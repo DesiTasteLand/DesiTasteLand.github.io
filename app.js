@@ -1,8 +1,8 @@
 /* ==========================================================================
-   DESI TASTE LAND - Touch Slider, Scroll Reveal & 3-Product Top Selling
+   DESI TASTE LAND - Master JavaScript Application Logic
    ========================================================================== */
 
-// 1. TOP SELLING PRODUCTS DATABASE (3 Items Only - NO PRICES DISPLAYED)
+// 1. TOP SELLING PRODUCTS DATABASE (3 Items Only - NO BADGES & NO PRICES DISPLAYED)
 const TOP_SELLING_PRODUCTS = [
   {
     id: 'top-1',
@@ -11,9 +11,8 @@ const TOP_SELLING_PRODUCTS = [
     unit: '500g Luxury Jar',
     rating: 5.0,
     reviewsCount: 450,
-    badge: '100% Pure',
-    badgeClass: 'badge-red',
-    image: 'assets/images/top_honey.jpg',
+    price: 1800,
+    image: 'assets/images/all_honey.jpg',
     description: '100% pure, unpasteurized, cold-extracted Sidr honey collected directly from wild Sidr flower blossoms. Boosts immunity and natural vitality.',
     benefits: [
       'Zero sugar adulteration guarantee',
@@ -25,12 +24,11 @@ const TOP_SELLING_PRODUCTS = [
     id: 'top-2',
     name: 'DESI GHEE',
     urdu: 'خالص کوہلو دیسی گھی',
-    unit: '1 kg Glass Jar',
+    unit: '1000g Glass Jar',
     rating: 5.0,
     reviewsCount: 620,
-    badge: 'Bilona Method',
-    badgeClass: 'badge-red',
-    image: 'assets/images/top_ghee.jpg',
+    price: 3200,
+    image: 'assets/images/all_ghee.jpg',
     description: 'Prepared using traditional Bilona method from grass-fed cow milk. Golden granular texture and authentic traditional aroma.',
     benefits: [
       'Traditional hand-churned Bilona method',
@@ -42,12 +40,11 @@ const TOP_SELLING_PRODUCTS = [
     id: 'top-3',
     name: 'OLIVE OIL',
     urdu: 'خالص کولڈ پریسڈ زیتون کا تیل',
-    unit: '1 Litre Glass Bottle',
+    unit: '1000ml Glass Bottle',
     rating: 5.0,
     reviewsCount: 310,
-    badge: 'Cold Pressed',
-    badgeClass: 'badge-red',
-    image: 'assets/images/top_olive_oil.jpg',
+    price: 4800,
+    image: 'assets/images/all_olive_oil.jpg',
     description: 'Cold-pressed extra virgin olive oil packed with natural anti-oxidants and healthy fats. Perfect for cooking, salad dressing, and daily wellness.',
     benefits: [
       'First cold press, zero chemical additives',
@@ -57,124 +54,104 @@ const TOP_SELLING_PRODUCTS = [
   }
 ];
 
-// 2. ALL NATURAL PRODUCTS DATABASE
-const ALL_NATURAL_PRODUCTS = [
+// 2. ALL PRODUCTS DATABASE (5 Items with Prices & Full Details)
+const ALL_PRODUCTS = [
   {
-    id: 'p1',
-    name: 'Pure Sidr Honey',
-    urdu: 'خالص سدر بیری کا شہد',
+    id: 'prod-1',
+    name: 'PURE HONEY',
+    urdu: 'خالص آرگینک شہد',
     category: 'honey-spices',
-    price: 2450,
-    oldPrice: 3200,
-    unit: '500g Jar',
+    price: 1800,
+    unit: '500g Glass Jar',
     rating: 5.0,
     reviewsCount: 420,
     badge: '100% Pure',
     badgeClass: 'badge-red',
-    image: 'assets/images/top_honey.jpg',
-    description: '100% pure raw Sidr Honey.',
-    benefits: ['100% Raw', 'Zero sugar']
+    image: 'assets/images/all_honey.jpg',
+    description: '100% raw and pure Sidr honey collected directly from natural flower blossoms.',
+    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration Guarantee']
   },
   {
-    id: 'p2',
-    name: 'Traditional Handmade Achar',
-    urdu: 'روایتی دیسی مکس اچار',
-    category: 'wellness',
-    price: 950,
-    oldPrice: 1250,
-    unit: '1 kg Glass Jar',
-    rating: 4.9,
-    reviewsCount: 310,
-    badge: 'Homemade Taste',
-    badgeClass: '',
-    image: 'assets/images/mixed_pickle.jpg',
-    description: 'Traditional spices pickle.',
-    benefits: ['Sun cured', 'No chemical']
-  },
-  {
-    id: 'p3',
-    name: '100% Pure Olive Oil',
-    urdu: 'خالص کولڈ پریسڈ زیتون کا تیل',
-    category: 'ghee-oils',
-    price: 2850,
-    oldPrice: 3500,
-    unit: '1 Litre Bottle',
-    rating: 5.0,
-    reviewsCount: 275,
-    badge: 'Cold Pressed',
-    badgeClass: 'badge-red',
-    image: 'assets/images/top_olive_oil.jpg',
-    description: 'Cold pressed extra virgin olive oil.',
-    benefits: ['Cold pressed', 'Heart healthy']
-  },
-  {
-    id: 'p4',
-    name: 'Premium Tea Patti',
-    urdu: 'پریمیم شاہی چائے پتی',
+    id: 'prod-2',
+    name: 'TEA',
+    urdu: 'پریمیم چائے پتی',
     category: 'honey-spices',
-    price: 750,
-    oldPrice: 950,
-    unit: '250g Pack',
+    price: 400,
+    unit: '200g Pack',
     rating: 4.9,
     reviewsCount: 380,
     badge: 'Rich Aroma',
     badgeClass: '',
-    image: 'assets/images/hero_banner_4.jpg',
-    description: 'High grade tea leaves.',
-    benefits: ['Strong color', 'Natural aroma']
+    image: 'assets/images/all_tea.jpg',
+    description: 'Selected top tea leaves for a rich aroma, strong color, and refreshing taste.',
+    benefits: ['Strong Rich Color', 'Natural Aroma']
   },
   {
-    id: 'p5',
-    name: 'Wood-Pressed Desi Ghee',
-    urdu: 'خالص کوہلو دیسی گھی',
+    id: 'prod-3',
+    name: 'OLIVE OIL',
+    urdu: 'خالص زیتون کا تیل',
+    category: 'ghee-oils',
+    price: 4800,
+    unit: '1000ml Glass Bottle',
+    rating: 5.0,
+    reviewsCount: 290,
+    badge: 'Cold Pressed',
+    badgeClass: 'badge-red',
+    image: 'assets/images/all_olive_oil.jpg',
+    description: 'Cold-pressed extra virgin olive oil packed with healthy nutrients.',
+    benefits: ['First Cold Press', 'Heart Healthy']
+  },
+  {
+    id: 'prod-4',
+    name: 'DESI GHEE',
+    urdu: 'کوہلو دیسی گھی',
     category: 'ghee-oils',
     price: 3200,
-    oldPrice: 3800,
-    unit: '1 kg Glass Jar',
+    unit: '1000g Glass Jar',
     rating: 5.0,
     reviewsCount: 610,
     badge: 'Bilona Ghee',
     badgeClass: 'badge-red',
-    image: 'assets/images/top_ghee.jpg',
-    description: 'Grass-fed Cow Bilona Ghee.',
-    benefits: ['Bilona Method', 'Rich aroma']
+    image: 'assets/images/all_ghee.jpg',
+    description: 'Traditional Bilona Desi Ghee prepared from pure grass-fed cow milk.',
+    benefits: ['Hand-Churned Bilona', 'Rich Aroma']
   },
   {
-    id: 'p6',
-    name: 'Royal Kashmiri Saffron',
-    urdu: 'اصل شاہی کشمیری زعفران',
-    category: 'honey-spices',
-    price: 1850,
-    oldPrice: 2400,
-    unit: '1g Crystal Vial',
-    rating: 5.0,
-    reviewsCount: 195,
-    badge: 'Mongra Grade',
+    id: 'prod-5',
+    name: 'IMLI CHUTNEY',
+    urdu: 'لذیذ املی چٹنی',
+    category: 'wellness',
+    price: 800,
+    unit: '500g Glass Jar',
+    rating: 4.9,
+    reviewsCount: 310,
+    badge: 'Homemade Taste',
     badgeClass: '',
-    image: 'assets/images/kashmiri_saffron.jpg',
-    description: 'Original Kashmiri Mongra Saffron.',
-    benefits: ['Pure Mongra', 'Deep red threads']
+    image: 'assets/images/all_imli_chutney.jpg',
+    description: 'Handcrafted authentic tangy and sweet Imli Chutney prepared with natural spices.',
+    benefits: ['Handmade Recipe', 'No Synthetic Color']
   }
 ];
 
 // 3. STATE MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
+let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
 let currentSlideIndex = 0;
 let slideInterval;
-let progressTimeout;
 
 // 4. INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
-  renderAllNaturalProducts('all');
+  renderAllProducts('all');
   updateCartUI();
+  updateAuthUI();
   initHeroTouchSlider();
   initScrollRevealObserver();
   initCountdownTimer();
   initEventListeners();
 });
 
-// 5. HERO SLIDER LOGIC (Touch Swipe + 3s Auto-Slide + Golden Progress Bar Line)
+// 5. HERO SLIDER LOGIC (Touch Swipe + 3s Auto-Slide + Golden Progress Line Bar)
 function initHeroTouchSlider() {
   const sliderContainer = document.getElementById('heroSlider');
   const slides = document.querySelectorAll('.slide');
@@ -211,15 +188,12 @@ function initHeroTouchSlider() {
     if (!progressFill) return;
     progressFill.style.transition = 'none';
     progressFill.style.width = '0%';
-
-    // Trigger reflow
     void progressFill.offsetWidth;
-
     progressFill.style.transition = 'width 3s linear';
     progressFill.style.width = '100%';
   }
 
-  // Touch Controls (Mobile / Tablet)
+  // Touch Controls
   sliderContainer.addEventListener('touchstart', (e) => {
     isDragging = true;
     startX = e.touches[0].clientX;
@@ -236,16 +210,13 @@ function initHeroTouchSlider() {
     const diffX = startX - currentX;
 
     if (Math.abs(diffX) > 40) {
-      if (diffX > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
+      if (diffX > 0) nextSlide();
+      else prevSlide();
       resetSlideTimer();
     }
   });
 
-  // Mouse Drag Controls (Desktop)
+  // Mouse Drag Controls
   sliderContainer.addEventListener('mousedown', (e) => {
     isDragging = true;
     startX = e.clientX;
@@ -262,11 +233,8 @@ function initHeroTouchSlider() {
     const diffX = startX - currentX;
 
     if (Math.abs(diffX) > 40) {
-      if (diffX > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
+      if (diffX > 0) nextSlide();
+      else prevSlide();
       resetSlideTimer();
     }
   });
@@ -296,7 +264,7 @@ function initHeroTouchSlider() {
   startSlideTimer();
 }
 
-// 6. SCROLL REVEAL ANIMATIONS (Smooth Fade & Slide-up on Scroll)
+// 6. SCROLL REVEAL ANIMATIONS
 function initScrollRevealObserver() {
   const revealElements = document.querySelectorAll('.reveal-section');
 
@@ -313,15 +281,13 @@ function initScrollRevealObserver() {
   revealElements.forEach(el => observer.observe(el));
 }
 
-// 7. RENDER TOP SELLING PRODUCTS (3 Items Only - NO PRICES)
+// 7. RENDER TOP SELLING PRODUCTS (3 Items Only - NO BADGES & NO PRICES)
 function renderTopSellingProducts() {
   const container = document.getElementById('topSellingGrid');
   if (!container) return;
 
   container.innerHTML = TOP_SELLING_PRODUCTS.map(product => `
     <div class="product-card">
-      <span class="product-badge ${product.badgeClass}">${product.badge}</span>
-      
       <div class="product-img-box">
         <img src="${product.image}" alt="${product.name}" loading="lazy">
         <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
@@ -355,14 +321,14 @@ function renderTopSellingProducts() {
   `).join('');
 }
 
-// 8. RENDER ALL NATURAL PRODUCTS
-function renderAllNaturalProducts(category) {
+// 8. RENDER ALL PRODUCTS (5 Items with Prices)
+function renderAllProducts(category) {
   const container = document.getElementById('allNaturalGrid');
   if (!container) return;
 
   const filtered = category === 'all' 
-    ? ALL_NATURAL_PRODUCTS 
-    : ALL_NATURAL_PRODUCTS.filter(p => p.category === category);
+    ? ALL_PRODUCTS 
+    : ALL_PRODUCTS.filter(p => p.category === category);
 
   container.innerHTML = filtered.map(product => `
     <div class="product-card">
@@ -393,7 +359,6 @@ function renderAllNaturalProducts(category) {
 
         <div class="price-row">
           <span class="price-current">Rs. ${product.price.toLocaleString()}</span>
-          ${product.oldPrice ? `<span class="price-old">Rs. ${product.oldPrice.toLocaleString()}</span>` : ''}
         </div>
 
         <div class="card-actions">
@@ -408,22 +373,14 @@ function renderAllNaturalProducts(category) {
 
 // 9. CART OPERATIONS
 function addToCart(productId) {
-  let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_NATURAL_PRODUCTS.find(p => p.id === productId);
+  let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_PRODUCTS.find(p => p.id === productId);
   if (!product) return;
-
-  // Assign price if adding top selling item (e.g. Pure Honey Rs 2450, Ghee Rs 3200, Olive Oil Rs 2850)
-  let itemPrice = product.price;
-  if (!itemPrice) {
-    if (productId === 'top-1') itemPrice = 2450;
-    else if (productId === 'top-2') itemPrice = 3200;
-    else if (productId === 'top-3') itemPrice = 2850;
-  }
 
   const existing = cart.find(item => item.id === productId);
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ ...product, price: itemPrice, qty: 1 });
+    cart.push({ ...product, qty: 1 });
   }
 
   saveCart();
@@ -523,7 +480,27 @@ function updateCartUI() {
   }
 }
 
-// 10. MODALS & DRAWER LISTENERS
+// 10. AUTH & USER LOGIN STATE LOGIC
+function updateAuthUI() {
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const loggedState = document.getElementById('userLoggedInState');
+
+  if (currentUser) {
+    if (loginForm) loginForm.style.display = 'none';
+    if (signupForm) signupForm.style.display = 'none';
+    if (loggedState) {
+      loggedState.style.display = 'block';
+      document.getElementById('loggedInUserName').textContent = currentUser.name;
+      document.getElementById('loggedInUserEmail').textContent = currentUser.email;
+    }
+  } else {
+    if (loggedState) loggedState.style.display = 'none';
+    if (loginForm) loginForm.style.display = 'flex';
+  }
+}
+
+// 11. MODALS & DRAWER LISTENERS
 function openCartDrawer() {
   document.getElementById('cartDrawer')?.classList.add('active');
   document.getElementById('cartOverlay')?.classList.add('active');
@@ -535,20 +512,17 @@ function closeCartDrawer() {
 }
 
 function openQuickView(productId) {
-  let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_NATURAL_PRODUCTS.find(p => p.id === productId);
+  let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_PRODUCTS.find(p => p.id === productId);
   if (!product) return;
 
   const content = document.getElementById('quickViewContent');
   if (!content) return;
-
-  let displayPrice = product.price ? `Rs. ${product.price.toLocaleString()}` : 'Rs. 2,450';
 
   content.innerHTML = `
     <div class="qv-img-box">
       <img src="${product.image}" alt="${product.name}">
     </div>
     <div class="qv-info">
-      <span class="product-badge ${product.badgeClass}">${product.badge}</span>
       <h2>${product.name}</h2>
       <div class="qv-urdu">${product.urdu}</div>
       <p class="qv-desc">${product.description}</p>
@@ -558,7 +532,7 @@ function openQuickView(productId) {
       </ul>
 
       <div class="price-row" style="margin-bottom: 20px;">
-        <span class="price-current" style="font-size: 1.6rem;">${displayPrice}</span>
+        <span class="price-current" style="font-size: 1.6rem;">Rs. ${product.price.toLocaleString()}</span>
       </div>
 
       <button class="btn btn-red btn-lg btn-block shadow-red" onclick="addToCart('${product.id}'); closeQuickView();">
@@ -589,6 +563,11 @@ function openCheckoutModal() {
   document.getElementById('checkoutShippingFee').textContent = shipping === 0 ? 'FREE' : `Rs. ${shipping}`;
   document.getElementById('checkoutFinalTotal').textContent = `Rs. ${finalTotal.toLocaleString()}`;
 
+  // Build hidden email order summary
+  const itemsText = cart.map(i => `${i.name} (${i.qty}x) = Rs. ${i.price * i.qty}`).join('\n');
+  const fullSummary = `ITEMS:\n${itemsText}\n\nSubtotal: Rs. ${subtotal}\nShipping: Rs. ${shipping}\nGrand Total: Rs. ${finalTotal}`;
+  document.getElementById('emailOrderSummary').value = fullSummary;
+
   document.getElementById('checkoutModal')?.classList.add('active');
 }
 
@@ -596,7 +575,7 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal')?.classList.remove('active');
 }
 
-// 11. EVENT LISTENERS SETUP
+// 12. EVENT LISTENERS SETUP
 function initEventListeners() {
   // Mobile Nav Toggle
   const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -628,6 +607,12 @@ function initEventListeners() {
   document.getElementById('closeCartBtn')?.addEventListener('click', closeCartDrawer);
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
 
+  // User Account Scroll / Modal Trigger
+  document.getElementById('userAccountBtn')?.addEventListener('click', () => {
+    const authSection = document.getElementById('authSection');
+    if (authSection) authSection.scrollIntoView({ behavior: 'smooth' });
+  });
+
   // Quick View Close
   document.getElementById('closeQuickViewBtn')?.addEventListener('click', closeQuickView);
 
@@ -638,8 +623,57 @@ function initEventListeners() {
       tabs.forEach(t => t.classList.remove('active'));
       e.target.classList.add('active');
       const cat = e.target.getAttribute('data-category');
-      renderAllNaturalProducts(cat);
+      renderAllProducts(cat);
     });
+  });
+
+  // Auth Tab Buttons Switch
+  const loginTabBtn = document.getElementById('loginTabBtn');
+  const signupTabBtn = document.getElementById('signupTabBtn');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+
+  loginTabBtn?.addEventListener('click', () => {
+    loginTabBtn.classList.add('active');
+    signupTabBtn?.classList.remove('active');
+    loginForm?.classList.add('active');
+    signupForm?.classList.remove('active');
+  });
+
+  signupTabBtn?.addEventListener('click', () => {
+    signupTabBtn.classList.add('active');
+    loginTabBtn?.classList.remove('active');
+    signupForm?.classList.add('active');
+    loginForm?.classList.remove('active');
+  });
+
+  // Login Form Submit
+  loginForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    currentUser = { name: email.split('@')[0], email: email };
+    localStorage.setItem('dtl_user', JSON.stringify(currentUser));
+    updateAuthUI();
+    showToast('<i class="fa-solid fa-circle-check text-red"></i> Welcome back to Desi Taste Land!');
+  });
+
+  // Sign Up Form Submit
+  signupForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    currentUser = { name: name, email: email };
+    localStorage.setItem('dtl_user', JSON.stringify(currentUser));
+    updateAuthUI();
+    showToast('<i class="fa-solid fa-circle-check text-red"></i> Account created successfully!');
+  });
+
+  // Logout Button
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    currentUser = null;
+    localStorage.removeItem('dtl_user');
+    updateAuthUI();
+    showToast('Logged out successfully');
   });
 
   // Checkout Triggers
@@ -669,10 +703,23 @@ function initEventListeners() {
     openCartDrawer();
   });
 
-  // Checkout Form Submission
+  // Checkout Form Submission (Posts to FormSubmit zaibbabar54@gmail.com & Opens WhatsApp)
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
+    const city = document.getElementById('custCity').value;
+    const address = document.getElementById('custAddress').value;
     const refId = '#DTL-' + Math.floor(10000 + Math.random() * 90000);
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const shipping = subtotal >= 3000 ? 0 : 250;
+    const grandTotal = subtotal + shipping;
+
+    const itemsSummary = cart.map(i => `*${i.name}* x${i.qty} = Rs. ${i.price * i.qty}`).join('%0A');
+    const waText = `*NEW ORDER RECEIVED (${refId})*%0A%0A*Customer Name:* ${name}%0A*Phone:* ${phone}%0A*City:* ${city}%0A*Address:* ${address}%0A%0A*ITEMS ORDERED:*%0A${itemsSummary}%0A%0A*Total Amount:* Rs. ${grandTotal} (COD)`;
+
+    // Open WhatsApp order notification directly to store number +923070016113
+    window.open(`https://wa.me/923070016113?text=${waText}`, '_blank');
 
     document.getElementById('orderRefId').textContent = refId;
     closeCheckoutModal();
@@ -691,7 +738,7 @@ function initEventListeners() {
   });
 }
 
-// 12. COUNTDOWN TIMER LOGIC
+// 13. COUNTDOWN TIMER LOGIC
 function initCountdownTimer() {
   let hours = 8;
   let mins = 42;
@@ -724,7 +771,7 @@ function initCountdownTimer() {
   }, 1000);
 }
 
-// 13. TOAST NOTIFICATIONS
+// 14. TOAST NOTIFICATIONS
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;

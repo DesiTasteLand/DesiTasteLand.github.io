@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DESI TASTE LAND - Brand Matched Luxury Design System & Animations
+   DESI TASTE LAND - Brand Matched Luxury Design System & Auth Styles
    ========================================================================== */
 
 :root {
@@ -9,17 +9,17 @@
   --bg-alt: #F4EBE0;
   --bg-card: #FFFFFF;
 
-  /* Forest Green (from Logo & Leaf Accents) */
+  /* Forest Green */
   --forest-primary: #1E4D3B;
   --forest-dark: #123629;
   --forest-light: #E6F2EC;
 
-  /* Crimson Red (from Logo Script Text & Badges) */
+  /* Crimson Red */
   --red-primary: #C81D25;
   --red-dark: #A31219;
   --red-light: #FDE8E9;
 
-  /* Mustard Gold & Warm Orange (from DESI Logo Text & Highlights) */
+  /* Mustard Gold & Warm Orange */
   --gold-primary: #D4AF37;
   --gold-dark: #B8860B;
   --gold-light: #FDEBD0;
@@ -53,7 +53,7 @@
   --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Reset & Responsive Universal Rules */
+/* Reset & Universal Rules */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -282,11 +282,11 @@ button {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
 }
 
 .nav-link {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-body);
   position: relative;
@@ -321,12 +321,12 @@ button {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .icon-btn {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
@@ -368,7 +368,7 @@ button {
   color: var(--text-dark);
 }
 
-/* HERO SLIDER SECTION (Clean Images + Touch Swipe + Golden Progress Line - No Side Arrows) */
+/* HERO SLIDER SECTION (Clean Images + Touch Swipe + Golden Line) */
 .hero-slider-section {
   position: relative;
   width: 100%;
@@ -491,17 +491,21 @@ button {
   margin: 0 auto;
 }
 
-/* TOP SELLING PRODUCTS GRID (3 Items Only - NO PRICES DISPLAYED) */
+/* TOP SELLING PRODUCTS GRID (3 Items Only - NO BADGES & NO PRICES) */
 .top-selling-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
 }
 
-/* PRODUCTS GRID & CARD */
+.top-selling-grid .product-badge {
+  display: none !important;
+}
+
+/* PRODUCTS GRID & CARD (Full Image Visibility - No Cropping / No Clipping) */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 28px;
 }
 
@@ -539,19 +543,26 @@ button {
   background: var(--red-primary);
 }
 
+/* Product Image Box - Fixed Image Cut Off (object-fit: contain) */
 .product-img-box {
   position: relative;
   width: 100%;
   height: 280px;
-  background: var(--bg-alt);
-  overflow: hidden;
+  background: #FFFDF7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .product-img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s ease;
 }
 
 .product-card:hover .product-img-box img {
@@ -721,7 +732,7 @@ button {
   color: var(--text-muted);
 }
 
-/* SPECIAL DEALS SECTION (Redesigned Offer Banner) */
+/* SPECIAL DEALS SECTION */
 .special-deal-section {
   background: var(--bg-main);
 }
@@ -1037,7 +1048,7 @@ button {
   letter-spacing: 0.5px;
 }
 
-/* REVIEWS SECTION (No Profile Pics) */
+/* REVIEWS SECTION */
 .reviews-section {
   background: var(--bg-main);
 }
@@ -1125,6 +1136,85 @@ button {
 .reviewer-info small {
   font-size: 0.78rem;
   color: var(--text-muted);
+}
+
+/* SIGN UP / LOGIN SECTION STYLES */
+.auth-section {
+  background: var(--bg-alt);
+}
+
+.auth-card-luxury {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-lg);
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border-light);
+  margin-bottom: 28px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: var(--transition-fast);
+}
+
+.auth-tab-btn.active {
+  color: var(--red-primary);
+  border-bottom-color: var(--red-primary);
+}
+
+.auth-form {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-form.active {
+  display: flex;
+}
+
+.auth-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.auth-header p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.user-logged-state {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.user-avatar-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--forest-light);
+  color: var(--forest-primary);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  border: 2px solid var(--forest-primary);
 }
 
 /* FOOTER */
@@ -1494,12 +1584,16 @@ button {
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
 
 .qv-img-box img {
-  width: 100%;
-  height: 280px;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: contain;
 }
 
 .qv-info h2 {
@@ -1645,9 +1739,7 @@ button {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* ==========================================================================
-   100% RESPONSIVE BREAKPOINTS (NO CUTOFF / NO CLIPPING ON MOBILE)
-   ========================================================================== */
+/* RESPONSIVE BREAKPOINTS */
 @media (max-width: 992px) {
   .top-selling-grid { grid-template-columns: repeat(2, 1fr); }
   .deal-grid, .quick-view-grid { grid-template-columns: 1fr; }
@@ -1688,7 +1780,7 @@ button {
 
   .section-padding { padding: 48px 0; }
   .section-title { font-size: 1.8rem; }
-  .about-card-luxury { padding: 32px 20px; }
+  .about-card-luxury, .auth-card-luxury { padding: 28px 18px; }
   .about-main-title { font-size: 1.8rem; }
 
   .deal-card-luxury { padding: 20px; }
@@ -1698,7 +1790,7 @@ button {
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .form-row { grid-template-columns: 1fr; }
   .top-selling-grid { grid-template-columns: 1fr; }
-  .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
 }
 
 @media (max-width: 480px) {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DESI TASTE LAND | Pure, Organic & Authentic Desi Goodness</title>
-  <meta name="description" content="Discover 100% pure, organic Sidr Honey, Kashmiri Saffron, Desi Ghee, Pure Olive Oil & Traditional Delicacies from DESI TASTE LAND.">
+  <meta name="description" content="Discover 100% pure, organic Sidr Honey, Kashmiri Saffron, Desi Ghee, Pure Olive Oil, Premium Tea & Imli Chutney from DESI TASTE LAND.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
     <div class="container announcement-content">
       <span><i class="fa-solid fa-crown text-red"></i> 100% Guaranteed Pure & Lab Tested Products Across Pakistan</span>
       <span><i class="fa-solid fa-truck-fast"></i> Free Delivery on Orders Above Rs. 3,000</span>
-      <span><i class="fa-solid fa-phone"></i> Helpline: +92 300 1234567</span>
+      <span><i class="fa-solid fa-phone"></i> Helpline / WhatsApp: +92 307 0016113</span>
     </div>
   </div>
 
@@ -48,15 +48,20 @@
       <nav class="nav-menu" id="navMenu">
         <a href="#hero" class="nav-link active">Home</a>
         <a href="#topSelling" class="nav-link">Top Selling</a>
-        <a href="#allNatural" class="nav-link">All Natural</a>
+        <a href="#allNatural" class="nav-link">All Products</a>
         <a href="#whyUs" class="nav-link">Why Us</a>
         <a href="#specialDeal" class="nav-link deal-link"><i class="fa-solid fa-fire-flame-curved"></i> Special Deal</a>
         <a href="#aboutSection" class="nav-link">About Us</a>
         <a href="#reviewsSection" class="nav-link">Reviews</a>
+        <a href="#authSection" class="nav-link">Login / Account</a>
       </nav>
 
       <!-- Header Action Icons -->
       <div class="header-actions">
+        <button class="icon-btn" id="userAccountBtn" title="My Account">
+          <i class="fa-solid fa-user"></i>
+        </button>
+
         <button class="icon-btn cart-btn-trigger" id="cartToggleBtn" title="Shopping Cart">
           <i class="fa-solid fa-bag-shopping"></i>
           <span class="cart-badge" id="cartCountBadge">0</span>
@@ -72,7 +77,7 @@
   <!-- Mobile Drawer Menu Overlay -->
   <div class="mobile-nav-overlay" id="mobileOverlay"></div>
 
-  <!-- HERO SECTION (Clean Image Touch Slider + Golden Progress Bar + Smooth 3s Timer Loop - No Side Arrows) -->
+  <!-- HERO SECTION (Clean Image Touch Slider + Golden Progress Bar + Smooth 3s Timer Loop) -->
   <section class="hero-slider-section" id="hero">
     <div class="slider-container" id="heroSlider">
       <div class="slide active">
@@ -103,7 +108,7 @@
     </div>
   </section>
 
-  <!-- TOP SELLING PRODUCTS SECTION (3 Products Only - NO PRICES DISPLAYED) -->
+  <!-- TOP SELLING PRODUCTS SECTION (NO TAG BADGES & NO PRICES DISPLAYED) -->
   <section class="section-padding top-selling-section reveal-section" id="topSelling">
     <div class="container">
       <div class="section-header text-center">
@@ -113,18 +118,18 @@
       </div>
 
       <div class="top-selling-grid" id="topSellingGrid">
-        <!-- Injected via JavaScript (PURE HONEY, DESI GHEE, OLIVE OIL - No Prices) -->
+        <!-- Injected via JavaScript (PURE HONEY, DESI GHEE, OLIVE OIL - No Badges & No Prices) -->
       </div>
     </div>
   </section>
 
-  <!-- ALL NATURAL PRODUCTS SECTION -->
+  <!-- ALL PRODUCTS SECTION (5 Products: Honey, Tea, Olive Oil, Desi Ghee, Imli Chutney) -->
   <section class="section-padding all-natural-section reveal-section" id="allNatural">
     <div class="container">
       <div class="section-header text-center">
         <span class="section-subtitle"><i class="fa-solid fa-leaf text-forest"></i> Farm Fresh Harvest</span>
-        <h2 class="section-title">100% All Natural Collection</h2>
-        <p class="section-desc">Explore our full range of chemical-free, nutrient-rich pure organic foods.</p>
+        <h2 class="section-title">ALL PRODUCTS COLLECTION</h2>
+        <p class="section-desc">Explore our full range of 100% chemical-free, nutrient-rich pure organic foods.</p>
       </div>
 
       <!-- Filter Tabs -->
@@ -132,11 +137,11 @@
         <button class="tab-btn active" data-category="all">All Products</button>
         <button class="tab-btn" data-category="honey-spices">Pure Honey & Tea</button>
         <button class="tab-btn" data-category="ghee-oils">Desi Ghee & Olive Oil</button>
-        <button class="tab-btn" data-category="wellness">Traditional Achar & More</button>
+        <button class="tab-btn" data-category="wellness">Chutney & Delicacies</button>
       </div>
 
       <div class="products-grid" id="allNaturalGrid">
-        <!-- Injected via JavaScript -->
+        <!-- Injected via JavaScript (5 items with prices) -->
       </div>
     </div>
   </section>
@@ -186,7 +191,7 @@
     </div>
   </section>
 
-  <!-- REDESIGNED SPECIAL DEALS SECTION (Using Image 4 Offer Banner) -->
+  <!-- SPECIAL DEALS SECTION -->
   <section class="section-padding special-deal-section reveal-section" id="specialDeal">
     <div class="container">
       <div class="deal-card-luxury">
@@ -295,7 +300,7 @@
     </div>
   </section>
 
-  <!-- REVIEWS SECTION (3 Pakistani Reviews - NO PROFILE PICTURES) -->
+  <!-- REVIEWS SECTION -->
   <section class="section-padding reviews-section reveal-section" id="reviewsSection">
     <div class="container">
       <div class="section-header text-center">
@@ -377,6 +382,81 @@
     </div>
   </section>
 
+  <!-- SIGN UP / LOGIN SECTION -->
+  <section class="section-padding auth-section reveal-section" id="authSection">
+    <div class="container">
+      <div class="auth-card-luxury">
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="loginTabBtn">Login to Account</button>
+          <button class="auth-tab-btn" id="signupTabBtn">Create New Account</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form active">
+          <div class="auth-header text-center">
+            <h3>Welcome Back to DESI TASTE LAND</h3>
+            <p>Login to track your organic food orders and exclusive offers</p>
+          </div>
+
+          <div class="form-group">
+            <label for="loginEmail">Email / Phone Number *</label>
+            <input type="text" id="loginEmail" placeholder="Enter your email or 0300XXXXXXX" required>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password *</label>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+          </div>
+
+          <button type="submit" class="btn btn-red btn-block btn-lg shadow-red">
+            <i class="fa-solid fa-right-to-bracket"></i> Login Now
+          </button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signupForm" class="auth-form">
+          <div class="auth-header text-center">
+            <h3>Register Account</h3>
+            <p>Join the Desi Taste Land family for pure organic blessings</p>
+          </div>
+
+          <div class="form-group">
+            <label for="signupName">Full Name *</label>
+            <input type="text" id="signupName" placeholder="e.g. Muhammad Ali" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPhone">Phone / WhatsApp Number *</label>
+            <input type="tel" id="signupPhone" placeholder="0307 0016113" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signupEmail">Email Address *</label>
+            <input type="email" id="signupEmail" placeholder="desitasteland@gmail.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPassword">Create Password *</label>
+            <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required>
+          </div>
+
+          <button type="submit" class="btn btn-red btn-block btn-lg shadow-red">
+            <i class="fa-solid fa-user-plus"></i> Create Account
+          </button>
+        </form>
+
+        <div id="userLoggedInState" class="user-logged-state" style="display: none;">
+          <div class="user-avatar-circle"><i class="fa-solid fa-user"></i></div>
+          <h3 id="loggedInUserName">Logged in User</h3>
+          <p id="loggedInUserEmail">email@example.com</p>
+          <button class="btn btn-red-outline btn-sm" id="logoutBtn" style="margin-top: 16px;">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-grid">
@@ -392,9 +472,9 @@
           DESI TASTE LAND brings authentic, farm-fresh, 100% natural organic delicacies straight from pristine farms to your home with unmatched purity and light luxury elegance.
         </p>
         <div class="social-links">
-          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61584915339912" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/desitasteland?fbclid=IwY2xjawTztANwZG9mAWV4dG4DYWVtAjEwAGJyaWQRMEJXV0liOHFJU3RWcU5aOUtzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEe6tF8oHgwicK_J7Tt6gjESwBnG2rTl7IfkGREiYenxsA2Kioxh04QvJAwc7g_aem_ukDTJik3oora3aB591MIJA" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/923070016113" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
       </div>
 
@@ -403,11 +483,12 @@
         <ul>
           <li><a href="#hero">Home</a></li>
           <li><a href="#topSelling">Top Selling Products</a></li>
-          <li><a href="#allNatural">All Natural Collection</a></li>
+          <li><a href="#allNatural">All Products</a></li>
           <li><a href="#whyUs">Why Desi Taste Land</a></li>
           <li><a href="#specialDeal">Today's Special Deal</a></li>
           <li><a href="#aboutSection">About Us</a></li>
           <li><a href="#reviewsSection">Customer Reviews</a></li>
+          <li><a href="#authSection">Login / Register</a></li>
         </ul>
       </div>
 
@@ -423,9 +504,9 @@
 
       <div class="footer-col">
         <h4>Contact & Orders</h4>
-        <p><i class="fa-solid fa-location-dot text-red"></i> Head Office: DHA Phase 5, Lahore, Pakistan</p>
-        <p><i class="fa-solid fa-phone text-red"></i> Phone: +92 300 1234567</p>
-        <p><i class="fa-solid fa-envelope text-red"></i> Email: support@desitasteland.com</p>
+        <p><i class="fa-solid fa-location-dot text-red"></i> Aqua Market Phool Nagar , Bhai Pheru, Pakistan, 55260</p>
+        <p><i class="fa-solid fa-phone text-red"></i> Phone: +92 307 0016113</p>
+        <p><i class="fa-solid fa-envelope text-red"></i> Email: desitasteland@gmail.com</p>
         <p><i class="fa-solid fa-clock text-red"></i> Mon - Sat: 9:00 AM - 9:00 PM</p>
       </div>
     </div>
@@ -443,7 +524,7 @@
   </footer>
 
   <!-- FLOATING WHATSAPP BUTTON -->
-  <a href="https://wa.me/923001234567?text=Hello%20Desi%20Taste%20Land,%20I%20want%20to%20place%20an%20order!" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+  <a href="https://wa.me/923070016113?text=Hello%20Desi%20Taste%20Land,%20I%20want%20to%20place%20an%20order!" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
     <span class="whatsapp-text">Quick Order</span>
   </a>
@@ -498,7 +579,7 @@
     </div>
   </div>
 
-  <!-- CHECKOUT MODAL -->
+  <!-- CHECKOUT MODAL (Connected to Email zaibbabar54@gmail.com & WhatsApp) -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-card modal-card-md">
       <button class="modal-close" id="closeCheckoutBtn">&times;</button>
@@ -506,29 +587,35 @@
         <div class="modal-header-block">
           <span class="gold-badge"><i class="fa-solid fa-shield-halved"></i> Fast & Secure Checkout</span>
           <h2>Complete Your Order</h2>
-          <p>Pay via Cash on Delivery upon receiving your pure organic items.</p>
+          <p>Order details will be sent directly to store management for instant dispatch.</p>
         </div>
 
-        <form id="checkoutForm" class="checkout-form">
+        <form id="checkoutForm" class="checkout-form" action="https://formsubmit.co/zaibbabar54@gmail.com" method="POST">
+          <!-- FormSubmit Configuration -->
+          <input type="hidden" name="_subject" id="emailSubject" value="New Order Placed - DESI TASTE LAND">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="Order_Summary" id="emailOrderSummary" value="">
+
           <div class="form-group">
             <label for="custName">Full Name *</label>
-            <input type="text" id="custName" placeholder="e.g. Ali Ahmed" required>
+            <input type="text" id="custName" name="Customer_Name" placeholder="e.g. Ali Ahmed" required>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="custPhone">Phone / WhatsApp Number *</label>
-              <input type="tel" id="custPhone" placeholder="0300 1234567" required>
+              <input type="tel" id="custPhone" name="Customer_Phone" placeholder="03070016113" required>
             </div>
             <div class="form-group">
               <label for="custCity">City *</label>
-              <input type="text" id="custCity" placeholder="Lahore, Karachi, Islamabad..." required>
+              <input type="text" id="custCity" name="Customer_City" placeholder="Phool Nagar, Lahore, Karachi..." required>
             </div>
           </div>
 
           <div class="form-group">
             <label for="custAddress">Full Shipping Address *</label>
-            <textarea id="custAddress" rows="3" placeholder="House/Flat No, Street, Area Name..." required></textarea>
+            <textarea id="custAddress" name="Shipping_Address" rows="3" placeholder="Aqua Market Phool Nagar, House No, Street..." required></textarea>
           </div>
 
           <div class="order-summary-box">
@@ -538,8 +625,8 @@
             <div class="summary-line total-line"><span>Payable Amount (COD):</span> <strong id="checkoutFinalTotal" class="text-red">Rs. 0</strong></div>
           </div>
 
-          <button type="submit" class="btn btn-red btn-block btn-lg shadow-red">
-            <i class="fa-solid fa-circle-check"></i> Confirm Cash on Delivery Order
+          <button type="submit" class="btn btn-red btn-block btn-lg shadow-red" id="submitOrderBtn">
+            <i class="fa-solid fa-circle-check"></i> Confirm & Send Order
           </button>
         </form>
       </div>
@@ -554,7 +641,7 @@
       </div>
       <h2>Order Placed Successfully!</h2>
       <p class="order-ref-text">Order Reference: <strong id="orderRefId" class="text-red">#DTL-89421</strong></p>
-      <p>Shukriya! Your order for pure organic products from <strong>DESI TASTE LAND</strong> has been received. Our team will contact you shortly on WhatsApp to confirm delivery.</p>
+      <p>Shukriya! Your order details have been sent to <strong>zaibbabar54@gmail.com</strong> and WhatsApp (+92 307 0016113). Our team will contact you shortly for dispatch!</p>
       <button class="btn btn-red btn-block" id="closeSuccessBtn">Continue Shopping</button>
     </div>
   </div>
