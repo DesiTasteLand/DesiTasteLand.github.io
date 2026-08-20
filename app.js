@@ -100,7 +100,7 @@ const ALL_PRODUCTS = [
     unit: '500g Glass Jar',
     rating: 4.9,
     reviewsCount: 280,
-    image: 'assets/images/mixed_pickle.jpg',
+    image: 'assets/images/prod_mix_pickle2.jpg',
     description: 'Handcrafted authentic mixed mustard oil pickle infused with traditional spices.',
     benefits: ['Traditional Recipe', 'Pure Mustard Oil Base']
   },
