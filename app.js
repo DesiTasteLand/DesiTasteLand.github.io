@@ -1,8 +1,8 @@
 /* ==========================================================================
-   DESI TASTE LAND - Master JavaScript Application Logic
+   DESI TASTE LAND - Master Application JavaScript Logic
    ========================================================================== */
 
-// 1. TOP SELLING PRODUCTS DATABASE (3 Items Only - NO BADGES & NO PRICES DISPLAYED)
+// 1. TOP SELLING PRODUCTS DATABASE (3 Items Only - NO BADGES & NO PRICES)
 const TOP_SELLING_PRODUCTS = [
   {
     id: 'top-1',
@@ -13,12 +13,8 @@ const TOP_SELLING_PRODUCTS = [
     reviewsCount: 450,
     price: 1800,
     image: 'assets/images/all_honey.jpg',
-    description: '100% pure, unpasteurized, cold-extracted Sidr honey collected directly from wild Sidr flower blossoms. Boosts immunity and natural vitality.',
-    benefits: [
-      'Zero sugar adulteration guarantee',
-      'Rich in natural enzymes & minerals',
-      'Natural remedy for cough & digestive health'
-    ]
+    description: '100% pure, unpasteurized Sidr honey collected directly from wild Sidr flower blossoms. Natural immune booster.',
+    benefits: ['100% Raw & Unprocessed', 'Zero sugar adulteration guarantee']
   },
   {
     id: 'top-2',
@@ -29,12 +25,8 @@ const TOP_SELLING_PRODUCTS = [
     reviewsCount: 620,
     price: 3200,
     image: 'assets/images/all_ghee.jpg',
-    description: 'Prepared using traditional Bilona method from grass-fed cow milk. Golden granular texture and authentic traditional aroma.',
-    benefits: [
-      'Traditional hand-churned Bilona method',
-      'Rich in Vitamin A, D, E & Healthy Fatty Acids',
-      'Chemical-free & zero preservatives'
-    ]
+    description: 'Prepared using traditional hand-churned Bilona method from grass-fed cow milk. Golden granular texture.',
+    benefits: ['Traditional hand-churned Bilona method', 'Chemical-free & zero preservatives']
   },
   {
     id: 'top-3',
@@ -45,43 +37,33 @@ const TOP_SELLING_PRODUCTS = [
     reviewsCount: 310,
     price: 4800,
     image: 'assets/images/all_olive_oil.jpg',
-    description: 'Cold-pressed extra virgin olive oil packed with natural anti-oxidants and healthy fats. Perfect for cooking, salad dressing, and daily wellness.',
-    benefits: [
-      'First cold press, zero chemical additives',
-      'Rich in heart-healthy Omega-9 & polyphenols',
-      'Ideal for healthy cooking & glowing skin'
-    ]
+    description: 'Cold-pressed extra virgin olive oil packed with natural anti-oxidants and healthy fats.',
+    benefits: ['First cold press, zero chemical additives', 'Heart-healthy Omega-9']
   }
 ];
 
-// 2. ALL PRODUCTS DATABASE (5 Items with Prices & Full Details)
+// 2. ALL PRODUCTS DATABASE (8 Items with Exact Prices & Requested Names)
 const ALL_PRODUCTS = [
   {
     id: 'prod-1',
     name: 'PURE HONEY',
     urdu: 'خالص آرگینک شہد',
-    category: 'honey-spices',
     price: 1800,
     unit: '500g Glass Jar',
     rating: 5.0,
     reviewsCount: 420,
-    badge: '100% Pure',
-    badgeClass: 'badge-red',
     image: 'assets/images/all_honey.jpg',
     description: '100% raw and pure Sidr honey collected directly from natural flower blossoms.',
-    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration Guarantee']
+    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration']
   },
   {
     id: 'prod-2',
     name: 'TEA',
     urdu: 'پریمیم چائے پتی',
-    category: 'honey-spices',
     price: 400,
     unit: '200g Pack',
     rating: 4.9,
     reviewsCount: 380,
-    badge: 'Rich Aroma',
-    badgeClass: '',
     image: 'assets/images/all_tea.jpg',
     description: 'Selected top tea leaves for a rich aroma, strong color, and refreshing taste.',
     benefits: ['Strong Rich Color', 'Natural Aroma']
@@ -90,13 +72,10 @@ const ALL_PRODUCTS = [
     id: 'prod-3',
     name: 'OLIVE OIL',
     urdu: 'خالص زیتون کا تیل',
-    category: 'ghee-oils',
     price: 4800,
     unit: '1000ml Glass Bottle',
     rating: 5.0,
     reviewsCount: 290,
-    badge: 'Cold Pressed',
-    badgeClass: 'badge-red',
     image: 'assets/images/all_olive_oil.jpg',
     description: 'Cold-pressed extra virgin olive oil packed with healthy nutrients.',
     benefits: ['First Cold Press', 'Heart Healthy']
@@ -105,36 +84,67 @@ const ALL_PRODUCTS = [
     id: 'prod-4',
     name: 'DESI GHEE',
     urdu: 'کوہلو دیسی گھی',
-    category: 'ghee-oils',
     price: 3200,
     unit: '1000g Glass Jar',
     rating: 5.0,
     reviewsCount: 610,
-    badge: 'Bilona Ghee',
-    badgeClass: 'badge-red',
     image: 'assets/images/all_ghee.jpg',
     description: 'Traditional Bilona Desi Ghee prepared from pure grass-fed cow milk.',
     benefits: ['Hand-Churned Bilona', 'Rich Aroma']
   },
   {
     id: 'prod-5',
+    name: 'MIX PICKLE',
+    urdu: 'خالص دیسی اچار',
+    price: 350,
+    unit: '500g Glass Jar',
+    rating: 4.9,
+    reviewsCount: 280,
+    image: 'assets/images/mixed_pickle.jpg',
+    description: 'Handcrafted authentic mixed mustard oil pickle infused with traditional spices.',
+    benefits: ['Traditional Recipe', 'Pure Mustard Oil Base']
+  },
+  {
+    id: 'prod-6',
+    name: 'SHILAJIT',
+    urdu: 'خالص ہمالیائی سلاجیت',
+    price: 1000,
+    unit: '1 Tola Jar',
+    rating: 5.0,
+    reviewsCount: 190,
+    image: 'assets/images/prod_shilajit.jpg',
+    description: '100% authentic purified Himalayan resin Shilajit. Rich in fulvic acid and natural minerals.',
+    benefits: ['100% Pure Resin', 'Boosts Natural Energy & Vitality']
+  },
+  {
+    id: 'prod-7',
+    name: 'TALBINA',
+    urdu: 'سنت نبوی تلبینہ',
+    price: 1300,
+    unit: '450g Pack',
+    rating: 4.9,
+    reviewsCount: 340,
+    image: 'assets/images/prod_talbina.jpg',
+    description: 'Traditional Sunnah barley porridge blended with nuts, dates, and natural honey goodness.',
+    benefits: ['Sunnah Food', 'Eases Digestive Stress & Anxiety']
+  },
+  {
+    id: 'prod-8',
     name: 'IMLI CHUTNEY',
     urdu: 'لذیذ املی چٹنی',
-    category: 'wellness',
     price: 800,
     unit: '500g Glass Jar',
     rating: 4.9,
     reviewsCount: 310,
-    badge: 'Homemade Taste',
-    badgeClass: '',
-    image: 'assets/images/all_imli_chutney.jpg',
+    image: 'assets/images/prod_imli_chutney.jpg',
     description: 'Handcrafted authentic tangy and sweet Imli Chutney prepared with natural spices.',
-    benefits: ['Handmade Recipe', 'No Synthetic Color']
+    benefits: ['Handmade Recipe', 'No Synthetic Colors']
   }
 ];
 
 // 3. STATE MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
+let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
 let currentSlideIndex = 0;
 let slideInterval;
@@ -142,16 +152,17 @@ let slideInterval;
 // 4. INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
-  renderAllProducts('all');
+  renderAllProducts();
   updateCartUI();
   updateAuthUI();
+  renderOrdersDrawer();
   initHeroTouchSlider();
   initScrollRevealObserver();
   initCountdownTimer();
   initEventListeners();
 });
 
-// 5. HERO SLIDER LOGIC (Touch Swipe + 3s Auto-Slide + Golden Progress Line Bar)
+// 5. HERO SLIDER LOGIC (Touch Swipe + 3s Auto Loop + Golden Line)
 function initHeroTouchSlider() {
   const sliderContainer = document.getElementById('heroSlider');
   const slides = document.querySelectorAll('.slide');
@@ -239,7 +250,6 @@ function initHeroTouchSlider() {
     }
   });
 
-  // Dots navigation
   dots.forEach(dot => {
     dot.addEventListener('click', (e) => {
       const idx = parseInt(e.target.getAttribute('data-index'));
@@ -248,7 +258,6 @@ function initHeroTouchSlider() {
     });
   });
 
-  // Auto Slide Every 3 Seconds
   function startSlideTimer() {
     resetProgressBar();
     slideInterval = setInterval(() => {
@@ -264,7 +273,7 @@ function initHeroTouchSlider() {
   startSlideTimer();
 }
 
-// 6. SCROLL REVEAL ANIMATIONS
+// 6. SCROLL REVEAL OBSERVER
 function initScrollRevealObserver() {
   const revealElements = document.querySelectorAll('.reveal-section');
 
@@ -321,19 +330,13 @@ function renderTopSellingProducts() {
   `).join('');
 }
 
-// 8. RENDER ALL PRODUCTS (5 Items with Prices)
-function renderAllProducts(category) {
-  const container = document.getElementById('allNaturalGrid');
+// 8. RENDER ALL PRODUCTS (8 Items with Full Prices)
+function renderAllProducts() {
+  const container = document.getElementById('allProductsGrid');
   if (!container) return;
 
-  const filtered = category === 'all' 
-    ? ALL_PRODUCTS 
-    : ALL_PRODUCTS.filter(p => p.category === category);
-
-  container.innerHTML = filtered.map(product => `
+  container.innerHTML = ALL_PRODUCTS.map(product => `
     <div class="product-card">
-      <span class="product-badge ${product.badgeClass}">${product.badge}</span>
-      
       <div class="product-img-box">
         <img src="${product.image}" alt="${product.name}" loading="lazy">
         <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
@@ -418,11 +421,9 @@ function updateCartUI() {
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
   const freeShippingThreshold = 3000;
 
-  // Badges & Counters
   document.getElementById('cartCountBadge').textContent = totalItems;
   document.getElementById('cartCountTitle').textContent = totalItems;
 
-  // Subtotal & Grand Total
   const deliveryCharge = (subtotal >= freeShippingThreshold || subtotal === 0) ? 0 : 250;
   const grandTotal = subtotal + deliveryCharge;
 
@@ -430,7 +431,6 @@ function updateCartUI() {
   document.getElementById('deliveryChargeText').textContent = deliveryCharge === 0 ? 'FREE' : `Rs. ${deliveryCharge}`;
   document.getElementById('cartGrandTotal').textContent = `Rs. ${grandTotal.toLocaleString()}`;
 
-  // Free shipping progress
   const progressPercent = Math.min((subtotal / freeShippingThreshold) * 100, 100);
   const fillBar = document.getElementById('shippingProgressFill');
   const textBar = document.getElementById('shippingText');
@@ -438,14 +438,13 @@ function updateCartUI() {
   if (fillBar) fillBar.style.width = `${progressPercent}%`;
   if (textBar) {
     if (subtotal >= freeShippingThreshold) {
-      textBar.innerHTML = `<span class="text-forest"><i class="fa-solid fa-crown text-red"></i> Congratulations! You unlocked <strong>FREE Delivery</strong>!</span>`;
+      textBar.innerHTML = `<span class="text-forest"><i class="fa-solid fa-crown text-red"></i> You unlocked <strong>FREE Delivery</strong>!</span>`;
     } else {
       const needed = freeShippingThreshold - subtotal;
       textBar.innerHTML = `Add <strong>Rs. ${needed.toLocaleString()}</strong> more to get <strong>FREE Delivery</strong>!`;
     }
   }
 
-  // Cart items HTML
   const container = document.getElementById('cartItemsContainer');
   if (!container) return;
 
@@ -454,7 +453,7 @@ function updateCartUI() {
       <div class="text-center" style="padding: 40px 0; color: var(--text-muted);">
         <i class="fa-solid fa-basket-shopping" style="font-size: 3rem; color: var(--border-gold); margin-bottom: 16px;"></i>
         <p>Your shopping cart is empty.</p>
-        <a href="#topSelling" onclick="closeCartDrawer()" class="btn btn-red-outline btn-sm" style="margin-top: 16px;">Explore Products</a>
+        <button onclick="closeCartDrawer()" class="btn btn-red-outline btn-sm" style="margin-top: 16px;">Explore Products</button>
       </div>
     `;
   } else {
@@ -480,7 +479,64 @@ function updateCartUI() {
   }
 }
 
-// 10. AUTH & USER LOGIN STATE LOGIC
+// 10. MY ORDERS & 24-HOUR CANCELLATION SYSTEM
+function renderOrdersDrawer() {
+  const container = document.getElementById('ordersListContainer');
+  if (!container) return;
+
+  if (myOrders.length === 0) {
+    container.innerHTML = `
+      <div class="text-center" style="padding: 40px 0; color: var(--text-muted);">
+        <i class="fa-solid fa-box-open" style="font-size: 3rem; color: var(--border-gold); margin-bottom: 16px;"></i>
+        <p>You haven't placed any orders yet.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const now = Date.now();
+  const twentyFourHours = 24 * 3600 * 1000;
+
+  container.innerHTML = myOrders.map(order => {
+    const timeElapsed = now - order.timestamp;
+    const canCancel = (timeElapsed <= twentyFourHours) && (order.status !== 'Cancelled');
+    const orderDateStr = new Date(order.timestamp).toLocaleString();
+
+    return `
+      <div class="order-card-item">
+        <div class="order-card-header">
+          <span class="order-ref-code">${order.id}</span>
+          <span class="order-status-badge ${order.status === 'Cancelled' ? 'cancelled' : ''}">${order.status}</span>
+        </div>
+        <div class="order-items-list">
+          ${order.items.map(i => `<div>• ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
+        </div>
+        <div class="summary-line" style="margin-top: 4px;">
+          <strong>Total: Rs. ${order.total}</strong>
+        </div>
+        <div class="order-time-text">Placed on: ${orderDateStr}</div>
+
+        ${canCancel ? `
+          <button class="cancel-order-btn" onclick="cancelOrder('${order.id}')">
+            <i class="fa-solid fa-ban"></i> Cancel Order (Within 24h)
+          </button>
+        ` : (order.status !== 'Cancelled' ? `<small style="color: var(--text-muted);">Order processing locked (24h passed)</small>` : '')}
+      </div>
+    `;
+  }).join('');
+}
+
+function cancelOrder(orderId) {
+  const order = myOrders.find(o => o.id === orderId);
+  if (!order) return;
+
+  order.status = 'Cancelled';
+  localStorage.setItem('dtl_orders', JSON.stringify(myOrders));
+  renderOrdersDrawer();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Order ${orderId} has been cancelled.`);
+}
+
+// 11. AUTH UI & IN-PLACE TAB SWAPPING
 function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
@@ -500,7 +556,7 @@ function updateAuthUI() {
   }
 }
 
-// 11. MODALS & DRAWER LISTENERS
+// 12. DRAWER & MODALS TOGGLE
 function openCartDrawer() {
   document.getElementById('cartDrawer')?.classList.add('active');
   document.getElementById('cartOverlay')?.classList.add('active');
@@ -509,6 +565,17 @@ function openCartDrawer() {
 function closeCartDrawer() {
   document.getElementById('cartDrawer')?.classList.remove('active');
   document.getElementById('cartOverlay')?.classList.remove('active');
+}
+
+function openOrdersDrawer() {
+  renderOrdersDrawer();
+  document.getElementById('ordersDrawer')?.classList.add('active');
+  document.getElementById('ordersOverlay')?.classList.add('active');
+}
+
+function closeOrdersDrawer() {
+  document.getElementById('ordersDrawer')?.classList.remove('active');
+  document.getElementById('ordersOverlay')?.classList.remove('active');
 }
 
 function openQuickView(productId) {
@@ -532,7 +599,7 @@ function openQuickView(productId) {
       </ul>
 
       <div class="price-row" style="margin-bottom: 20px;">
-        <span class="price-current" style="font-size: 1.6rem;">Rs. ${product.price.toLocaleString()}</span>
+        <span class="price-current" style="font-size: 1.5rem;">Rs. ${product.price.toLocaleString()}</span>
       </div>
 
       <button class="btn btn-red btn-lg btn-block shadow-red" onclick="addToCart('${product.id}'); closeQuickView();">
@@ -563,11 +630,6 @@ function openCheckoutModal() {
   document.getElementById('checkoutShippingFee').textContent = shipping === 0 ? 'FREE' : `Rs. ${shipping}`;
   document.getElementById('checkoutFinalTotal').textContent = `Rs. ${finalTotal.toLocaleString()}`;
 
-  // Build hidden email order summary
-  const itemsText = cart.map(i => `${i.name} (${i.qty}x) = Rs. ${i.price * i.qty}`).join('\n');
-  const fullSummary = `ITEMS:\n${itemsText}\n\nSubtotal: Rs. ${subtotal}\nShipping: Rs. ${shipping}\nGrand Total: Rs. ${finalTotal}`;
-  document.getElementById('emailOrderSummary').value = fullSummary;
-
   document.getElementById('checkoutModal')?.classList.add('active');
 }
 
@@ -575,39 +637,19 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal')?.classList.remove('active');
 }
 
-// 12. EVENT LISTENERS SETUP
+// 13. EVENT LISTENERS SETUP
 function initEventListeners() {
-  // Mobile Nav Toggle
-  const mobileBtn = document.getElementById('mobileMenuBtn');
-  const navMenu = document.getElementById('navMenu');
-  const mobileOverlay = document.getElementById('mobileOverlay');
-
-  mobileBtn?.addEventListener('click', () => {
-    navMenu?.classList.toggle('active');
-    mobileOverlay?.classList.toggle('active');
-  });
-
-  mobileOverlay?.addEventListener('click', () => {
-    navMenu?.classList.remove('active');
-    mobileOverlay?.classList.remove('active');
-  });
-
-  // Header scroll sticky effect
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if (window.scrollY > 40) {
-      header?.classList.add('scrolled');
-    } else {
-      header?.classList.remove('scrolled');
-    }
-  });
+  // My Orders Drawer Icon
+  document.getElementById('myOrdersDrawerBtn')?.addEventListener('click', openOrdersDrawer);
+  document.getElementById('closeOrdersBtn')?.addEventListener('click', closeOrdersDrawer);
+  document.getElementById('ordersOverlay')?.addEventListener('click', closeOrdersDrawer);
 
   // Cart Toggles
   document.getElementById('cartToggleBtn')?.addEventListener('click', openCartDrawer);
   document.getElementById('closeCartBtn')?.addEventListener('click', closeCartDrawer);
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
 
-  // User Account Scroll / Modal Trigger
+  // Account Button
   document.getElementById('userAccountBtn')?.addEventListener('click', () => {
     const authSection = document.getElementById('authSection');
     if (authSection) authSection.scrollIntoView({ behavior: 'smooth' });
@@ -616,18 +658,7 @@ function initEventListeners() {
   // Quick View Close
   document.getElementById('closeQuickViewBtn')?.addEventListener('click', closeQuickView);
 
-  // Category Tabs Filter
-  const tabs = document.querySelectorAll('.filter-tabs .tab-btn');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      tabs.forEach(t => t.classList.remove('active'));
-      e.target.classList.add('active');
-      const cat = e.target.getAttribute('data-category');
-      renderAllProducts(cat);
-    });
-  });
-
-  // Auth Tab Buttons Switch
+  // In-Place Auth Tab Buttons Switching
   const loginTabBtn = document.getElementById('loginTabBtn');
   const signupTabBtn = document.getElementById('signupTabBtn');
   const loginForm = document.getElementById('loginForm');
@@ -636,18 +667,18 @@ function initEventListeners() {
   loginTabBtn?.addEventListener('click', () => {
     loginTabBtn.classList.add('active');
     signupTabBtn?.classList.remove('active');
-    loginForm?.classList.add('active');
-    signupForm?.classList.remove('active');
+    if (loginForm) loginForm.style.display = 'flex';
+    if (signupForm) signupForm.style.display = 'none';
   });
 
   signupTabBtn?.addEventListener('click', () => {
     signupTabBtn.classList.add('active');
     loginTabBtn?.classList.remove('active');
-    signupForm?.classList.add('active');
-    loginForm?.classList.remove('active');
+    if (signupForm) signupForm.style.display = 'flex';
+    if (loginForm) loginForm.style.display = 'none';
   });
 
-  // Login Form Submit
+  // Login Submit
   loginForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value;
@@ -657,7 +688,7 @@ function initEventListeners() {
     showToast('<i class="fa-solid fa-circle-check text-red"></i> Welcome back to Desi Taste Land!');
   });
 
-  // Sign Up Form Submit
+  // Sign Up Submit
   signupForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('signupName').value;
@@ -674,6 +705,57 @@ function initEventListeners() {
     localStorage.removeItem('dtl_user');
     updateAuthUI();
     showToast('Logged out successfully');
+  });
+
+  // Submit Review Form
+  document.getElementById('submitReviewForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('revName').value;
+    const city = document.getElementById('revCity').value;
+    const comment = document.getElementById('revComment').value;
+
+    // Send payload asynchronously to zaibbabar54@gmail.com
+    fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        Type: 'CUSTOMER REVIEW SUBMISSION',
+        Customer_Name: name,
+        City: city,
+        Review_Text: comment
+      })
+    }).catch(err => console.log(err));
+
+    // Append Review Live
+    const reviewsGrid = document.getElementById('reviewsGrid');
+    if (reviewsGrid) {
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.innerHTML = `
+        <div class="review-top">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+        </div>
+        <p class="review-text">"${comment}"</p>
+        <div class="reviewer-meta">
+          <div class="reviewer-initial">${name.charAt(0).toUpperCase()}</div>
+          <div class="reviewer-info">
+            <strong>${name}</strong>
+            <small>${city}, Pakistan</small>
+          </div>
+        </div>
+      `;
+      reviewsGrid.prepend(card);
+    }
+
+    document.getElementById('submitReviewForm').reset();
+    showToast('<i class="fa-solid fa-circle-check text-red"></i> Shukriya! Your review has been submitted.');
   });
 
   // Checkout Triggers
@@ -699,12 +781,14 @@ function initEventListeners() {
     }
     saveCart();
     updateCartUI();
-    showToast('<i class="fa-solid fa-crown text-red"></i> Bari Eid Deal added to your cart!');
+    showToast('<i class="fa-solid fa-crown text-red"></i> Bari Eid Deal added to cart!');
     openCartDrawer();
   });
 
-  // Checkout Form Submission (Posts to FormSubmit zaibbabar54@gmail.com & Opens WhatsApp)
+  // Checkout Form Submission (Background fetch - NO Redirect to External Screen!)
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
     const name = document.getElementById('custName').value;
     const phone = document.getElementById('custPhone').value;
     const city = document.getElementById('custCity').value;
@@ -715,21 +799,49 @@ function initEventListeners() {
     const shipping = subtotal >= 3000 ? 0 : 250;
     const grandTotal = subtotal + shipping;
 
-    const itemsSummary = cart.map(i => `*${i.name}* x${i.qty} = Rs. ${i.price * i.qty}`).join('%0A');
-    const waText = `*NEW ORDER RECEIVED (${refId})*%0A%0A*Customer Name:* ${name}%0A*Phone:* ${phone}%0A*City:* ${city}%0A*Address:* ${address}%0A%0A*ITEMS ORDERED:*%0A${itemsSummary}%0A%0A*Total Amount:* Rs. ${grandTotal} (COD)`;
+    const itemsSummary = cart.map(i => `${i.name} (${i.qty}x) = Rs. ${i.price * i.qty}`).join(', ');
 
-    // Open WhatsApp order notification directly to store number +923070016113
-    window.open(`https://wa.me/923070016113?text=${waText}`, '_blank');
+    // 1. Post order to zaibbabar54@gmail.com via FormSubmit AJAX (Background - No Redirect)
+    fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `New Order Received (${refId}) - DESI TASTE LAND`,
+        Order_Reference: refId,
+        Customer_Name: name,
+        Customer_Phone: phone,
+        Customer_City: city,
+        Shipping_Address: address,
+        Items_Ordered: itemsSummary,
+        Subtotal_PKR: subtotal,
+        Shipping_PKR: shipping,
+        Total_Amount_PKR: grandTotal
+      })
+    }).catch(err => console.log('Order notification background sent', err));
+
+    // 2. Save order to My Orders history
+    const newOrder = {
+      id: refId,
+      timestamp: Date.now(),
+      name: name,
+      phone: phone,
+      address: `${address}, ${city}`,
+      items: [...cart],
+      total: grandTotal,
+      status: 'Processing'
+    };
+    myOrders.unshift(newOrder);
+    localStorage.setItem('dtl_orders', JSON.stringify(myOrders));
 
     document.getElementById('orderRefId').textContent = refId;
     closeCheckoutModal();
 
-    // Clear Cart
+    // Clear cart
     cart = [];
     saveCart();
     updateCartUI();
 
-    // Open Success Modal
+    // Show in-app confirmation modal (NO REDIRECT!)
     document.getElementById('orderSuccessModal')?.classList.add('active');
   });
 
@@ -738,7 +850,7 @@ function initEventListeners() {
   });
 }
 
-// 13. COUNTDOWN TIMER LOGIC
+// 14. COUNTDOWN TIMER LOGIC
 function initCountdownTimer() {
   let hours = 8;
   let mins = 42;
@@ -771,7 +883,7 @@ function initCountdownTimer() {
   }, 1000);
 }
 
-// 14. TOAST NOTIFICATIONS
+// 15. TOAST NOTIFICATIONS
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
