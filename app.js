@@ -1,150 +1,213 @@
 /* ==========================================================================
-   DESI TASTE LAND - High Interactivity JavaScript Application Logic
+   DESI TASTE LAND - Brand Matched Products & Interactive Slider Logic
    ========================================================================== */
 
-// 1. PRODUCTS DATABASE
+// 1. PRODUCTS DATABASE (Aligned with Official Banners)
 const PRODUCTS = [
   {
     id: 'p1',
-    name: 'Organic Sidr Honey',
-    urdu: 'خالص سدر شہد (بیری کا شہد)',
+    name: 'Pure Sidr Honey',
+    urdu: 'خالص سدر بیری کا شہد',
     category: 'honey-spices',
     price: 2450,
     oldPrice: 3200,
-    unit: '500 grams jar',
+    unit: '500g Glass Jar',
     rating: 5.0,
-    reviewsCount: 342,
-    badge: 'Bestseller',
-    badgeClass: 'badge-gold',
+    reviewsCount: 420,
+    badge: '100% Pure',
+    badgeClass: 'badge-red',
     image: 'assets/images/sidr_honey.jpg',
     isTopSelling: true,
-    description: '100% pure, unpasteurized, cold-extracted Sidr honey collected directly from Karak & Wild Sidr forests. Renowned for its rich caramel texture and immune-boosting properties.',
+    description: '100% pure, unpasteurized, cold-extracted Sidr honey collected directly from wild Sidr flower blossoms. Boosts immunity and natural vitality.',
     benefits: [
       'Zero sugar adulteration guarantee',
-      'Rich in antioxidants & natural enzymes',
-      'Natural remedy for cough, throat & immunity'
+      'Rich in natural enzymes & minerals',
+      'Natural remedy for cough & digestive health'
     ]
   },
   {
     id: 'p2',
-    name: 'Pure Desi Ghee',
-    urdu: 'لکڑی کا کوہلو خالص دیسی گھی',
-    category: 'ghee-oils',
-    price: 3200,
-    oldPrice: 3800,
-    unit: '1 kg glass jar',
+    name: 'Traditional Handmade Achar',
+    urdu: 'روایتی دیسی مکس اچار',
+    category: 'wellness',
+    price: 950,
+    oldPrice: 1250,
+    unit: '1 kg Glass Jar',
     rating: 4.9,
-    reviewsCount: 518,
-    badge: '100% Pure',
+    reviewsCount: 310,
+    badge: 'Homemade Taste',
     badgeClass: '',
-    image: 'assets/images/desi_ghee.jpg',
+    image: 'assets/images/mixed_pickle.jpg',
     isTopSelling: true,
-    description: 'Prepared using traditional Bilona method from grass-fed cow milk. Golden granular texture, rich traditional aroma, and chemical-free preparation.',
+    description: 'Authentic handmade achar prepared with fresh raw mangoes, limes, green chilies, and pure mustard oil infused with heirloom spices.',
     benefits: [
-      'Traditional hand-churned Bilona method',
-      'High smoke point perfect for cooking & sweets',
-      'Rich in Vitamin A, D, E & healthy fatty acids'
+      'No synthetic vinegar or chemical preservatives',
+      'Slow sun-cured traditional recipe',
+      'Authentic mouth-watering taste of home'
     ]
   },
   {
     id: 'p3',
-    name: 'Royal Kashmiri Saffron',
-    urdu: 'شاہی کشمیری زعفران',
-    category: 'honey-spices',
-    price: 1850,
-    oldPrice: 2400,
-    unit: '1 gram luxury crystal vial',
+    name: '100% Pure & Natural Olive Oil',
+    urdu: 'خالص کولڈ پریسڈ زیتون کا تیل',
+    category: 'ghee-oils',
+    price: 2850,
+    oldPrice: 3500,
+    unit: '1 Litre Glass Bottle',
     rating: 5.0,
-    reviewsCount: 189,
-    badge: 'Royal Grade',
-    badgeClass: 'badge-gold',
-    image: 'assets/images/kashmiri_saffron.jpg',
+    reviewsCount: 275,
+    badge: 'Cold Pressed',
+    badgeClass: 'badge-red',
+    image: 'assets/images/mustard_oil.jpg',
     isTopSelling: true,
-    description: 'Authentic Mongra grade Kashmiri Saffron with deep crimson threads, hand-harvested from Pampore Kashmir fields. Unmatched aroma and golden dye potency.',
+    description: 'Cold-pressed extra virgin olive oil packed with natural anti-oxidants and healthy fats. Perfect for cooking, salad dressing, and daily wellness.',
     benefits: [
-      'Grade-1 Mongra full-crimson threads',
-      'Boosts mood, skin radiance & memory',
-      'Perfect for milk, kehwa & royal dishes'
+      'First cold press, zero chemical additives',
+      'Rich in heart-healthy Omega-9 & polyphenols',
+      'Ideal for healthy cooking & glowing skin'
     ]
   },
   {
     id: 'p4',
-    name: 'Cold-Pressed Mustard Oil',
-    urdu: 'کچی گھانی سرسوں کا تیل',
-    category: 'ghee-oils',
-    price: 1250,
-    oldPrice: 1600,
-    unit: '1 Litre bottle',
-    rating: 4.8,
-    reviewsCount: 210,
-    badge: 'Wood-Pressed',
+    name: 'Premium Tea Patti',
+    urdu: 'پریمیم شاہی چائے پتی',
+    category: 'honey-spices',
+    price: 750,
+    oldPrice: 950,
+    unit: '250g Vacuum Pack',
+    rating: 4.9,
+    reviewsCount: 380,
+    badge: 'Rich Aroma',
     badgeClass: '',
-    image: 'assets/images/mustard_oil.jpg',
+    image: 'assets/images/hero.jpg',
     isTopSelling: true,
-    description: 'Cold wood-pressed mustard oil extracted at low temperature to retain natural pungency, Omega-3 fatty acids, and essential vitamins.',
+    description: 'Carefully selected top tea leaves for a rich aroma, strong color, and natural refreshing taste in every single cup.',
     benefits: [
-      'Unrefined & chemical-free extraction',
-      'Promotes heart health & hair nourishment',
-      'Authentic pungent Desi aroma'
+      'Hand-picked finest garden tea leaves',
+      'Strong rich color & refreshing taste',
+      '100% natural without artificial dyes'
     ]
   },
   {
     id: 'p5',
-    name: 'Handcrafted Mixed Pickle',
-    urdu: 'گھر کا بنا لذیذ مکس اچار',
-    category: 'wellness',
-    price: 850,
-    oldPrice: 1100,
-    unit: '1 kg traditional glass jar',
-    rating: 4.9,
-    reviewsCount: 145,
-    badge: 'Homemade Taste',
-    badgeClass: '',
-    image: 'assets/images/mixed_pickle.jpg',
+    name: 'Wood-Pressed Desi Ghee',
+    urdu: 'خالص کوہلو دیسی گھی',
+    category: 'ghee-oils',
+    price: 3200,
+    oldPrice: 3800,
+    unit: '1 kg Glass Jar',
+    rating: 5.0,
+    reviewsCount: 610,
+    badge: 'Bilona Ghee',
+    badgeClass: 'badge-red',
+    image: 'assets/images/desi_ghee.jpg',
     isTopSelling: false,
-    description: 'Prepared with fresh green mangoes, lemons, green chilies, and pure mustard oil infused with authentic heirloom spices.',
+    description: 'Prepared using traditional Bilona method from grass-fed cow milk. Golden granular texture and authentic traditional aroma.',
     benefits: [
-      'No synthetic vinegar or chemical preservatives',
-      'Slow sun-cured traditional recipe',
-      'Mouth-watering tangy & spicy flavor'
+      'Traditional hand-churned Bilona method',
+      'Rich in Vitamin A, D, E & Healthy Fats',
+      'Chemical-free & zero preservatives'
     ]
   },
   {
     id: 'p6',
-    name: 'Organic Turmeric Powder',
-    urdu: 'خالص آرگینک ہلدی پاؤڈر',
+    name: 'Royal Kashmiri Saffron',
+    urdu: 'اصل شاہی کشمیری زعفران',
     category: 'honey-spices',
-    price: 650,
-    oldPrice: 850,
-    unit: '250 grams pack',
-    rating: 4.9,
-    reviewsCount: 290,
-    badge: 'High Curcumin',
+    price: 1850,
+    oldPrice: 2400,
+    unit: '1g Crystal Vial',
+    rating: 5.0,
+    reviewsCount: 195,
+    badge: 'Grade-1 Mongra',
     badgeClass: '',
-    image: 'assets/images/hero.jpg',
+    image: 'assets/images/kashmiri_saffron.jpg',
     isTopSelling: false,
-    description: 'Pure whole turmeric roots ground fresh without starch or artificial color. High natural Curcumin content for healing.',
+    description: 'Authentic Mongra Kashmiri Saffron with deep crimson threads, hand-harvested from Kashmir fields. High color and aroma potency.',
     benefits: [
-      'High active Curcumin content',
-      'Powerful natural anti-inflammatory',
-      'Vibrant golden color & earthy aroma'
+      '100% pure Mongra crimson threads',
+      'Boosts skin radiance & mood',
+      'Perfect for milk & kehwa'
     ]
   }
 ];
 
 // 2. STATE MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
+let currentSlideIndex = 0;
+let slideInterval;
 
 // 3. INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
   renderAllNaturalProducts('all');
   updateCartUI();
+  initHeroSlider();
   initCountdownTimer();
   initEventListeners();
 });
 
-// 4. RENDER FUNCTIONS
+// 4. HERO BANNER SLIDER LOGIC (4 Clean Images)
+function initHeroSlider() {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('prevSlideBtn');
+  const nextBtn = document.getElementById('nextSlideBtn');
+
+  if (slides.length === 0) return;
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+
+    currentSlideIndex = (index + slides.length) % slides.length;
+
+    slides[currentSlideIndex].classList.add('active');
+    if (dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+  }
+
+  function nextSlide() {
+    showSlide(currentSlideIndex + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlideIndex - 1);
+  }
+
+  // Arrow Clicks
+  nextBtn?.addEventListener('click', () => {
+    nextSlide();
+    resetSlideTimer();
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    prevSlide();
+    resetSlideTimer();
+  });
+
+  // Dot Clicks
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      const idx = parseInt(e.target.getAttribute('data-index'));
+      showSlide(idx);
+      resetSlideTimer();
+    });
+  });
+
+  // Auto Play every 4 seconds
+  function startSlideTimer() {
+    slideInterval = setInterval(nextSlide, 4000);
+  }
+
+  function resetSlideTimer() {
+    clearInterval(slideInterval);
+    startSlideTimer();
+  }
+
+  startSlideTimer();
+}
+
+// 5. RENDER FUNCTIONS
 function renderTopSellingProducts() {
   const container = document.getElementById('topSellingGrid');
   if (!container) return;
@@ -172,7 +235,7 @@ function createProductCardHTML(product) {
       <div class="product-img-box">
         <img src="${product.image}" alt="${product.name}" loading="lazy">
         <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
-          <i class="fa-solid fa-eye text-gold"></i> Quick View
+          <i class="fa-solid fa-eye text-red"></i> Quick View
         </button>
       </div>
 
@@ -198,7 +261,7 @@ function createProductCardHTML(product) {
         </div>
 
         <div class="card-actions">
-          <button class="btn btn-gold btn-block" onclick="addToCart('${product.id}')">
+          <button class="btn btn-red btn-block" onclick="addToCart('${product.id}')">
             <i class="fa-solid fa-bag-shopping"></i> Add To Cart
           </button>
         </div>
@@ -207,7 +270,7 @@ function createProductCardHTML(product) {
   `;
 }
 
-// 5. CART OPERATIONS
+// 6. CART OPERATIONS
 function addToCart(productId) {
   const product = PRODUCTS.find(p => p.id === productId);
   if (!product) return;
@@ -221,7 +284,7 @@ function addToCart(productId) {
 
   saveCart();
   updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-gold"></i> Added <strong>${product.name}</strong> to your cart!`);
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Added <strong>${product.name}</strong> to your cart!`);
   openCartDrawer();
 }
 
@@ -274,7 +337,7 @@ function updateCartUI() {
   if (fillBar) fillBar.style.width = `${progressPercent}%`;
   if (textBar) {
     if (subtotal >= freeShippingThreshold) {
-      textBar.innerHTML = `<span class="text-emerald"><i class="fa-solid fa-crown text-gold"></i> Congratulations! You unlocked <strong>FREE Delivery</strong>!</span>`;
+      textBar.innerHTML = `<span class="text-forest"><i class="fa-solid fa-crown text-red"></i> Congratulations! You unlocked <strong>FREE Delivery</strong>!</span>`;
     } else {
       const needed = freeShippingThreshold - subtotal;
       textBar.innerHTML = `Add <strong>Rs. ${needed.toLocaleString()}</strong> more to get <strong>FREE Delivery</strong>!`;
@@ -290,7 +353,7 @@ function updateCartUI() {
       <div class="text-center" style="padding: 40px 0; color: var(--text-muted);">
         <i class="fa-solid fa-basket-shopping" style="font-size: 3rem; color: var(--border-gold); margin-bottom: 16px;"></i>
         <p>Your shopping cart is empty.</p>
-        <a href="#topSelling" onclick="closeCartDrawer()" class="btn btn-gold-outline btn-sm" style="margin-top: 16px;">Explore Products</a>
+        <a href="#topSelling" onclick="closeCartDrawer()" class="btn btn-red-outline btn-sm" style="margin-top: 16px;">Explore Products</a>
       </div>
     `;
   } else {
@@ -316,7 +379,7 @@ function updateCartUI() {
   }
 }
 
-// 6. MODALS & DRAWER LISTENERS
+// 7. MODALS & DRAWER LISTENERS
 function openCartDrawer() {
   document.getElementById('cartDrawer')?.classList.add('active');
   document.getElementById('cartOverlay')?.classList.add('active');
@@ -345,15 +408,15 @@ function openQuickView(productId) {
       <p class="qv-desc">${product.description}</p>
 
       <ul class="qv-benefits">
-        ${product.benefits.map(b => `<li><i class="fa-solid fa-circle-check text-gold"></i> ${b}</li>`).join('')}
+        ${product.benefits.map(b => `<li><i class="fa-solid fa-circle-check text-red"></i> ${b}</li>`).join('')}
       </ul>
 
-      <div class="price-row" style="margin-bottom: 24px;">
-        <span class="price-current" style="font-size: 1.8rem;">Rs. ${product.price.toLocaleString()}</span>
-        ${product.oldPrice ? `<span class="price-old" style="font-size: 1.1rem;">Rs. ${product.oldPrice.toLocaleString()}</span>` : ''}
+      <div class="price-row" style="margin-bottom: 20px;">
+        <span class="price-current" style="font-size: 1.6rem;">Rs. ${product.price.toLocaleString()}</span>
+        ${product.oldPrice ? `<span class="price-old" style="font-size: 1rem;">Rs. ${product.oldPrice.toLocaleString()}</span>` : ''}
       </div>
 
-      <button class="btn btn-gold btn-lg btn-block shadow-gold" onclick="addToCart('${product.id}'); closeQuickView();">
+      <button class="btn btn-red btn-lg btn-block shadow-red" onclick="addToCart('${product.id}'); closeQuickView();">
         <i class="fa-solid fa-bag-shopping"></i> Add To Cart Now
       </button>
     </div>
@@ -388,7 +451,7 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal')?.classList.remove('active');
 }
 
-// 7. EVENT LISTENERS SETUP
+// 8. EVENT LISTENERS SETUP
 function initEventListeners() {
   // Mobile Nav Toggle
   const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -440,14 +503,13 @@ function initEventListeners() {
 
   // Special Deal Claim Button
   document.getElementById('claimDealBtn')?.addEventListener('click', () => {
-    // Add special deal items to cart
     const dealItem = {
       id: 'deal-royal-combo',
       name: 'ROYAL DESI HEALTH & TASTE COMBO',
       urdu: 'شاہی دیسی ہیلتھ اینڈ ٹیسٹ کمبو',
       price: 5999,
       qty: 1,
-      image: 'assets/images/hero.jpg'
+      image: 'assets/images/hero_banner_1.jpg'
     };
 
     const existing = cart.find(i => i.id === dealItem.id);
@@ -458,14 +520,13 @@ function initEventListeners() {
     }
     saveCart();
     updateCartUI();
-    showToast('<i class="fa-solid fa-crown text-gold"></i> Special Mega Deal added to your cart!');
+    showToast('<i class="fa-solid fa-crown text-red"></i> Special Mega Deal added to your cart!');
     openCartDrawer();
   });
 
   // Checkout Form Submission
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('custName').value;
     const refId = '#DTL-' + Math.floor(10000 + Math.random() * 90000);
 
     document.getElementById('orderRefId').textContent = refId;
@@ -485,7 +546,7 @@ function initEventListeners() {
   });
 }
 
-// 8. COUNTDOWN TIMER LOGIC
+// 9. COUNTDOWN TIMER LOGIC
 function initCountdownTimer() {
   let hours = 8;
   let mins = 42;
@@ -503,7 +564,7 @@ function initCountdownTimer() {
         if (hours > 0) {
           hours--;
         } else {
-          hours = 12; // Reset cycle
+          hours = 12;
         }
       }
     }
@@ -518,7 +579,7 @@ function initCountdownTimer() {
   }, 1000);
 }
 
-// 9. TOAST NOTIFICATIONS
+// 10. TOAST NOTIFICATIONS
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;

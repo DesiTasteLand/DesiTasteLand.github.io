@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DESI TASTE LAND | Pure, Organic & Authentic Desi Goodness</title>
-  <meta name="description" content="Discover 100% pure, organic Sidr Honey, Kashmiri Saffron, Desi Ghee, Cold-pressed Oils, & Handcrafted Delicacies from Desi Taste Land. Light Luxury Organic Store.">
+  <meta name="description" content="Discover 100% pure, organic Sidr Honey, Kashmiri Saffron, Desi Ghee, Pure Olive Oil, Traditional Achar & Premium Tea Patti from DESI TASTE LAND.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,7 +21,7 @@
   <!-- Top Announcement Bar -->
   <div class="announcement-bar">
     <div class="container announcement-content">
-      <span><i class="fa-solid fa-crown text-gold"></i> 100% Guaranteed Pure & Lab Tested Products Across Pakistan</span>
+      <span><i class="fa-solid fa-crown text-red"></i> 100% Guaranteed Pure & Lab Tested Products Across Pakistan</span>
       <span><i class="fa-solid fa-truck-fast"></i> Free Delivery on Orders Above Rs. 3,000</span>
       <span><i class="fa-solid fa-phone"></i> Helpline: +92 300 1234567</span>
     </div>
@@ -35,11 +35,9 @@
         <i class="fa-solid fa-bars-staggered"></i>
       </button>
 
-      <!-- Brand Logo -->
+      <!-- Brand Logo (Matching 1st Image) -->
       <a href="#" class="brand-logo">
-        <div class="logo-mark">
-          <i class="fa-solid fa-leaf"></i>
-        </div>
+        <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Official Logo" class="brand-logo-img">
         <div class="logo-text">
           <span class="brand-title">DESI TASTE LAND</span>
           <span class="brand-subtitle">PURE • ORGANIC • LUXURY</span>
@@ -57,16 +55,12 @@
 
       <!-- Header Action Icons -->
       <div class="header-actions">
-        <button class="icon-btn" id="searchBtn" title="Search Products">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-
         <button class="icon-btn cart-btn-trigger" id="cartToggleBtn" title="Shopping Cart">
           <i class="fa-solid fa-bag-shopping"></i>
           <span class="cart-badge" id="cartCountBadge">0</span>
         </button>
 
-        <a href="#specialDeal" class="btn btn-gold-outline btn-sm desktop-only">
+        <a href="#specialDeal" class="btn btn-red-outline btn-sm desktop-only">
           <i class="fa-solid fa-bolt"></i> Claim Deal
         </a>
       </div>
@@ -76,95 +70,37 @@
   <!-- Mobile Drawer Menu Overlay -->
   <div class="mobile-nav-overlay" id="mobileOverlay"></div>
 
-  <!-- HERO SECTION -->
-  <section class="hero-section" id="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-badge animate-fade-in">
-          <i class="fa-solid fa-award text-gold"></i> Premium Organic Heritage
-        </div>
-        <h1 class="hero-heading animate-slide-up">
-          Taste The Purity of <span class="gold-gradient-text">Authentic Desi</span> Traditions
-        </h1>
-        <p class="hero-tagline">
-          Hand-extracted Sidr Honey, Wood-pressed Desi Ghee, Kashmiri Saffron & Organic Spices — 100% natural, chemical-free & delivered fresh to your doorstep.
-        </p>
-
-        <!-- Trust Badges Bar -->
-        <div class="hero-trust-list">
-          <div class="trust-pill">
-            <i class="fa-solid fa-shield-halved text-gold"></i>
-            <span>100% Lab Tested Pure</span>
-          </div>
-          <div class="trust-pill">
-            <i class="fa-solid fa-seedling text-emerald"></i>
-            <span>Direct Organic Farms</span>
-          </div>
-          <div class="trust-pill">
-            <i class="fa-solid fa-rotate-left text-gold"></i>
-            <span>Money-Back Guarantee</span>
-          </div>
-        </div>
-
-        <div class="hero-actions">
-          <a href="#topSelling" class="btn btn-gold btn-lg shadow-gold">
-            <span>Explore Bestsellers</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <a href="#specialDeal" class="btn btn-glass btn-lg">
-            <i class="fa-solid fa-tag text-gold"></i>
-            <span>View Today's Deal</span>
-          </a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">50,000+</span>
-            <span class="stat-label">Happy Families</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">4.9 / 5</span>
-            <span class="stat-label">Customer Rating</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Zero Chemical Guarantee</span>
-          </div>
-        </div>
+  <!-- HERO SECTION (Full Clean Image Slider - No Overlay Text, No Borders) -->
+  <section class="hero-slider-section" id="hero">
+    <div class="slider-container" id="heroSlider">
+      <div class="slide active">
+        <img src="assets/images/hero_banner_1.jpg" alt="Pure Honey Straight from Nature Banner" class="hero-slide-img">
       </div>
-
-      <div class="hero-image-wrapper">
-        <div class="hero-card-glow"></div>
-        <div class="hero-image-frame">
-          <img src="assets/images/hero.jpg" alt="Desi Taste Land Luxury Organic Products" class="hero-main-img">
-          
-          <!-- Floating Glass Badges -->
-          <div class="floating-glass-card card-top-right">
-            <div class="glass-icon"><i class="fa-solid fa-certificate"></i></div>
-            <div class="glass-info">
-              <strong>Certified Pure</strong>
-              <small>No Preservatives Added</small>
-            </div>
-          </div>
-
-          <div class="floating-glass-card card-bottom-left">
-            <div class="glass-avatar-group">
-              <i class="fa-solid fa-star text-gold"></i>
-              <i class="fa-solid fa-star text-gold"></i>
-              <i class="fa-solid fa-star text-gold"></i>
-              <i class="fa-solid fa-star text-gold"></i>
-              <i class="fa-solid fa-star text-gold"></i>
-            </div>
-            <div class="glass-info">
-              <strong>"Authentic Desi Taste"</strong>
-              <small>Over 12,000+ Verified Reviews</small>
-            </div>
-          </div>
-        </div>
+      <div class="slide">
+        <img src="assets/images/hero_banner_2.jpg" alt="Traditional Achar Banner" class="hero-slide-img">
       </div>
+      <div class="slide">
+        <img src="assets/images/hero_banner_3.jpg" alt="100% Pure & Natural Olive Oil Banner" class="hero-slide-img">
+      </div>
+      <div class="slide">
+        <img src="assets/images/hero_banner_4.jpg" alt="Premium Tea Patti Banner" class="hero-slide-img">
+      </div>
+    </div>
+
+    <!-- Slider Arrow Controls -->
+    <button class="slider-arrow prev-arrow" id="prevSlideBtn" aria-label="Previous Slide">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="slider-arrow next-arrow" id="nextSlideBtn" aria-label="Next Slide">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <!-- Slider Dot Indicators -->
+    <div class="slider-dots" id="sliderDots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
     </div>
   </section>
 
@@ -172,7 +108,7 @@
   <section class="section-padding top-selling-section" id="topSelling">
     <div class="container">
       <div class="section-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-crown text-gold"></i> Customer Favorites</span>
+        <span class="section-subtitle"><i class="fa-solid fa-crown text-red"></i> Customer Favorites</span>
         <h2 class="section-title">Top Selling Luxury Delicacies</h2>
         <p class="section-desc">Our most cherished handpicked organic products crafted for purity and unmatched rich taste.</p>
       </div>
@@ -187,7 +123,7 @@
   <section class="section-padding all-natural-section" id="allNatural">
     <div class="container">
       <div class="section-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-leaf text-emerald"></i> Farm Fresh Harvest</span>
+        <span class="section-subtitle"><i class="fa-solid fa-leaf text-forest"></i> Farm Fresh Harvest</span>
         <h2 class="section-title">100% All Natural Collection</h2>
         <p class="section-desc">Explore our full range of chemical-free, nutrient-rich pure organic foods.</p>
       </div>
@@ -195,9 +131,9 @@
       <!-- Filter Tabs -->
       <div class="filter-tabs">
         <button class="tab-btn active" data-category="all">All Products</button>
-        <button class="tab-btn" data-category="ghee-oils">Desi Ghee & Oils</button>
-        <button class="tab-btn" data-category="honey-spices">Pure Honey & Spices</button>
-        <button class="tab-btn" data-category="wellness">Health & Delicacies</button>
+        <button class="tab-btn" data-category="honey-spices">Pure Honey & Tea</button>
+        <button class="tab-btn" data-category="ghee-oils">Desi Ghee & Olive Oil</button>
+        <button class="tab-btn" data-category="wellness">Traditional Achar & More</button>
       </div>
 
       <div class="products-grid" id="allNaturalGrid">
@@ -210,8 +146,8 @@
   <section class="section-padding why-us-section" id="whyUs">
     <div class="container">
       <div class="section-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-gem text-gold"></i> The Desi Taste Guarantee</span>
-        <h2 class="section-title">Why Choose DESI TASTE LAND?</h2>
+        <span class="section-subtitle"><i class="fa-solid fa-gem text-red"></i> THE DESI TASTE GUARANTEE</span>
+        <h2 class="section-title">WHY DESI TASTE LAND</h2>
         <p class="section-desc">We never compromise on purity. Here is why thousands of households trust us every single day.</p>
       </div>
 
@@ -229,7 +165,7 @@
             <i class="fa-solid fa-tractor"></i>
           </div>
           <h3>Direct From Organic Farms</h3>
-          <p>We work directly with traditional beekeepers, local dairy artisans, and Kashmiri saffron growers to preserve authentic traditional methods.</p>
+          <p>We work directly with traditional beekeepers, local dairy artisans, and olive growers to preserve authentic traditional methods.</p>
         </div>
 
         <div class="why-card">
@@ -256,28 +192,28 @@
     <div class="container">
       <div class="deal-card-luxury">
         <div class="deal-badge-ribbon">
-          <i class="fa-solid fa-fire text-gold"></i> SPECIAL MEGA DEAL OF THE DAY
+          <i class="fa-solid fa-fire text-red"></i> SPECIAL MEGA DEAL OF THE DAY
         </div>
 
         <div class="deal-grid">
           <div class="deal-image-container">
-            <img src="assets/images/hero.jpg" alt="Royal Desi Taste Mega Deal Box" class="deal-img">
+            <img src="assets/images/hero_banner_1.jpg" alt="Royal Desi Taste Mega Deal Box" class="deal-img">
             <div class="deal-savings-tag">
               <span>Save 30% OFF</span>
             </div>
           </div>
 
           <div class="deal-content">
-            <div class="deal-category"><i class="fa-solid fa-crown text-gold"></i> LIMITED TIME EXCLUSIVE COMBO</div>
+            <div class="deal-category"><i class="fa-solid fa-crown text-red"></i> LIMITED TIME EXCLUSIVE COMBO</div>
             <h2 class="deal-title">ROYAL DESI HEALTH & TASTE COMBO</h2>
             <p class="deal-description">
               Get our 4 best-selling organic powerhouses in one royal luxury package:
             </p>
             <ul class="deal-includes">
-              <li><i class="fa-solid fa-circle-check text-gold"></i> <strong>1 kg Pure Wood-Pressed Desi Ghee</strong> (Grass-Fed Cows)</li>
-              <li><i class="fa-solid fa-circle-check text-gold"></i> <strong>500g Organic Sidr Honey</strong> (100% Raw Berry Honey)</li>
-              <li><i class="fa-solid fa-circle-check text-gold"></i> <strong>250g Organic Pure Turmeric Powder</strong></li>
-              <li><i class="fa-solid fa-gift text-emerald"></i> <strong>FREE GIFT: 1g Original Kashmiri Saffron Sample</strong></li>
+              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>1 kg Pure Sidr Honey Jar</strong> (100% Unprocessed)</li>
+              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>1 L Cold-Pressed Pure Olive Oil</strong></li>
+              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>1 kg Handmade Traditional Achar Jar</strong></li>
+              <li><i class="fa-solid fa-gift text-forest"></i> <strong>FREE GIFT: 250g Premium Tea Patti Pack</strong></li>
             </ul>
 
             <!-- Countdown Timer Box -->
@@ -305,7 +241,7 @@
             <div class="stock-progress-wrapper">
               <div class="stock-info">
                 <span><i class="fa-solid fa-cubes"></i> Limited Stock Left:</span>
-                <strong class="text-gold" id="dealStockText">Only 7 packages remaining!</strong>
+                <strong class="text-red" id="dealStockText">Only 7 packages remaining!</strong>
               </div>
               <div class="progress-bar">
                 <div class="progress-fill" style="width: 78%;"></div>
@@ -318,7 +254,7 @@
                 <span class="original-price">Rs. 8,500</span>
                 <span class="current-price">Rs. 5,999</span>
               </div>
-              <button class="btn btn-gold btn-lg shadow-gold" id="claimDealBtn">
+              <button class="btn btn-red btn-lg shadow-red" id="claimDealBtn">
                 <i class="fa-solid fa-cart-shopping"></i> Claim Deal Now
               </button>
             </div>
@@ -333,7 +269,7 @@
     <div class="container footer-grid">
       <div class="footer-col brand-col">
         <a href="#" class="brand-logo footer-logo">
-          <div class="logo-mark"><i class="fa-solid fa-leaf"></i></div>
+          <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Official Logo" class="brand-logo-img">
           <div class="logo-text">
             <span class="brand-title">DESI TASTE LAND</span>
             <span class="brand-subtitle">PURE • ORGANIC • LUXURY</span>
@@ -363,19 +299,19 @@
       <div class="footer-col">
         <h4>Our Guarantee</h4>
         <ul>
-          <li><a href="#"><i class="fa-solid fa-check text-gold"></i> 100% Raw & Chemical Free</a></li>
-          <li><a href="#"><i class="fa-solid fa-check text-gold"></i> Certified Quality Standard</a></li>
-          <li><a href="#"><i class="fa-solid fa-check text-gold"></i> Cash On Delivery Available</a></li>
-          <li><a href="#"><i class="fa-solid fa-check text-gold"></i> Safe Glass Packaging</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> 100% Raw & Chemical Free</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> Certified Quality Standard</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> Cash On Delivery Available</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> Safe Glass Packaging</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Contact & Orders</h4>
-        <p><i class="fa-solid fa-location-dot text-gold"></i> Head Office: DHA Phase 5, Lahore, Pakistan</p>
-        <p><i class="fa-solid fa-phone text-gold"></i> Phone: +92 300 1234567</p>
-        <p><i class="fa-solid fa-envelope text-gold"></i> Email: support@desitasteland.com</p>
-        <p><i class="fa-solid fa-clock text-gold"></i> Mon - Sat: 9:00 AM - 9:00 PM</p>
+        <p><i class="fa-solid fa-location-dot text-red"></i> Head Office: DHA Phase 5, Lahore, Pakistan</p>
+        <p><i class="fa-solid fa-phone text-red"></i> Phone: +92 300 1234567</p>
+        <p><i class="fa-solid fa-envelope text-red"></i> Email: support@desitasteland.com</p>
+        <p><i class="fa-solid fa-clock text-red"></i> Mon - Sat: 9:00 AM - 9:00 PM</p>
       </div>
     </div>
 
@@ -401,7 +337,7 @@
   <div class="cart-drawer-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3><i class="fa-solid fa-bag-shopping text-gold"></i> Shopping Cart (<span id="cartCountTitle">0</span>)</h3>
+      <h3><i class="fa-solid fa-bag-shopping text-red"></i> Shopping Cart (<span id="cartCountTitle">0</span>)</h3>
       <button class="close-btn" id="closeCartBtn">&times;</button>
     </div>
 
@@ -428,9 +364,9 @@
       </div>
       <div class="cart-total-row">
         <span>Total Amount:</span>
-        <strong class="text-gold" id="cartGrandTotal">Rs. 0</strong>
+        <strong class="text-red" id="cartGrandTotal">Rs. 0</strong>
       </div>
-      <button class="btn btn-gold btn-block shadow-gold" id="checkoutBtn">
+      <button class="btn btn-red btn-block shadow-red" id="checkoutBtn">
         <span>Proceed to Checkout</span>
         <i class="fa-solid fa-arrow-right"></i>
       </button>
@@ -484,10 +420,10 @@
             <h4>Order Summary</h4>
             <div class="summary-line"><span>Items Total:</span> <span id="checkoutItemsTotal">Rs. 0</span></div>
             <div class="summary-line"><span>Shipping Fee:</span> <span id="checkoutShippingFee">Rs. 250</span></div>
-            <div class="summary-line total-line"><span>Payable Amount (COD):</span> <strong id="checkoutFinalTotal" class="text-gold">Rs. 0</strong></div>
+            <div class="summary-line total-line"><span>Payable Amount (COD):</span> <strong id="checkoutFinalTotal" class="text-red">Rs. 0</strong></div>
           </div>
 
-          <button type="submit" class="btn btn-gold btn-block btn-lg shadow-gold">
+          <button type="submit" class="btn btn-red btn-block btn-lg shadow-red">
             <i class="fa-solid fa-circle-check"></i> Confirm Cash on Delivery Order
           </button>
         </form>
@@ -502,9 +438,9 @@
         <i class="fa-solid fa-circle-check"></i>
       </div>
       <h2>Order Placed Successfully!</h2>
-      <p class="order-ref-text">Order Reference: <strong id="orderRefId" class="text-gold">#DTL-89421</strong></p>
+      <p class="order-ref-text">Order Reference: <strong id="orderRefId" class="text-red">#DTL-89421</strong></p>
       <p>Shukriya! Your order for pure organic products from <strong>DESI TASTE LAND</strong> has been received. Our team will contact you shortly on WhatsApp to confirm delivery.</p>
-      <button class="btn btn-gold btn-block" id="closeSuccessBtn">Continue Shopping</button>
+      <button class="btn btn-red btn-block" id="closeSuccessBtn">Continue Shopping</button>
     </div>
   </div>
 
