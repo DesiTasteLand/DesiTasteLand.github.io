@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DESI TASTE LAND - Brand Logo Matched Light Luxury Design System
+   DESI TASTE LAND - Brand Matched Luxury Design System & Animations
    ========================================================================== */
 
 :root {
@@ -19,11 +19,11 @@
   --red-dark: #A31219;
   --red-light: #FDE8E9;
 
-  /* Mustard Gold & Warm Orange (from DESI Logo Text & Honey Highlights) */
-  --gold-primary: #E67E22;
-  --gold-dark: #C36B1B;
+  /* Mustard Gold & Warm Orange (from DESI Logo Text & Highlights) */
+  --gold-primary: #D4AF37;
+  --gold-dark: #B8860B;
   --gold-light: #FDEBD0;
-  --gold-glow: rgba(230, 126, 34, 0.25);
+  --gold-glow: rgba(212, 175, 55, 0.3);
 
   --text-dark: #1C1917;
   --text-body: #443E38;
@@ -31,13 +31,14 @@
   --text-light: #9E948A;
 
   --border-light: #EBE1D5;
-  --border-gold: rgba(230, 126, 34, 0.35);
+  --border-gold: rgba(212, 175, 55, 0.4);
   --border-red: rgba(200, 29, 37, 0.25);
 
   --shadow-sm: 0 4px 12px rgba(28, 25, 23, 0.05);
   --shadow-md: 0 8px 24px rgba(28, 25, 23, 0.08);
   --shadow-lg: 0 16px 40px rgba(28, 25, 23, 0.12);
   --shadow-red: 0 10px 30px rgba(200, 29, 37, 0.25);
+  --shadow-gold: 0 10px 30px rgba(212, 175, 55, 0.25);
 
   --radius-sm: 8px;
   --radius-md: 16px;
@@ -49,7 +50,7 @@
 
   --transition-fast: all 0.2s ease;
   --transition-normal: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reset & Responsive Universal Rules */
@@ -113,6 +114,19 @@ button {
 .text-red { color: var(--red-primary) !important; }
 .text-forest { color: var(--forest-primary) !important; }
 .text-gold { color: var(--gold-primary) !important; }
+
+/* Scroll Reveal Animation Classes */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* Buttons System */
 .btn {
@@ -189,7 +203,7 @@ button {
   font-size: 0.82rem;
   font-weight: 600;
   padding: 8px 0;
-  border-bottom: 1px solid rgba(230, 126, 34, 0.25);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
 }
 
 .announcement-content {
@@ -223,7 +237,7 @@ button {
   height: 80px;
 }
 
-/* Brand Logo (Matching Image 1) */
+/* Brand Logo */
 .brand-logo {
   display: flex;
   align-items: center;
@@ -268,7 +282,7 @@ button {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
 }
 
 .nav-link {
@@ -354,18 +368,25 @@ button {
   color: var(--text-dark);
 }
 
-/* HERO SLIDER SECTION (Clean Images 2, 3, 4, 5 - No Borders, No Text Overlays) */
+/* HERO SLIDER SECTION (Clean Images + Touch Swipe + Golden Progress Line - No Side Arrows) */
 .hero-slider-section {
   position: relative;
   width: 100%;
   background: var(--bg-main);
   overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
 }
 
 .slider-container {
   width: 100%;
   position: relative;
   display: flex;
+  cursor: grab;
+}
+
+.slider-container:active {
+  cursor: grabbing;
 }
 
 .slide {
@@ -373,7 +394,7 @@ button {
   flex-shrink: 0;
   display: none;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
 }
 
 .slide.active {
@@ -393,40 +414,29 @@ button {
   box-shadow: none !important;
 }
 
-/* Slider Arrows */
-.slider-arrow {
+/* Golden Progress Line Bar */
+.golden-progress-bar {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  color: var(--forest-primary);
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
-  transition: var(--transition-fast);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.08);
+  z-index: 20;
 }
 
-.prev-arrow { left: 20px; }
-.next-arrow { right: 20px; }
-
-.slider-arrow:hover {
-  background: var(--red-primary);
-  color: #FFFFFF;
-  border-color: var(--red-primary);
+.golden-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #D4AF37 0%, #E67E22 50%, #C81D25 100%);
+  border-radius: 0 2px 2px 0;
+  transition: width 3s linear;
 }
 
 /* Slider Dot Indicators */
 .slider-dots {
   position: absolute;
-  bottom: 16px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -435,18 +445,18 @@ button {
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--forest-primary);
+  border: 1.5px solid var(--forest-primary);
   cursor: pointer;
   transition: var(--transition-fast);
 }
 
 .dot.active {
   background: var(--red-primary);
-  width: 28px;
+  width: 24px;
   border-radius: var(--radius-pill);
   border-color: var(--red-primary);
 }
@@ -479,6 +489,13 @@ button {
   color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto;
+}
+
+/* TOP SELLING PRODUCTS GRID (3 Items Only - NO PRICES DISPLAYED) */
+.top-selling-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
 }
 
 /* PRODUCTS GRID & CARD */
@@ -525,7 +542,7 @@ button {
 .product-img-box {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 280px;
   background: var(--bg-alt);
   overflow: hidden;
 }
@@ -538,7 +555,7 @@ button {
 }
 
 .product-card:hover .product-img-box img {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .quick-view-overlay-btn {
@@ -556,7 +573,7 @@ button {
 }
 
 .product-content {
-  padding: 18px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -573,14 +590,14 @@ button {
 
 .product-title {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-dark);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .product-urdu {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--red-primary);
   margin-bottom: 10px;
   font-weight: 700;
@@ -592,7 +609,7 @@ button {
   gap: 6px;
   font-size: 0.8rem;
   color: var(--text-muted);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .stars {
@@ -623,6 +640,7 @@ button {
 .card-actions {
   display: flex;
   gap: 10px;
+  margin-top: auto;
 }
 
 /* ALL NATURAL SECTION & FILTER TABS */
@@ -703,7 +721,7 @@ button {
   color: var(--text-muted);
 }
 
-/* SPECIAL DEALS SECTION */
+/* SPECIAL DEALS SECTION (Redesigned Offer Banner) */
 .special-deal-section {
   background: var(--bg-main);
 }
@@ -728,13 +746,13 @@ button {
   font-weight: 800;
   padding: 6px 20px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--red-primary);
+  border: 1px solid var(--gold-primary);
   margin-bottom: 28px;
 }
 
 .deal-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1.1fr 1fr;
   gap: 40px;
   align-items: center;
 }
@@ -744,11 +762,13 @@ button {
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-gold);
 }
 
 .deal-img {
   width: 100%;
-  height: 360px;
+  height: auto;
+  max-height: 440px;
   object-fit: cover;
 }
 
@@ -909,6 +929,202 @@ button {
   font-size: 2rem;
   font-weight: 800;
   color: var(--red-primary);
+}
+
+/* ABOUT DESI TASTE LAND SECTION */
+.about-section {
+  background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-alt) 100%);
+}
+
+.about-card-luxury {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-gold);
+  box-shadow: var(--shadow-lg);
+  padding: 56px 48px;
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.about-header {
+  margin-bottom: 32px;
+}
+
+.about-main-title {
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--forest-dark);
+  margin: 8px 0 16px;
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--gold-primary);
+  font-size: 1.2rem;
+}
+
+.gold-divider::before, .gold-divider::after {
+  content: '';
+  width: 80px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
+.about-body-content {
+  display: grid;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-lead {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.about-promise-box {
+  background: var(--bg-alt);
+  border-left: 4px solid var(--red-primary);
+  border-radius: var(--radius-sm);
+  padding: 20px 28px;
+  font-size: 1.1rem;
+  color: var(--red-dark);
+}
+
+.quran-quote-box {
+  background: var(--forest-light);
+  border: 1px solid rgba(30, 77, 59, 0.2);
+  border-radius: var(--radius-md);
+  padding: 28px 36px;
+  margin: 12px 0;
+  position: relative;
+}
+
+.quote-icon {
+  font-size: 2rem;
+  color: var(--forest-primary);
+  opacity: 0.25;
+  margin-bottom: 12px;
+}
+
+.quran-text {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--forest-dark);
+  margin-bottom: 8px;
+}
+
+.quran-quote-box cite {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  font-style: normal;
+}
+
+.about-closing-dua {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--gold-dark);
+  letter-spacing: 0.5px;
+}
+
+/* REVIEWS SECTION (No Profile Pics) */
+.reviews-section {
+  background: var(--bg-main);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.review-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  padding: 32px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.review-card:hover {
+  border-color: var(--gold-primary);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.verified-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--forest-primary);
+  background: var(--forest-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.review-text {
+  font-size: 0.95rem;
+  color: var(--text-body);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+  font-style: italic;
+}
+
+.reviewer-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid var(--border-light);
+  padding-top: 16px;
+}
+
+.reviewer-initial {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red-primary), var(--gold-primary));
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(200, 29, 37, 0.2);
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewer-info strong {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.reviewer-info small {
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
 /* FOOTER */
@@ -1433,9 +1649,9 @@ button {
    100% RESPONSIVE BREAKPOINTS (NO CUTOFF / NO CLIPPING ON MOBILE)
    ========================================================================== */
 @media (max-width: 992px) {
-  .deal-grid, .quick-view-grid {
-    grid-template-columns: 1fr;
-  }
+  .top-selling-grid { grid-template-columns: repeat(2, 1fr); }
+  .deal-grid, .quick-view-grid { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1470,18 +1686,18 @@ button {
     z-index: 140;
   }
 
-  .section-padding { padding: 50px 0; }
+  .section-padding { padding: 48px 0; }
   .section-title { font-size: 1.8rem; }
-  
-  .slider-arrow { width: 38px; height: 38px; font-size: 0.9rem; }
-  .prev-arrow { left: 8px; }
-  .next-arrow { right: 8px; }
+  .about-card-luxury { padding: 32px 20px; }
+  .about-main-title { font-size: 1.8rem; }
 
   .deal-card-luxury { padding: 20px; }
   .deal-title { font-size: 1.5rem; }
   .countdown-wrapper { justify-content: center; }
+  .reviews-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .form-row { grid-template-columns: 1fr; }
+  .top-selling-grid { grid-template-columns: 1fr; }
   .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 }
 

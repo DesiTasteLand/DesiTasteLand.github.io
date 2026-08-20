@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DESI TASTE LAND | Pure, Organic & Authentic Desi Goodness</title>
-  <meta name="description" content="Discover 100% pure, organic Sidr Honey, Kashmiri Saffron, Desi Ghee, Pure Olive Oil, Traditional Achar & Premium Tea Patti from DESI TASTE LAND.">
+  <meta name="description" content="Discover 100% pure, organic Sidr Honey, Kashmiri Saffron, Desi Ghee, Pure Olive Oil & Traditional Delicacies from DESI TASTE LAND.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,7 +35,7 @@
         <i class="fa-solid fa-bars-staggered"></i>
       </button>
 
-      <!-- Brand Logo (Matching 1st Image) -->
+      <!-- Brand Logo -->
       <a href="#" class="brand-logo">
         <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Official Logo" class="brand-logo-img">
         <div class="logo-text">
@@ -51,6 +51,8 @@
         <a href="#allNatural" class="nav-link">All Natural</a>
         <a href="#whyUs" class="nav-link">Why Us</a>
         <a href="#specialDeal" class="nav-link deal-link"><i class="fa-solid fa-fire-flame-curved"></i> Special Deal</a>
+        <a href="#aboutSection" class="nav-link">About Us</a>
+        <a href="#reviewsSection" class="nav-link">Reviews</a>
       </nav>
 
       <!-- Header Action Icons -->
@@ -70,7 +72,7 @@
   <!-- Mobile Drawer Menu Overlay -->
   <div class="mobile-nav-overlay" id="mobileOverlay"></div>
 
-  <!-- HERO SECTION (Full Clean Image Slider - No Overlay Text, No Borders) -->
+  <!-- HERO SECTION (Clean Image Touch Slider + Golden Progress Bar + Smooth 3s Timer Loop - No Side Arrows) -->
   <section class="hero-slider-section" id="hero">
     <div class="slider-container" id="heroSlider">
       <div class="slide active">
@@ -87,13 +89,10 @@
       </div>
     </div>
 
-    <!-- Slider Arrow Controls -->
-    <button class="slider-arrow prev-arrow" id="prevSlideBtn" aria-label="Previous Slide">
-      <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <button class="slider-arrow next-arrow" id="nextSlideBtn" aria-label="Next Slide">
-      <i class="fa-solid fa-chevron-right"></i>
-    </button>
+    <!-- Golden Progress Line Bar -->
+    <div class="golden-progress-bar">
+      <div class="golden-progress-fill" id="goldenProgressFill"></div>
+    </div>
 
     <!-- Slider Dot Indicators -->
     <div class="slider-dots" id="sliderDots">
@@ -104,23 +103,23 @@
     </div>
   </section>
 
-  <!-- TOP SELLING PRODUCTS SECTION -->
-  <section class="section-padding top-selling-section" id="topSelling">
+  <!-- TOP SELLING PRODUCTS SECTION (3 Products Only - NO PRICES DISPLAYED) -->
+  <section class="section-padding top-selling-section reveal-section" id="topSelling">
     <div class="container">
       <div class="section-header text-center">
         <span class="section-subtitle"><i class="fa-solid fa-crown text-red"></i> Customer Favorites</span>
-        <h2 class="section-title">Top Selling Luxury Delicacies</h2>
-        <p class="section-desc">Our most cherished handpicked organic products crafted for purity and unmatched rich taste.</p>
+        <h2 class="section-title">TOP SELLING PRODUCTS</h2>
+        <p class="section-desc">Our 3 signature organic delicacies crafted for purity and unmatched rich taste.</p>
       </div>
 
-      <div class="products-grid" id="topSellingGrid">
-        <!-- Injected via JavaScript -->
+      <div class="top-selling-grid" id="topSellingGrid">
+        <!-- Injected via JavaScript (PURE HONEY, DESI GHEE, OLIVE OIL - No Prices) -->
       </div>
     </div>
   </section>
 
   <!-- ALL NATURAL PRODUCTS SECTION -->
-  <section class="section-padding all-natural-section" id="allNatural">
+  <section class="section-padding all-natural-section reveal-section" id="allNatural">
     <div class="container">
       <div class="section-header text-center">
         <span class="section-subtitle"><i class="fa-solid fa-leaf text-forest"></i> Farm Fresh Harvest</span>
@@ -143,7 +142,7 @@
   </section>
 
   <!-- WHY DESI TASTE LAND SECTION -->
-  <section class="section-padding why-us-section" id="whyUs">
+  <section class="section-padding why-us-section reveal-section" id="whyUs">
     <div class="container">
       <div class="section-header text-center">
         <span class="section-subtitle"><i class="fa-solid fa-gem text-red"></i> THE DESI TASTE GUARANTEE</span>
@@ -187,33 +186,32 @@
     </div>
   </section>
 
-  <!-- SPECIAL DEALS SECTION (1 Mega Highlight Deal) -->
-  <section class="section-padding special-deal-section" id="specialDeal">
+  <!-- REDESIGNED SPECIAL DEALS SECTION (Using Image 4 Offer Banner) -->
+  <section class="section-padding special-deal-section reveal-section" id="specialDeal">
     <div class="container">
       <div class="deal-card-luxury">
         <div class="deal-badge-ribbon">
-          <i class="fa-solid fa-fire text-red"></i> SPECIAL MEGA DEAL OF THE DAY
+          <i class="fa-solid fa-moon text-gold"></i> BARI EID SPECIAL MEGA OFFER
         </div>
 
         <div class="deal-grid">
           <div class="deal-image-container">
-            <img src="assets/images/hero_banner_1.jpg" alt="Royal Desi Taste Mega Deal Box" class="deal-img">
+            <img src="assets/images/deal_banner.jpg" alt="Bari Eid Special Offer Ghee and Saffron" class="deal-img">
             <div class="deal-savings-tag">
-              <span>Save 30% OFF</span>
+              <span>FREE Delivery Pakistan</span>
             </div>
           </div>
 
           <div class="deal-content">
-            <div class="deal-category"><i class="fa-solid fa-crown text-red"></i> LIMITED TIME EXCLUSIVE COMBO</div>
-            <h2 class="deal-title">ROYAL DESI HEALTH & TASTE COMBO</h2>
+            <div class="deal-category"><i class="fa-solid fa-crown text-red"></i> EXCLUSIVE LIMITED EID COMBO</div>
+            <h2 class="deal-title">PURE DESI GHEE & KASHMIRI SAFFRON OFFER</h2>
             <p class="deal-description">
-              Get our 4 best-selling organic powerhouses in one royal luxury package:
+              Buy 500g Pure Desi Ghee & get 1g Original Kashmiri Saffron + FREE All Pakistan Delivery!
             </p>
             <ul class="deal-includes">
-              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>1 kg Pure Sidr Honey Jar</strong> (100% Unprocessed)</li>
-              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>1 L Cold-Pressed Pure Olive Oil</strong></li>
-              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>1 kg Handmade Traditional Achar Jar</strong></li>
-              <li><i class="fa-solid fa-gift text-forest"></i> <strong>FREE GIFT: 250g Premium Tea Patti Pack</strong></li>
+              <li><i class="fa-solid fa-circle-check text-red"></i> <strong>500g Pure Wood-Pressed Desi Ghee</strong></li>
+              <li><i class="fa-solid fa-gift text-gold"></i> <strong>1g Royal Kashmiri Saffron (100% Pure Mongra)</strong></li>
+              <li><i class="fa-solid fa-truck-fast text-forest"></i> <strong>FREE All Pakistan Express Delivery</strong></li>
             </ul>
 
             <!-- Countdown Timer Box -->
@@ -240,23 +238,138 @@
             <!-- Limited Stock Progress Bar -->
             <div class="stock-progress-wrapper">
               <div class="stock-info">
-                <span><i class="fa-solid fa-cubes"></i> Limited Stock Left:</span>
-                <strong class="text-red" id="dealStockText">Only 7 packages remaining!</strong>
+                <span><i class="fa-solid fa-cubes"></i> Limited Packages Remaining:</span>
+                <strong class="text-red" id="dealStockText">Only 5 deals left!</strong>
               </div>
               <div class="progress-bar">
-                <div class="progress-fill" style="width: 78%;"></div>
+                <div class="progress-fill" style="width: 85%;"></div>
               </div>
             </div>
 
             <!-- Price & Claim CTA -->
             <div class="deal-pricing-row">
               <div class="price-block">
-                <span class="original-price">Rs. 8,500</span>
-                <span class="current-price">Rs. 5,999</span>
+                <span class="original-price">Rs. 3,800</span>
+                <span class="current-price">Rs. 2,750</span>
               </div>
               <button class="btn btn-red btn-lg shadow-red" id="claimDealBtn">
-                <i class="fa-solid fa-cart-shopping"></i> Claim Deal Now
+                <i class="fa-solid fa-cart-shopping"></i> Claim Deal Now (Rs. 2,750)
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT DESI TASTE LAND SECTION -->
+  <section class="section-padding about-section reveal-section" id="aboutSection">
+    <div class="container">
+      <div class="about-card-luxury">
+        <div class="about-header text-center">
+          <span class="section-subtitle"><i class="fa-solid fa-hand-holding-heart text-red"></i> OUR SACRED COMMITMENT</span>
+          <h2 class="about-main-title">About Desi Taste Land</h2>
+          <div class="gold-divider"><i class="fa-solid fa-seedling"></i></div>
+        </div>
+
+        <div class="about-body-content text-center">
+          <p class="about-lead">
+            Desi Taste Land is a humble effort to bring pure, wholesome and authentic desi goodness to your home. Our mission is to serve with honesty, quality and halal values, while keeping the blessings of Allah at the heart of our work.
+          </p>
+
+          <div class="about-promise-box">
+            <p><strong>Purity is our promise, trust is our responsibility, and barakah is what we seek.</strong></p>
+          </div>
+
+          <blockquote class="quran-quote-box">
+            <i class="fa-solid fa-quote-left quote-icon"></i>
+            <p class="quran-text">“And eat of what Allah has provided for you, lawful and good.”</p>
+            <cite>— Qur’an 5:88</cite>
+          </blockquote>
+
+          <p class="about-closing-dua">
+            May Allah put barakah in every effort. Ameen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS SECTION (3 Pakistani Reviews - NO PROFILE PICTURES) -->
+  <section class="section-padding reviews-section reveal-section" id="reviewsSection">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-subtitle"><i class="fa-solid fa-star text-gold"></i> VERIFIED CUSTOMER FEEDBACK</span>
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p class="section-desc">Real words of trust from households across Pakistan.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-top">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+          </div>
+          <p class="review-text">
+            "Mashallah! Sidr Honey aur Desi Ghee bilkul 100% pure hain. Taste aur aroma lajawab hai. Packing bhi bohot hygienic thi. SubhanAllah bohot shukriya!"
+          </p>
+          <div class="reviewer-meta">
+            <div class="reviewer-initial">S</div>
+            <div class="reviewer-info">
+              <strong>Syed Hammad Raza</strong>
+              <small>Lahore, Pakistan</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+          </div>
+          <p class="review-text">
+            "Main ne Pehli dafa Desi Taste Land se Olive Oil mangwaya tha. Delivery fast thi aur quality unmatched hai. Health aur taste dono me 100/100!"
+          </p>
+          <div class="reviewer-meta">
+            <div class="reviewer-initial">F</div>
+            <div class="reviewer-info">
+              <strong>Fatima Zehra</strong>
+              <small>Islamabad, Pakistan</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+          </div>
+          <p class="review-text">
+            "Eid Offer Combo mangwaya tha Ghee aur Saffron ka. Packing bohot hi luxury thi aur taste 100% authentic desi hai. JazakAllah khair!"
+          </p>
+          <div class="reviewer-meta">
+            <div class="reviewer-initial">C</div>
+            <div class="reviewer-info">
+              <strong>Chaudhry Bilal</strong>
+              <small>Karachi, Pakistan</small>
             </div>
           </div>
         </div>
@@ -293,6 +406,8 @@
           <li><a href="#allNatural">All Natural Collection</a></li>
           <li><a href="#whyUs">Why Desi Taste Land</a></li>
           <li><a href="#specialDeal">Today's Special Deal</a></li>
+          <li><a href="#aboutSection">About Us</a></li>
+          <li><a href="#reviewsSection">Customer Reviews</a></li>
         </ul>
       </div>
 
