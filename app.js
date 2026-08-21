@@ -1,11 +1,10 @@
 /* ==========================================================================
-   DESI TASTE LAND - Master Application JavaScript Logic
+   DESI TASTE LAND - Master Application JavaScript
    ========================================================================== */
 
-// Free Delivery Threshold: Exactly Rs. 5,000
 const FREE_SHIPPING_THRESHOLD = 5000;
 
-// 1. HONEY CATEGORIES (4 Varieties with Uploaded Images & Exact Prices)
+// 1. HONEY CATEGORIES (4 Varieties - 250g instead of 200g)
 const HONEY_CATEGORIES = [
   {
     id: 'honey-wild-big',
@@ -14,7 +13,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_wild_big.jpg',
     description: '100% pure wild Sidr honey collected from wild big bees in natural forests.',
     variants: [
-      { weight: '200g', price: 560 },
+      { weight: '250g', price: 560 },
       { weight: '500g', price: 1400, isDefault: true },
       { weight: '1000g', price: 2800 }
     ],
@@ -27,7 +26,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_wild_small.jpg',
     description: 'Rare wild small bee honey collected from mountain flora. Supreme health and immunity booster.',
     variants: [
-      { weight: '200g', price: 1080 },
+      { weight: '250g', price: 1080 },
       { weight: '500g', price: 2700, isDefault: true },
       { weight: '1000g', price: 5400 }
     ],
@@ -40,7 +39,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_farmy_big.jpg',
     description: 'Pure farm-harvested big bee honey from certified floral blossom fields.',
     variants: [
-      { weight: '200g', price: 360 },
+      { weight: '250g', price: 360 },
       { weight: '500g', price: 900, isDefault: true },
       { weight: '1000g', price: 1800 }
     ],
@@ -53,7 +52,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_farmy_small.jpg',
     description: 'Exquisite farm small bee honey, amber in color with delicate floral aroma.',
     variants: [
-      { weight: '200g', price: 800 },
+      { weight: '250g', price: 800 },
       { weight: '500g', price: 2000, isDefault: true },
       { weight: '1000g', price: 4000 }
     ],
@@ -61,54 +60,35 @@ const HONEY_CATEGORIES = [
   }
 ];
 
-// 2. TOP SELLING PRODUCTS DATABASE (3 Signature Items)
+// 2. TOP SELLING PRODUCTS - Only name, image, simple BUY NOW (no price/qty display)
 const TOP_SELLING_PRODUCTS = [
   {
     id: 'top-honey',
-    name: 'PURE HONEY (4 VARIETIES)',
+    name: 'PURE HONEY',
     isHoney: true,
-    rating: 5.0,
-    reviewsCount: 450,
     image: 'assets/images/honey_wild_big.jpg',
-    description: '100% pure raw honey available in 4 certified varieties: Wild Big Bee, Wild Small Bee, Farmy Big Bee & Farmy Small Bee.',
-    variants: [
-      { weight: '200g', price: 560 },
-      { weight: '500g', price: 1400, isDefault: true },
-      { weight: '1000g', price: 2800 }
-    ],
-    selectedWeightIndex: 1,
-    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration Guarantee']
+    rating: 5.0,
+    reviewsCount: 450
   },
   {
     id: 'top-ghee',
     name: 'DESI GHEE',
+    image: 'assets/images/all_ghee.jpg',
     rating: 5.0,
     reviewsCount: 620,
-    image: 'assets/images/all_ghee.jpg',
-    description: 'Prepared using traditional hand-churned Bilona method from grass-fed cow milk. Golden granular texture.',
-    variants: [
-      { weight: '500g', price: 1600 },
-      { weight: '1000g', price: 3200, isDefault: true }
-    ],
-    selectedWeightIndex: 1,
-    benefits: ['Traditional hand-churned Bilona method', 'Chemical-free & zero preservatives']
+    defaultVariant: { weight: '500g', price: 1600 }
   },
   {
     id: 'top-olive',
     name: 'OLIVE OIL',
+    image: 'assets/images/all_olive_oil.jpg',
     rating: 5.0,
     reviewsCount: 310,
-    image: 'assets/images/all_olive_oil.jpg',
-    description: 'Cold-pressed extra virgin olive oil packed with natural anti-oxidants and healthy fats.',
-    variants: [
-      { weight: '112ml', price: 600, isDefault: true }
-    ],
-    selectedWeightIndex: 0,
-    benefits: ['First cold press, zero chemical additives', 'Heart-healthy Omega-9']
+    defaultVariant: { weight: '112ml', price: 600 }
   }
 ];
 
-// 3. ALL PRODUCTS DATABASE (With Exact Requested Prices & Weight Variants)
+// 3. ALL PRODUCTS (Full weight selectors & prices shown here)
 const ALL_PRODUCTS = [
   {
     id: 'prod-honey',
@@ -117,9 +97,9 @@ const ALL_PRODUCTS = [
     rating: 5.0,
     reviewsCount: 480,
     image: 'assets/images/honey_wild_big.jpg',
-    description: 'Select your preferred honey variety from 4 natural choices (Wild/Farmy Big/Small Bee).',
+    description: 'Select your preferred honey variety from 4 natural choices.',
     variants: [
-      { weight: '200g', price: 560 },
+      { weight: '250g', price: 560 },
       { weight: '500g', price: 1400, isDefault: true },
       { weight: '1000g', price: 2800 }
     ],
@@ -166,7 +146,7 @@ const ALL_PRODUCTS = [
       { weight: '450g', price: 1300 }
     ],
     selectedWeightIndex: 0,
-    benefits: ['Nutritious Sunnah Food', 'Eases Digestive Stress & Boosts Energy']
+    benefits: ['Nutritious Sunnah Food', 'Eases Digestive Stress']
   },
   {
     id: 'prod-olive',
@@ -194,7 +174,7 @@ const ALL_PRODUCTS = [
       { weight: '3 Tola', price: 3000 }
     ],
     selectedWeightIndex: 0,
-    benefits: ['100% Pure Resin', 'Boosts Natural Energy & Vitality']
+    benefits: ['100% Pure Resin', 'Boosts Natural Energy']
   },
   {
     id: 'prod-pickle',
@@ -226,7 +206,7 @@ const ALL_PRODUCTS = [
   }
 ];
 
-// 4. STATE MANAGEMENT
+// 4. STATE
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
 let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
@@ -234,7 +214,7 @@ let currentSlideIndex = 0;
 let slideInterval;
 let isHoneyAccordionOpen = false;
 
-// 5. INITIALIZATION ON DOM LOAD
+// 5. INIT
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
   renderAllProductsWithHoneyAccordion();
@@ -246,37 +226,23 @@ document.addEventListener('DOMContentLoaded', () => {
   initEventListeners();
 });
 
-// 6. HERO SLIDER LOGIC (Touch Swipe + Drag, NO Side Buttons)
+// 6. HERO SLIDER
 function initHeroTouchSlider() {
   const sliderContainer = document.getElementById('heroSlider');
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
   const progressFill = document.getElementById('goldenProgressFill');
-
   if (!sliderContainer || slides.length === 0) return;
 
-  let startX = 0;
-  let currentX = 0;
-  let isDragging = false;
+  let startX = 0, currentX = 0, isDragging = false;
 
   function showSlide(index) {
     slides.forEach(s => s.classList.remove('active'));
     dots.forEach(d => d.classList.remove('active'));
-
     currentSlideIndex = (index + slides.length) % slides.length;
-
     slides[currentSlideIndex].classList.add('active');
     if (dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
-
     resetProgressBar();
-  }
-
-  function nextSlide() {
-    showSlide(currentSlideIndex + 1);
-  }
-
-  function prevSlide() {
-    showSlide(currentSlideIndex - 1);
   }
 
   function resetProgressBar() {
@@ -288,232 +254,138 @@ function initHeroTouchSlider() {
     progressFill.style.width = '100%';
   }
 
-  // Touch Controls
-  sliderContainer.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  sliderContainer.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-  }, { passive: true });
-
+  sliderContainer.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; }, { passive: true });
+  sliderContainer.addEventListener('touchmove', (e) => { if (!isDragging) return; currentX = e.touches[0].clientX; }, { passive: true });
   sliderContainer.addEventListener('touchend', () => {
     if (!isDragging) return;
     isDragging = false;
-    const diffX = startX - currentX;
-
-    if (Math.abs(diffX) > 35) {
-      if (diffX > 0) nextSlide();
-      else prevSlide();
-      resetSlideTimer();
-    }
+    if (Math.abs(startX - currentX) > 35) { startX - currentX > 0 ? showSlide(currentSlideIndex + 1) : showSlide(currentSlideIndex - 1); resetSlideTimer(); }
   });
-
-  // Mouse Drag Controls
-  sliderContainer.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.clientX;
-  });
-
-  sliderContainer.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    currentX = e.clientX;
-  });
-
+  sliderContainer.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; });
+  sliderContainer.addEventListener('mousemove', (e) => { if (!isDragging) return; currentX = e.clientX; });
   sliderContainer.addEventListener('mouseup', () => {
     if (!isDragging) return;
     isDragging = false;
-    const diffX = startX - currentX;
-
-    if (Math.abs(diffX) > 35) {
-      if (diffX > 0) nextSlide();
-      else prevSlide();
-      resetSlideTimer();
-    }
+    if (Math.abs(startX - currentX) > 35) { startX - currentX > 0 ? showSlide(currentSlideIndex + 1) : showSlide(currentSlideIndex - 1); resetSlideTimer(); }
   });
 
-  dots.forEach(dot => {
-    dot.addEventListener('click', (e) => {
-      const idx = parseInt(e.target.getAttribute('data-index'));
-      showSlide(idx);
-      resetSlideTimer();
-    });
-  });
+  dots.forEach(dot => dot.addEventListener('click', (e) => { showSlide(parseInt(e.target.getAttribute('data-index'))); resetSlideTimer(); }));
 
-  function startSlideTimer() {
-    resetProgressBar();
-    slideInterval = setInterval(() => {
-      nextSlide();
-    }, 3000);
-  }
-
-  function resetSlideTimer() {
-    clearInterval(slideInterval);
-    startSlideTimer();
-  }
-
+  function startSlideTimer() { resetProgressBar(); slideInterval = setInterval(() => showSlide(currentSlideIndex + 1), 3000); }
+  function resetSlideTimer() { clearInterval(slideInterval); startSlideTimer(); }
   startSlideTimer();
 }
 
-// 7. SCROLL REVEAL OBSERVER
+// 7. SCROLL REVEAL
 function initScrollRevealObserver() {
-  const revealElements = document.querySelectorAll('.reveal-section');
-
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, {
-    threshold: 0.12
-  });
-
-  revealElements.forEach(el => observer.observe(el));
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
 }
 
-// 8. RENDER TOP SELLING PRODUCTS
+// 8. TOP SELLING - Clean simple cards: just image, name, rating, BUY NOW
 function renderTopSellingProducts() {
   const container = document.getElementById('topSellingGrid');
   if (!container) return;
 
-  container.innerHTML = TOP_SELLING_PRODUCTS.map(product => {
-    const activeVar = product.variants[product.selectedWeightIndex];
-    return `
-      <div class="product-card" id="card-${product.id}">
-        <div class="product-img-box">
-          <img src="${product.image}" alt="${product.name}" loading="lazy" id="img-${product.id}">
-          <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
-            <i class="fa-solid fa-eye text-red"></i> Quick View
-          </button>
-        </div>
-
-        <div class="product-content">
-          <span class="product-category">${activeVar.weight}</span>
-          <h3 class="product-title">${product.name}</h3>
-
-          <div class="rating-row">
-            <div class="stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-            <span>${product.rating} (${product.reviewsCount})</span>
-          </div>
-
-          ${product.variants.length > 1 ? `
-            <div class="weight-selector-box">
-              <span class="weight-selector-label">Select Quantity:</span>
-              <div class="weight-options-row">
-                ${product.variants.map((v, idx) => `
-                  <button class="weight-btn ${idx === product.selectedWeightIndex ? 'active' : ''}" 
-                          onclick="selectProductWeight('${product.id}', ${idx}, true)">
-                    ${v.weight}
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-          ` : ''}
-
-          <div class="price-row">
-            <span class="price-current" id="price-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
-          </div>
-
-          <div class="card-actions">
-            ${product.isHoney ? `
-              <button class="btn btn-red btn-block" onclick="toggleHoneyAccordion()">
-                <i class="fa-solid fa-jar-wheat"></i> Choose Honey Variety
-              </button>
-            ` : `
-              <button class="btn btn-red btn-block" onclick="addProductToCart('${product.id}', true)">
-                <i class="fa-solid fa-bag-shopping"></i> Add To Cart
-              </button>
-            `}
-          </div>
-        </div>
+  container.innerHTML = TOP_SELLING_PRODUCTS.map(product => `
+    <div class="product-card ts-card" id="card-${product.id}">
+      <div class="product-img-box ts-img-box">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
       </div>
-    `;
-  }).join('');
+      <div class="product-content ts-content">
+        <h3 class="product-title">${product.name}</h3>
+        <div class="rating-row">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <span>${product.rating} (${product.reviewsCount}+)</span>
+        </div>
+        <button class="btn btn-red btn-block ts-buy-btn" onclick="${product.isHoney ? "scrollToAllProducts()" : `quickBuyTopSelling('${product.id}')`}">
+          <i class="fa-solid fa-bag-shopping"></i> BUY NOW
+        </button>
+      </div>
+    </div>
+  `).join('');
 }
 
-// 9. RENDER ALL PRODUCTS WITH INLINE HONEY ACCORDION (Between Pure Honey and Desi Ghee)
+function scrollToAllProducts() {
+  const sec = document.getElementById('allProductsSection');
+  if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+}
+
+function quickBuyTopSelling(productId) {
+  const product = TOP_SELLING_PRODUCTS.find(p => p.id === productId);
+  if (!product || !product.defaultVariant) return;
+  const v = product.defaultVariant;
+  const itemId = `${product.id}-${v.weight.replace(/\s+/g,'')}`;
+  const existing = cart.find(i => i.id === itemId);
+  if (existing) { existing.qty += 1; } else { cart.push({ id: itemId, name: `${product.name} (${v.weight})`, price: v.price, image: product.image, qty: 1 }); }
+  saveCart(); updateCartUI();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${product.name}</strong> added to cart!`);
+  openCartDrawer();
+}
+
+// 9. ALL PRODUCTS WITH INLINE HONEY ACCORDION
 function renderAllProductsWithHoneyAccordion() {
   const container = document.getElementById('allProductsGrid');
   if (!container) return;
 
   let html = '';
-
   ALL_PRODUCTS.forEach((product) => {
     const activeVar = product.variants[product.selectedWeightIndex];
-
-    // Render the Product Card
     html += `
       <div class="product-card" id="allcard-${product.id}">
         <div class="product-img-box">
           <img src="${product.image}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
-          <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
-            <i class="fa-solid fa-eye text-red"></i> Quick View
-          </button>
         </div>
-
         <div class="product-content">
-          <span class="product-category">${activeVar.weight}</span>
           <h3 class="product-title">${product.name}</h3>
-
           <div class="rating-row">
             <div class="stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
             </div>
             <span>${product.rating} (${product.reviewsCount})</span>
           </div>
-
           ${product.variants.length > 1 ? `
             <div class="weight-selector-box">
-              <span class="weight-selector-label">Select Quantity / Weight:</span>
+              <span class="weight-selector-label">Select Weight:</span>
               <div class="weight-options-row">
                 ${product.variants.map((v, idx) => `
-                  <button class="weight-btn ${idx === product.selectedWeightIndex ? 'active' : ''}" 
-                          onclick="selectProductWeight('${product.id}', ${idx}, false)">
-                    ${v.weight}
+                  <button class="weight-btn ${idx === product.selectedWeightIndex ? 'active' : ''}"
+                          onclick="selectProductWeight('${product.id}', ${idx})">
+                    <span class="w-qty">${v.weight}</span>
+                    <span class="w-price">Rs.${v.price.toLocaleString()}</span>
                   </button>
                 `).join('')}
               </div>
             </div>
           ` : `
             <div class="weight-selector-box">
-              <span class="weight-selector-label">Standard Size:</span>
-              <span style="font-size: 0.8rem; font-weight: 700; color: var(--forest-primary);">${activeVar.weight} Bottle</span>
+              <span class="weight-selector-label">Size:</span>
+              <div class="weight-options-row">
+                <button class="weight-btn active">
+                  <span class="w-qty">${activeVar.weight}</span>
+                  <span class="w-price">Rs.${activeVar.price.toLocaleString()}</span>
+                </button>
+              </div>
             </div>
           `}
-
           <div class="price-row">
             <span class="price-current" id="allprice-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
           </div>
-
-          <div class="card-actions">
-            ${product.isHoney ? `
-              <button class="btn btn-red btn-block" onclick="toggleHoneyAccordion()">
-                <i class="fa-solid fa-jar-wheat"></i> Choose Honey Variety
-              </button>
-            ` : `
-              <button class="btn btn-red btn-block" onclick="addProductToCart('${product.id}', false)">
-                <i class="fa-solid fa-bag-shopping"></i> Add To Cart
-              </button>
-            `}
-          </div>
+          <button class="btn btn-red btn-block buy-now-btn" onclick="${product.isHoney ? "toggleHoneyAccordion()" : `addProductToCart('${product.id}')`}">
+            <i class="fa-solid fa-bag-shopping"></i> ${product.isHoney ? 'Choose Honey' : 'BUY NOW'}
+          </button>
         </div>
       </div>
     `;
 
-    // Immediately after PURE HONEY (before Desi Ghee), inject the Inline Honey Varieties Section
     if (product.id === 'prod-honey') {
       html += `
         <div class="honey-inline-accordion ${isHoneyAccordionOpen ? 'active' : ''}" id="honeyInlineAccordion">
@@ -524,7 +396,6 @@ function renderAllProductsWithHoneyAccordion() {
             </div>
             <button class="honey-close-btn" onclick="toggleHoneyAccordion()">&times;</button>
           </div>
-
           <div class="honey-inline-grid">
             ${HONEY_CATEGORIES.map(category => {
               const catVar = category.variants[category.selectedWeightIndex];
@@ -534,29 +405,25 @@ function renderAllProductsWithHoneyAccordion() {
                   <div class="honey-card-img-box">
                     <img src="${category.image}" alt="${category.name}" loading="lazy">
                   </div>
-
                   <div class="honey-card-body">
                     <h3 class="honey-card-title">${category.name}</h3>
-
                     <div class="weight-selector-box">
                       <span class="weight-selector-label">Select Weight:</span>
                       <div class="honey-weights-row">
                         ${category.variants.map((v, idx) => `
-                          <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
+                          <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}"
                                   onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
                             ${v.weight}
                           </button>
                         `).join('')}
                       </div>
                     </div>
-
                     <div class="honey-card-price-row">
                       <span class="honey-price-val" id="hprice-${category.id}">Rs. ${catVar.price.toLocaleString()}</span>
                       <span class="honey-unit-label">per ${catVar.weight}</span>
                     </div>
-
                     <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
-                      <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+                      <i class="fa-solid fa-bag-shopping"></i> BUY NOW
                     </button>
                   </div>
                 </div>
@@ -571,128 +438,73 @@ function renderAllProductsWithHoneyAccordion() {
   container.innerHTML = html;
 }
 
-// 10. TOGGLE INLINE HONEY ACCORDION
 function toggleHoneyAccordion() {
   isHoneyAccordionOpen = !isHoneyAccordionOpen;
   renderAllProductsWithHoneyAccordion();
-
   if (isHoneyAccordionOpen) {
     const accordion = document.getElementById('honeyInlineAccordion');
-    if (accordion) {
-      accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    if (accordion) accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
-// 11. WEIGHT SELECTOR INTERACTION HANDLERS
-function selectProductWeight(productId, weightIndex, isTopSelling) {
-  const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
-  const product = list.find(p => p.id === productId);
+function selectProductWeight(productId, weightIndex) {
+  const product = ALL_PRODUCTS.find(p => p.id === productId);
   if (!product) return;
-
   product.selectedWeightIndex = weightIndex;
-  const selectedVariant = product.variants[weightIndex];
-
-  const topPriceElem = document.getElementById(`price-${productId}`);
-  if (topPriceElem) topPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
-
-  const allPriceElem = document.getElementById(`allprice-${productId}`);
-  if (allPriceElem) allPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
-
-  if (isTopSelling) renderTopSellingProducts();
-  else renderAllProductsWithHoneyAccordion();
+  renderAllProductsWithHoneyAccordion();
 }
 
 function selectHoneyCategoryWeight(categoryId, weightIndex) {
   const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
   if (!category) return;
-
   category.selectedWeightIndex = weightIndex;
   renderAllProductsWithHoneyAccordion();
 }
 
-// 12. CART OPERATIONS (Free delivery strictly above Rs. 5000)
-function addProductToCart(productId, isTopSelling) {
-  const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
-  const product = list.find(p => p.id === productId);
+// 10. CART
+function addProductToCart(productId) {
+  const product = ALL_PRODUCTS.find(p => p.id === productId);
   if (!product) return;
-
   const variant = product.variants[product.selectedWeightIndex];
-  const itemUniqueId = `${product.id}-${variant.weight.replace(/\s+/g, '')}`;
-
-  const existing = cart.find(item => item.id === itemUniqueId);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({
-      id: itemUniqueId,
-      name: `${product.name} (${variant.weight})`,
-      price: variant.price,
-      image: product.image,
-      qty: 1
-    });
-  }
-
-  saveCart();
-  updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Added <strong>${product.name} (${variant.weight})</strong> to cart!`);
+  const itemId = `${product.id}-${variant.weight.replace(/\s+/g,'')}`;
+  const existing = cart.find(i => i.id === itemId);
+  if (existing) { existing.qty += 1; } else { cart.push({ id: itemId, name: `${product.name} (${variant.weight})`, price: variant.price, image: product.image, qty: 1 }); }
+  saveCart(); updateCartUI();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${product.name} (${variant.weight})</strong> added to cart!`);
   openCartDrawer();
 }
 
 function addHoneyCategoryToCart(categoryId) {
   const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
   if (!category) return;
-
   const variant = category.variants[category.selectedWeightIndex];
-  const itemUniqueId = `${category.id}-${variant.weight.replace(/\s+/g, '')}`;
-
-  const existing = cart.find(item => item.id === itemUniqueId);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({
-      id: itemUniqueId,
-      name: `${category.name} (${variant.weight})`,
-      price: variant.price,
-      image: category.image,
-      qty: 1
-    });
-  }
-
-  saveCart();
-  updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Added <strong>${category.name} (${variant.weight})</strong> to cart!`);
+  const itemId = `${category.id}-${variant.weight.replace(/\s+/g,'')}`;
+  const existing = cart.find(i => i.id === itemId);
+  if (existing) { existing.qty += 1; } else { cart.push({ id: itemId, name: `${category.name} (${variant.weight})`, price: variant.price, image: category.image, qty: 1 }); }
+  saveCart(); updateCartUI();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${category.name} (${variant.weight})</strong> added to cart!`);
   openCartDrawer();
 }
 
-function updateCartQty(itemUniqueId, delta) {
-  const item = cart.find(i => i.id === itemUniqueId);
+function updateCartQty(itemId, delta) {
+  const item = cart.find(i => i.id === itemId);
   if (!item) return;
-
   item.qty += delta;
-  if (item.qty <= 0) {
-    cart = cart.filter(i => i.id !== itemUniqueId);
-  }
-
-  saveCart();
-  updateCartUI();
+  if (item.qty <= 0) cart = cart.filter(i => i.id !== itemId);
+  saveCart(); updateCartUI();
 }
 
-function removeFromCart(itemUniqueId) {
-  cart = cart.filter(i => i.id !== itemUniqueId);
-  saveCart();
-  updateCartUI();
+function removeFromCart(itemId) {
+  cart = cart.filter(i => i.id !== itemId);
+  saveCart(); updateCartUI();
   showToast('Item removed from cart');
 }
 
-function saveCart() {
-  localStorage.setItem('dtl_cart', JSON.stringify(cart));
-}
+function saveCart() { localStorage.setItem('dtl_cart', JSON.stringify(cart)); }
 
 function updateCartUI() {
-  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
+  const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+  const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
   document.getElementById('cartCountBadge').textContent = totalItems;
   document.getElementById('cartCountTitle').textContent = totalItems;
 
@@ -703,31 +515,25 @@ function updateCartUI() {
   document.getElementById('deliveryChargeText').textContent = deliveryCharge === 0 ? 'FREE' : `Rs. ${deliveryCharge}`;
   document.getElementById('cartGrandTotal').textContent = `Rs. ${grandTotal.toLocaleString()}`;
 
-  const progressPercent = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
   const fillBar = document.getElementById('shippingProgressFill');
   const textBar = document.getElementById('shippingText');
-
-  if (fillBar) fillBar.style.width = `${progressPercent}%`;
+  if (fillBar) fillBar.style.width = `${Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100)}%`;
   if (textBar) {
     if (subtotal >= FREE_SHIPPING_THRESHOLD) {
       textBar.innerHTML = `<span class="text-forest"><i class="fa-solid fa-crown text-red"></i> You unlocked <strong>FREE Delivery</strong>!</span>`;
     } else {
-      const needed = FREE_SHIPPING_THRESHOLD - subtotal;
-      textBar.innerHTML = `Add <strong>Rs. ${needed.toLocaleString()}</strong> more to get <strong>FREE Delivery</strong>!`;
+      textBar.innerHTML = `Add <strong>Rs. ${(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString()}</strong> more to get <strong>FREE Delivery</strong>!`;
     }
   }
 
   const container = document.getElementById('cartItemsContainer');
   if (!container) return;
-
   if (cart.length === 0) {
-    container.innerHTML = `
-      <div class="text-center" style="padding: 40px 0; color: var(--text-muted);">
-        <i class="fa-solid fa-basket-shopping" style="font-size: 3rem; color: var(--border-gold); margin-bottom: 16px;"></i>
-        <p>Your shopping cart is empty.</p>
-        <button onclick="closeCartDrawer()" class="btn btn-red-outline btn-sm" style="margin-top: 16px;">Explore Products</button>
-      </div>
-    `;
+    container.innerHTML = `<div class="text-center" style="padding:40px 0;color:var(--text-muted);">
+      <i class="fa-solid fa-basket-shopping" style="font-size:3rem;color:var(--border-gold);margin-bottom:16px;"></i>
+      <p>Your shopping cart is empty.</p>
+      <button onclick="closeCartDrawer()" class="btn btn-red-outline btn-sm" style="margin-top:16px;">Explore Products</button>
+    </div>`;
   } else {
     container.innerHTML = cart.map(item => `
       <div class="cart-item">
@@ -741,9 +547,7 @@ function updateCartUI() {
               <span class="qty-num">${item.qty}</span>
               <button class="qty-btn" onclick="updateCartQty('${item.id}', 1)">+</button>
             </div>
-            <button class="remove-item-btn" onclick="removeFromCart('${item.id}')">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
+            <button class="remove-item-btn" onclick="removeFromCart('${item.id}')"><i class="fa-solid fa-trash-can"></i></button>
           </div>
         </div>
       </div>
@@ -751,48 +555,31 @@ function updateCartUI() {
   }
 }
 
-// 13. MY ORDERS & 24-HOUR CANCELLATION SYSTEM
+// 11. ORDERS
 function renderOrdersDrawer() {
   const container = document.getElementById('ordersListContainer');
   if (!container) return;
-
   if (myOrders.length === 0) {
-    container.innerHTML = `
-      <div class="text-center" style="padding: 40px 0; color: var(--text-muted);">
-        <i class="fa-solid fa-box-open" style="font-size: 3rem; color: var(--border-gold); margin-bottom: 16px;"></i>
-        <p>You haven't placed any orders yet.</p>
-      </div>
-    `;
+    container.innerHTML = `<div class="text-center" style="padding:40px 0;color:var(--text-muted);">
+      <i class="fa-solid fa-box-open" style="font-size:3rem;color:var(--border-gold);margin-bottom:16px;"></i>
+      <p>You haven't placed any orders yet.</p>
+    </div>`;
     return;
   }
-
   const now = Date.now();
-  const twentyFourHours = 24 * 3600 * 1000;
-
+  const twoFourH = 24 * 3600 * 1000;
   container.innerHTML = myOrders.map(order => {
-    const timeElapsed = now - order.timestamp;
-    const canCancel = (timeElapsed <= twentyFourHours) && (order.status !== 'Cancelled');
-    const orderDateStr = new Date(order.timestamp).toLocaleString();
-
+    const canCancel = ((now - order.timestamp) <= twoFourH) && (order.status !== 'Cancelled');
     return `
       <div class="order-card-item">
         <div class="order-card-header">
           <span class="order-ref-code">${order.id}</span>
           <span class="order-status-badge ${order.status === 'Cancelled' ? 'cancelled' : ''}">${order.status}</span>
         </div>
-        <div class="order-items-list">
-          ${order.items.map(i => `<div>- ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
-        </div>
-        <div class="summary-line" style="margin-top: 4px;">
-          <strong>Total: Rs. ${order.total.toLocaleString()}</strong>
-        </div>
-        <div class="order-time-text">Placed on: ${orderDateStr}</div>
-
-        ${canCancel ? `
-          <button class="cancel-order-btn" onclick="cancelOrder('${order.id}')">
-            <i class="fa-solid fa-ban"></i> Cancel Order (Within 24h)
-          </button>
-        ` : (order.status !== 'Cancelled' ? `<small style="color: var(--text-muted);">Order processing locked (24h passed)</small>` : '')}
+        <div class="order-items-list">${order.items.map(i => `<div>- ${i.name} x${i.qty} = Rs. ${i.price * i.qty}</div>`).join('')}</div>
+        <div class="summary-line" style="margin-top:4px;"><strong>Total: Rs. ${order.total.toLocaleString()}</strong></div>
+        <div class="order-time-text">Placed: ${new Date(order.timestamp).toLocaleString()}</div>
+        ${canCancel ? `<button class="cancel-order-btn" onclick="cancelOrder('${order.id}')"><i class="fa-solid fa-ban"></i> Cancel Order (Within 24h)</button>` : ''}
       </div>
     `;
   }).join('');
@@ -801,19 +588,17 @@ function renderOrdersDrawer() {
 function cancelOrder(orderId) {
   const order = myOrders.find(o => o.id === orderId);
   if (!order) return;
-
   order.status = 'Cancelled';
   localStorage.setItem('dtl_orders', JSON.stringify(myOrders));
   renderOrdersDrawer();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Order ${orderId} has been cancelled.`);
+  showToast(`Order ${orderId} cancelled.`);
 }
 
-// 14. AUTH UI
+// 12. AUTH
 function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
   const loggedState = document.getElementById('userLoggedInState');
-
   if (currentUser) {
     if (loginForm) loginForm.style.display = 'none';
     if (signupForm) signupForm.style.display = 'none';
@@ -828,307 +613,124 @@ function updateAuthUI() {
   }
 }
 
-// 15. MODAL & DRAWER TOGGLES
-function openCartDrawer() {
-  document.getElementById('cartDrawer')?.classList.add('active');
-  document.getElementById('cartOverlay')?.classList.add('active');
-}
-
-function closeCartDrawer() {
-  document.getElementById('cartDrawer')?.classList.remove('active');
-  document.getElementById('cartOverlay')?.classList.remove('active');
-}
-
-function openOrdersDrawer() {
-  renderOrdersDrawer();
-  document.getElementById('ordersDrawer')?.classList.add('active');
-  document.getElementById('ordersOverlay')?.classList.add('active');
-}
-
-function closeOrdersDrawer() {
-  document.getElementById('ordersDrawer')?.classList.remove('active');
-  document.getElementById('ordersOverlay')?.classList.remove('active');
-}
-
-function openQuickView(productId) {
-  let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
-
-  const variant = product.variants[product.selectedWeightIndex];
-  const content = document.getElementById('quickViewContent');
-  if (!content) return;
-
-  content.innerHTML = `
-    <div class="qv-img-box">
-      <img src="${product.image}" alt="${product.name}">
-    </div>
-    <div class="qv-info">
-      <h2>${product.name}</h2>
-      <p class="qv-desc">${product.description}</p>
-
-      <ul class="qv-benefits">
-        ${product.benefits.map(b => `<li><i class="fa-solid fa-circle-check text-red"></i> ${b}</li>`).join('')}
-      </ul>
-
-      <div class="price-row" style="margin-bottom: 20px;">
-        <span class="price-current" style="font-size: 1.5rem;">Rs. ${variant.price.toLocaleString()} (${variant.weight})</span>
-      </div>
-
-      <button class="btn btn-red btn-lg btn-block shadow-red" onclick="addProductToCart('${product.id}', false); closeQuickView();">
-        <i class="fa-solid fa-bag-shopping"></i> Add To Cart Now
-      </button>
-    </div>
-  `;
-
-  document.getElementById('quickViewModal')?.classList.add('active');
-}
-
-function closeQuickView() {
-  document.getElementById('quickViewModal')?.classList.remove('active');
-}
+// 13. MODALS & DRAWERS
+function openCartDrawer() { document.getElementById('cartDrawer')?.classList.add('active'); document.getElementById('cartOverlay')?.classList.add('active'); }
+function closeCartDrawer() { document.getElementById('cartDrawer')?.classList.remove('active'); document.getElementById('cartOverlay')?.classList.remove('active'); }
+function openOrdersDrawer() { renderOrdersDrawer(); document.getElementById('ordersDrawer')?.classList.add('active'); document.getElementById('ordersOverlay')?.classList.add('active'); }
+function closeOrdersDrawer() { document.getElementById('ordersDrawer')?.classList.remove('active'); document.getElementById('ordersOverlay')?.classList.remove('active'); }
+function closeQuickView() { document.getElementById('quickViewModal')?.classList.remove('active'); }
 
 function openCheckoutModal() {
-  if (cart.length === 0) {
-    showToast('Your cart is empty! Add products first.');
-    return;
-  }
+  if (cart.length === 0) { showToast('Cart is empty!'); return; }
   closeCartDrawer();
-
-  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
   const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 250;
-  const finalTotal = subtotal + shipping;
-
   document.getElementById('checkoutItemsTotal').textContent = `Rs. ${subtotal.toLocaleString()}`;
   document.getElementById('checkoutShippingFee').textContent = shipping === 0 ? 'FREE' : `Rs. ${shipping}`;
-  document.getElementById('checkoutFinalTotal').textContent = `Rs. ${finalTotal.toLocaleString()}`;
-
+  document.getElementById('checkoutFinalTotal').textContent = `Rs. ${(subtotal + shipping).toLocaleString()}`;
   document.getElementById('checkoutModal')?.classList.add('active');
 }
+function closeCheckoutModal() { document.getElementById('checkoutModal')?.classList.remove('active'); }
 
-function closeCheckoutModal() {
-  document.getElementById('checkoutModal')?.classList.remove('active');
-}
-
-// 16. EVENT LISTENERS
+// 14. EVENT LISTENERS
 function initEventListeners() {
-  // Orders Drawer
   document.getElementById('myOrdersDrawerBtn')?.addEventListener('click', openOrdersDrawer);
   document.getElementById('closeOrdersBtn')?.addEventListener('click', closeOrdersDrawer);
   document.getElementById('ordersOverlay')?.addEventListener('click', closeOrdersDrawer);
-
-  // Cart Toggles
   document.getElementById('cartToggleBtn')?.addEventListener('click', openCartDrawer);
   document.getElementById('closeCartBtn')?.addEventListener('click', closeCartDrawer);
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
-
-  // Account Button
-  document.getElementById('userAccountBtn')?.addEventListener('click', () => {
-    const authSection = document.getElementById('authSection');
-    if (authSection) authSection.scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // Quick View Close
+  document.getElementById('userAccountBtn')?.addEventListener('click', () => document.getElementById('authSection')?.scrollIntoView({ behavior: 'smooth' }));
   document.getElementById('closeQuickViewBtn')?.addEventListener('click', closeQuickView);
 
-  // In-Place Auth Tabs
   const loginTabBtn = document.getElementById('loginTabBtn');
   const signupTabBtn = document.getElementById('signupTabBtn');
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
 
-  loginTabBtn?.addEventListener('click', () => {
-    loginTabBtn.classList.add('active');
-    signupTabBtn?.classList.remove('active');
-    if (loginForm) loginForm.style.display = 'flex';
-    if (signupForm) signupForm.style.display = 'none';
-  });
+  loginTabBtn?.addEventListener('click', () => { loginTabBtn.classList.add('active'); signupTabBtn?.classList.remove('active'); if (loginForm) loginForm.style.display = 'flex'; if (signupForm) signupForm.style.display = 'none'; });
+  signupTabBtn?.addEventListener('click', () => { signupTabBtn.classList.add('active'); loginTabBtn?.classList.remove('active'); if (signupForm) signupForm.style.display = 'flex'; if (loginForm) loginForm.style.display = 'none'; });
 
-  signupTabBtn?.addEventListener('click', () => {
-    signupTabBtn.classList.add('active');
-    loginTabBtn?.classList.remove('active');
-    if (signupForm) signupForm.style.display = 'flex';
-    if (loginForm) loginForm.style.display = 'none';
-  });
-
-  // Login Submit
   loginForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value;
-    currentUser = { name: email.split('@')[0], email: email };
+    currentUser = { name: email.split('@')[0], email };
     localStorage.setItem('dtl_user', JSON.stringify(currentUser));
     updateAuthUI();
-    showToast('<i class="fa-solid fa-circle-check text-red"></i> Welcome back to Desi Taste Land!');
+    showToast('Welcome back to Desi Taste Land!');
   });
 
-  // Sign Up Submit
   signupForm?.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('signupName').value;
     const email = document.getElementById('signupEmail').value;
-    currentUser = { name: name, email: email };
+    currentUser = { name, email };
     localStorage.setItem('dtl_user', JSON.stringify(currentUser));
     updateAuthUI();
-    showToast('<i class="fa-solid fa-circle-check text-red"></i> Account created successfully!');
+    showToast('Account created successfully!');
   });
 
-  // Logout Button
-  document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    currentUser = null;
-    localStorage.removeItem('dtl_user');
-    updateAuthUI();
-    showToast('Logged out successfully');
-  });
+  document.getElementById('logoutBtn')?.addEventListener('click', () => { currentUser = null; localStorage.removeItem('dtl_user'); updateAuthUI(); showToast('Logged out'); });
 
-  // Submit Review Form
   document.getElementById('submitReviewForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('revName').value;
     const city = document.getElementById('revCity').value;
     const comment = document.getElementById('revComment').value;
-
-    fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        Type: 'CUSTOMER REVIEW SUBMISSION',
-        Customer_Name: name,
-        City: city,
-        Review_Text: comment
-      })
-    }).catch(err => console.log(err));
-
-    const reviewsGrid = document.getElementById('reviewsGrid');
-    if (reviewsGrid) {
+    fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ Type: 'REVIEW', Customer_Name: name, City: city, Review_Text: comment }) }).catch(() => {});
+    const grid = document.getElementById('reviewsGrid');
+    if (grid) {
       const card = document.createElement('div');
       card.className = 'review-card';
-      card.innerHTML = `
-        <div class="review-top">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
-        </div>
-        <p class="review-text">"${comment}"</p>
-        <div class="reviewer-meta">
-          <div class="reviewer-initial">${name.charAt(0).toUpperCase()}</div>
-          <div class="reviewer-info">
-            <strong>${name}</strong>
-            <small>${city}, Pakistan</small>
-          </div>
-        </div>
-      `;
-      reviewsGrid.prepend(card);
+      card.innerHTML = `<div class="review-top"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified</span></div><p class="review-text">"${comment}"</p><div class="reviewer-meta"><div class="reviewer-initial">${name.charAt(0).toUpperCase()}</div><div class="reviewer-info"><strong>${name}</strong><small>${city}</small></div></div>`;
+      grid.prepend(card);
     }
-
     document.getElementById('submitReviewForm').reset();
-    showToast('<i class="fa-solid fa-circle-check text-red"></i> Shukriya! Your review has been submitted.');
+    showToast('Shukriya! Your review has been submitted.');
   });
 
-  // Checkout Triggers
   document.getElementById('checkoutBtn')?.addEventListener('click', openCheckoutModal);
   document.getElementById('closeCheckoutBtn')?.addEventListener('click', closeCheckoutModal);
 
-  // Special Deal Claim Button
   document.getElementById('claimDealBtn')?.addEventListener('click', () => {
-    const dealItem = {
-      id: 'deal-ghee-saffron',
-      name: 'DESI GHEE (500g) + ROYAL KASHMIRI SAFFRON (1g) COMBO',
-      price: 2750,
-      qty: 1,
-      image: 'assets/images/deal_banner.jpg'
-    };
-
-    const existing = cart.find(i => i.id === dealItem.id);
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push(dealItem);
-    }
-    saveCart();
-    updateCartUI();
-    showToast('<i class="fa-solid fa-crown text-red"></i> Special Mega Deal added to cart!');
+    const existing = cart.find(i => i.id === 'deal-ghee-saffron');
+    if (existing) { existing.qty += 1; } else { cart.push({ id: 'deal-ghee-saffron', name: 'DESI GHEE (500g) + KASHMIRI SAFFRON COMBO', price: 2750, qty: 1, image: 'assets/images/deal_banner.jpg' }); }
+    saveCart(); updateCartUI();
+    showToast('Mega Deal added to cart!');
     openCartDrawer();
   });
 
-  // Checkout Form Submission
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-
     const name = document.getElementById('custName').value;
     const phone = document.getElementById('custPhone').value;
     const city = document.getElementById('custCity').value;
     const address = document.getElementById('custAddress').value;
     const refId = '#DTL-' + Math.floor(10000 + Math.random() * 90000);
-
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
     const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 250;
     const grandTotal = subtotal + shipping;
-
-    const itemsSummary = cart.map(i => `${i.name} (${i.qty}x) = Rs. ${i.price * i.qty}`).join(', ');
-
-    fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: `New Order Received (${refId}) - DESI TASTE LAND`,
-        Order_Reference: refId,
-        Customer_Name: name,
-        Customer_Phone: phone,
-        Customer_City: city,
-        Shipping_Address: address,
-        Items_Ordered: itemsSummary,
-        Subtotal_PKR: subtotal,
-        Shipping_PKR: shipping,
-        Total_Amount_PKR: grandTotal
-      })
-    }).catch(err => console.log('Order notification background sent', err));
-
-    const newOrder = {
-      id: refId,
-      timestamp: Date.now(),
-      name: name,
-      phone: phone,
-      address: `${address}, ${city}`,
-      items: [...cart],
-      total: grandTotal,
-      status: 'Processing'
-    };
+    const itemsSummary = cart.map(i => `${i.name} (${i.qty}x) = Rs.${i.price * i.qty}`).join(', ');
+    fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ _subject: `New Order ${refId} - DESI TASTE LAND`, Order_Reference: refId, Customer_Name: name, Customer_Phone: phone, Customer_City: city, Shipping_Address: address, Items_Ordered: itemsSummary, Total_Amount_PKR: grandTotal }) }).catch(() => {});
+    const newOrder = { id: refId, timestamp: Date.now(), name, phone, address: `${address}, ${city}`, items: [...cart], total: grandTotal, status: 'Processing' };
     myOrders.unshift(newOrder);
     localStorage.setItem('dtl_orders', JSON.stringify(myOrders));
-
     document.getElementById('orderRefId').textContent = refId;
     closeCheckoutModal();
-
-    cart = [];
-    saveCart();
-    updateCartUI();
-
+    cart = []; saveCart(); updateCartUI();
     document.getElementById('orderSuccessModal')?.classList.add('active');
   });
 
-  document.getElementById('closeSuccessBtn')?.addEventListener('click', () => {
-    document.getElementById('orderSuccessModal')?.classList.remove('active');
-  });
+  document.getElementById('closeSuccessBtn')?.addEventListener('click', () => document.getElementById('orderSuccessModal')?.classList.remove('active'));
 }
 
-// 17. TOAST NOTIFICATIONS
+// 15. TOAST
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
-
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.innerHTML = message;
-
   container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(20px)';
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(20px)'; setTimeout(() => toast.remove(), 300); }, 3000);
 }
