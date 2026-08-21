@@ -1,25 +1,21 @@
- /* ==========================================================================
-   DESI TASTE LAND - Brand Logo Matched Premium Design System
+/* ==========================================================================
+   DESI TASTE LAND - Brand Logo Matched Design System (Typewriter Monospace)
    ========================================================================== */
 
 :root {
-  /* Exact Logo Palette: Off-White Cream, Deep Forest Emerald, Crimson Red Script, Mustard Gold */
   --bg-main: #FAF4EB;
   --bg-surface: #FFFDF9;
   --bg-alt: #F3E9DA;
   --bg-card: #FFFFFF;
 
-  /* Deep Forest Emerald Green (Logo Border & Base) */
   --forest-primary: #154734;
   --forest-dark: #0D3324;
   --forest-light: #E4EFEA;
 
-  /* Vibrant Crimson Red (Logo 'TasteLand' Script) */
   --red-primary: #D32F2F;
   --red-dark: #B71C1C;
   --red-light: #FDE8E8;
 
-  /* Mustard Gold & Honey Amber (Logo Accent Text) */
   --gold-primary: #D97706;
   --gold-dark: #B45309;
   --gold-light: #FEF3C7;
@@ -45,8 +41,10 @@
   --radius-lg: 24px;
   --radius-pill: 999px;
 
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Typewriter Monospace Aesthetic */
+  --font-heading: 'Courier Prime', 'Space Mono', 'Courier New', monospace;
+  --font-body: 'Courier Prime', 'Space Mono', monospace, system-ui;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --transition-fast: all 0.2s ease;
   --transition-normal: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -143,6 +141,8 @@ button {
   border-radius: var(--radius-pill);
   transition: var(--transition-normal);
   white-space: nowrap;
+  font-family: var(--font-heading);
+  letter-spacing: 0.5px;
 }
 
 .btn-lg {
@@ -200,7 +200,7 @@ button {
 }
 
 /* ==========================================================================
-   SIMPLE CLEAN FONT FOR ALL PRICES (Every single price on site)
+   SIMPLE CLEAN FONT FOR ALL PRICES
    ========================================================================== */
 .price-current,
 .current-price,
@@ -227,13 +227,12 @@ button {
 #checkoutItemsTotal,
 #cartSubtotal,
 #cartGrandTotal {
-  font-family: var(--font-body) !important;
-  font-weight: 800 !important;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--font-heading) !important;
+  font-weight: 700 !important;
   letter-spacing: -0.2px;
 }
 
-/* ULTRA-PREMIUM NAVBAR (Logo Centered, Menu Icon Left) */
+/* NAVBAR */
 .header {
   position: sticky;
   top: 0;
@@ -242,11 +241,6 @@ button {
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-light);
   transition: var(--transition-normal);
-}
-
-.header.scrolled {
-  background: rgba(255, 253, 249, 0.98);
-  box-shadow: var(--shadow-sm);
 }
 
 .header-inner {
@@ -305,15 +299,15 @@ button {
 .brand-title {
   font-family: var(--font-heading);
   font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
   color: var(--red-primary);
   line-height: 1.1;
 }
 
 .brand-subtitle {
   font-size: 0.65rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 2px;
   color: var(--forest-primary);
 }
@@ -493,9 +487,7 @@ button {
   color: #FFFFFF;
 }
 
-/* ==========================================================================
-   HERO SLIDER (Touch & Mouse Drag Swipe, No Side Buttons)
-   ========================================================================== */
+/* HERO SLIDER */
 .hero-slider-section {
   position: relative;
   width: 100%;
@@ -590,7 +582,7 @@ button {
 
 .section-subtitle {
   font-size: 0.85rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--red-primary);
@@ -600,10 +592,11 @@ button {
 
 .section-title {
   font-family: var(--font-heading);
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2.2rem;
+  font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 6px;
+  letter-spacing: 0.5px;
 }
 
 .section-desc {
@@ -614,7 +607,7 @@ button {
 }
 
 /* ==========================================================================
-   PRODUCT CARDS & INTERACTIVE WEIGHT SELECTORS
+   TOP SELLING PRODUCTS SECTION (Desktop 3-col Grid, Mobile 1-Row Horizontal Slider)
    ========================================================================== */
 .top-selling-grid {
   display: grid;
@@ -622,6 +615,41 @@ button {
   gap: 24px;
 }
 
+.mobile-swipe-hint {
+  display: none;
+  margin-top: 14px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .top-selling-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 16px !important;
+    padding: 10px 4px 16px !important;
+    scrollbar-width: none;
+  }
+  .top-selling-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .top-selling-grid .product-card {
+    flex: 0 0 84% !important;
+    min-width: 270px !important;
+    max-width: 320px !important;
+    scroll-snap-align: center !important;
+  }
+  .mobile-swipe-hint {
+    display: block !important;
+  }
+}
+
+/* ==========================================================================
+   ALL PRODUCTS SECTION & INLINE HONEY ACCORDION
+   ========================================================================== */
 .products-responsive-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -635,6 +663,7 @@ button {
   }
 }
 
+/* Product Card */
 .product-card {
   background: var(--bg-card);
   border-radius: var(--radius-md);
@@ -650,23 +679,6 @@ button {
   border-color: var(--red-primary);
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
-}
-
-.product-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  font-size: 0.72rem;
-  font-weight: 800;
-  background: var(--forest-primary);
-  color: #FFFFFF;
-}
-
-.badge-red {
-  background: var(--red-primary);
 }
 
 .product-img-box {
@@ -727,16 +739,9 @@ button {
 .product-title {
   font-family: var(--font-heading);
   font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 2px;
-}
-
-.product-urdu {
-  font-size: 0.82rem;
-  color: var(--red-primary);
-  margin-bottom: 8px;
   font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
 }
 
 .rating-row {
@@ -752,7 +757,6 @@ button {
   color: #F59E0B;
 }
 
-/* Weight Selection Pill Buttons */
 .weight-selector-box {
   margin: 6px 0 12px;
 }
@@ -810,7 +814,7 @@ button {
 
 .price-current {
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--forest-primary);
 }
 
@@ -821,18 +825,84 @@ button {
 }
 
 /* ==========================================================================
-   HONEY VARIETIES SHOWCASE SECTION (4 Real Images + Exact Prices)
+   INLINE HONEY ACCORDION (Between Honey and Desi Ghee in All Products)
+   Laptop: 3 Honey per row | Mobile: 2 Honey per row
    ========================================================================== */
-.honey-showcase-section {
-  background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg-main) 100%);
-  border-top: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
+.honey-inline-accordion {
+  grid-column: 1 / -1; /* Spans full row across all grid columns */
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--bg-surface) 100%);
+  border: 2px solid var(--forest-primary);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(21, 71, 52, 0.12);
+  margin: 12px 0 24px;
+  display: none;
 }
 
-.honey-cards-grid {
+.honey-inline-accordion.active {
+  display: block;
+  animation: expandFadeIn 0.4s ease forwards;
+}
+
+@keyframes expandFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.honey-inline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1.5px solid var(--border-light);
+  padding-bottom: 12px;
+}
+
+.honey-inline-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--forest-primary);
+}
+
+.honey-close-btn {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: var(--transition-fast);
+}
+
+.honey-close-btn:hover {
+  background: var(--red-light);
+  color: var(--red-primary);
+  border-color: var(--red-primary);
+}
+
+/* Grid Layout: 3 per row on Laptop/Desktop, 2 per row on Mobile */
+.honey-inline-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .honey-inline-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .honey-inline-accordion {
+    padding: 16px 10px !important;
+  }
+  .honey-inline-header h3 {
+    font-size: 1.05rem !important;
+  }
 }
 
 .honey-card {
@@ -848,7 +918,7 @@ button {
 }
 
 .honey-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: var(--red-primary);
   box-shadow: var(--shadow-md);
 }
@@ -860,7 +930,7 @@ button {
   background: var(--forest-primary);
   color: #FFFFFF;
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 700;
   padding: 3px 8px;
   border-radius: var(--radius-pill);
   z-index: 2;
@@ -868,7 +938,7 @@ button {
 
 .honey-card-img-box {
   width: 100%;
-  height: 220px;
+  height: 200px;
   background: #FFFDF9;
   display: flex;
   align-items: center;
@@ -887,11 +957,11 @@ button {
 }
 
 .honey-card:hover .honey-card-img-box img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .honey-card-body {
-  padding: 16px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -900,22 +970,15 @@ button {
 .honey-card-title {
   font-family: var(--font-heading);
   font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 2px;
-}
-
-.honey-card-urdu {
-  font-size: 0.82rem;
-  color: var(--red-primary);
   font-weight: 700;
-  margin-bottom: 10px;
+  color: var(--text-dark);
+  margin-bottom: 6px;
 }
 
 .honey-weights-row {
   display: flex;
   gap: 4px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
@@ -948,24 +1011,22 @@ button {
   align-items: baseline;
   justify-content: space-between;
   margin-top: auto;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .honey-price-val {
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: var(--forest-primary);
 }
 
 .honey-unit-label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-weight: 600;
 }
 
-/* ==========================================================================
-   WHY US SECTION
-   ========================================================================== */
+/* WHY US SECTION */
 .why-us-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1002,7 +1063,7 @@ button {
 .why-card h3 {
   font-family: var(--font-heading);
   font-size: 1.15rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 8px;
 }
@@ -1012,9 +1073,7 @@ button {
   color: var(--text-muted);
 }
 
-/* ==========================================================================
-   TOTALLY REDESIGNED SPECIAL DEAL SECTION (Full Image Visibility)
-   ========================================================================== */
+/* SPECIAL DEAL SECTION */
 .special-deal-section {
   background: var(--bg-main);
 }
@@ -1045,11 +1104,10 @@ button {
   background: var(--forest-dark);
   color: #FFFFFF;
   font-size: 0.82rem;
-  font-weight: 800;
+  font-weight: 700;
   padding: 6px 18px;
   border-radius: var(--radius-pill);
   border: 1.5px solid var(--gold-primary);
-  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);
 }
 
 .deal-urgency-badge {
@@ -1059,7 +1117,7 @@ button {
   background: var(--red-light);
   color: var(--red-primary);
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 700;
   padding: 6px 14px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border-red);
@@ -1105,10 +1163,6 @@ button {
   transition: transform 0.4s ease;
 }
 
-.deal-img-wrapper:hover .deal-banner-image {
-  transform: scale(1.03);
-}
-
 .deal-discount-pill {
   position: absolute;
   top: 14px;
@@ -1151,7 +1205,7 @@ button {
 
 .deal-tagline {
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 1.5px;
   color: var(--red-primary);
   margin-bottom: 6px;
@@ -1160,150 +1214,10 @@ button {
 .deal-heading {
   font-family: var(--font-heading);
   font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 10px;
-  line-height: 1.25;
-}
-
-.deal-lead-text {
-  font-size: 0.92rem;
-  color: var(--text-body);
-  margin-bottom: 16px;
-  line-height: 1.5;
-}
-
-.deal-items-included {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.deal-item-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  background: var(--bg-surface);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-light);
-}
-
-.deal-check-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--forest-light);
-  color: var(--forest-primary);
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.deal-item-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.deal-item-text strong {
-  font-size: 0.88rem;
-  color: var(--text-dark);
-}
-
-.deal-item-text span {
-  font-size: 0.76rem;
-  color: var(--text-muted);
-}
-
-.deal-countdown-box {
-  background: var(--bg-alt);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.countdown-header {
-  font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-dark);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.countdown-digits {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.timer-unit {
-  background: var(--forest-dark);
-  color: #FFFFFF;
-  border-radius: 6px;
-  padding: 4px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 44px;
-}
-
-.timer-val {
-  font-size: 1.1rem;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--gold-primary);
-}
-
-.timer-sub {
-  font-size: 0.55rem;
-  text-transform: uppercase;
-  color: #CBD5E1;
-}
-
-.timer-sep {
-  font-weight: 800;
-  color: var(--forest-primary);
-}
-
-.deal-stock-bar-box {
   margin-bottom: 20px;
-}
-
-.stock-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  margin-bottom: 6px;
-  color: var(--text-body);
-}
-
-.stock-highlight {
-  font-weight: 800;
-  color: var(--red-primary);
-}
-
-.stock-progress-track {
-  width: 100%;
-  height: 8px;
-  background: var(--border-light);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
-}
-
-.stock-progress-meter {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold-primary), var(--red-primary));
-  border-radius: var(--radius-pill);
+  line-height: 1.25;
 }
 
 .deal-action-panel {
@@ -1344,14 +1258,14 @@ button {
 
 .current-price {
   font-size: 1.85rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--red-primary);
   line-height: 1;
 }
 
 .free-shipping-tag {
   font-size: 0.68rem;
-  font-weight: 800;
+  font-weight: 700;
   background: var(--forest-light);
   color: var(--forest-primary);
   padding: 2px 6px;
@@ -1363,9 +1277,7 @@ button {
   max-width: 320px;
 }
 
-/* ==========================================================================
-   ABOUT SECTION
-   ========================================================================== */
+/* ABOUT SECTION */
 .about-section {
   background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-alt) 100%);
 }
@@ -1387,8 +1299,8 @@ button {
 
 .about-main-title {
   font-family: var(--font-heading);
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2.2rem;
+  font-weight: 700;
   color: var(--forest-dark);
   margin: 6px 0 14px;
 }
@@ -1417,7 +1329,7 @@ button {
 }
 
 .about-lead {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.7;
   color: var(--text-dark);
   font-weight: 500;
@@ -1428,50 +1340,18 @@ button {
   border-left: 4px solid var(--red-primary);
   border-radius: var(--radius-sm);
   padding: 18px 24px;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--red-dark);
-}
-
-.quran-quote-box {
-  background: var(--forest-light);
-  border: 1px solid rgba(21, 71, 52, 0.2);
-  border-radius: var(--radius-md);
-  padding: 24px 32px;
-  margin: 8px 0;
-}
-
-.quote-icon {
-  font-size: 1.8rem;
-  color: var(--forest-primary);
-  opacity: 0.25;
-  margin-bottom: 10px;
-}
-
-.quran-text {
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--forest-dark);
-  margin-bottom: 6px;
-}
-
-.quran-quote-box cite {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--gold-dark);
-  font-style: normal;
 }
 
 .about-closing-dua {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--gold-dark);
 }
 
-/* ==========================================================================
-   REVIEWS SECTION & SUBMIT FORM
-   ========================================================================== */
+/* REVIEWS SECTION */
 .reviews-section {
   background: var(--bg-main);
 }
@@ -1521,7 +1401,6 @@ button {
   line-height: 1.6;
   margin-bottom: 20px;
   flex-grow: 1;
-  font-style: italic;
 }
 
 .reviewer-meta {
@@ -1538,16 +1417,11 @@ button {
   border-radius: 50%;
   background: linear-gradient(135deg, var(--red-primary), var(--gold-primary));
   color: #FFFFFF;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.reviewer-info {
-  display: flex;
-  flex-direction: column;
 }
 
 .reviewer-info strong {
@@ -1627,7 +1501,7 @@ button {
 
 .auth-header h3 {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   color: var(--text-dark);
   margin-bottom: 4px;
 }
@@ -1960,15 +1834,13 @@ button {
 
 .cart-total-row {
   font-size: 1.05rem;
-  font-weight: 800;
+  font-weight: 700;
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px dashed var(--border-light);
 }
 
-/* ==========================================================================
-   MODALS (Quick View, Honey Selection, Checkout, Success)
-   ========================================================================== */
+/* MODALS */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -2002,7 +1874,6 @@ button {
   padding: 24px;
 }
 
-.modal-card-lg { max-width: 860px; }
 .modal-card-md { max-width: 480px; }
 .modal-card-sm { max-width: 380px; }
 
@@ -2041,16 +1912,9 @@ button {
 
 .qv-info h2 {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--text-dark);
-  margin-bottom: 2px;
-}
-
-.qv-urdu {
-  font-size: 0.9rem;
-  color: var(--red-primary);
-  font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .qv-desc {
@@ -2071,95 +1935,6 @@ button {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-/* Honey Modal Grid */
-.honey-modal-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.honey-modal-item {
-  background: var(--bg-surface);
-  border-radius: var(--radius-md);
-  border: 1.5px solid var(--border-gold);
-  padding: 14px;
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  transition: var(--transition-normal);
-}
-
-.honey-modal-item:hover {
-  border-color: var(--red-primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-.honey-modal-img {
-  width: 90px;
-  height: 90px;
-  border-radius: 8px;
-  object-fit: contain;
-  background: #FFFFFF;
-  border: 1px solid var(--border-light);
-  padding: 4px;
-  flex-shrink: 0;
-}
-
-.honey-modal-details {
-  flex-grow: 1;
-}
-
-.honey-modal-title {
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--text-dark);
-}
-
-.honey-modal-urdu {
-  font-size: 0.78rem;
-  color: var(--red-primary);
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.honey-modal-weights {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
-}
-
-.honey-modal-w-btn {
-  padding: 3px 6px;
-  border-radius: 4px;
-  background: var(--bg-alt);
-  border: 1px solid var(--border-light);
-  font-size: 0.72rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.honey-modal-w-btn.active {
-  background: var(--red-primary);
-  color: #FFFFFF;
-  border-color: var(--red-primary);
-}
-
-.honey-modal-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.honey-modal-price {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--forest-primary);
 }
 
 /* CHECKOUT FORM */
@@ -2273,12 +2048,9 @@ button {
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 992px) {
-  .top-selling-grid { grid-template-columns: repeat(2, 1fr); }
-  .honey-cards-grid { grid-template-columns: repeat(2, 1fr); }
   .deal-grid-layout, .quick-view-grid { grid-template-columns: 1fr; }
   .reviews-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .honey-modal-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -2289,9 +2061,9 @@ button {
   .brand-subtitle { font-size: 0.55rem; letter-spacing: 1px; }
 
   .section-padding { padding: 44px 0; }
-  .section-title { font-size: 1.7rem; }
+  .section-title { font-size: 1.6rem; }
   .about-card-luxury, .auth-card-luxury { padding: 24px 16px; }
-  .about-main-title { font-size: 1.7rem; }
+  .about-main-title { font-size: 1.6rem; }
 
   .deal-card-ultra { padding: 20px 16px; }
   .deal-heading { font-size: 1.35rem; }
@@ -2301,14 +2073,12 @@ button {
   .reviews-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 20px; }
   .form-row { grid-template-columns: 1fr; }
-  .top-selling-grid { grid-template-columns: 1fr; }
-  .honey-cards-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 12px; }
   .brand-title { font-size: 0.95rem; }
-  .section-title { font-size: 1.4rem; }
+  .section-title { font-size: 1.35rem; }
   .product-img-box { height: 180px; padding: 10px; }
   .product-title { font-size: 0.95rem; }
   .price-current { font-size: 1.1rem; }
