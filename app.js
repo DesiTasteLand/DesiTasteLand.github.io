@@ -232,13 +232,12 @@ let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
 let currentSlideIndex = 0;
 let slideInterval;
+let isHoneyAccordionOpen = false;
 
 // 5. INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
-  renderAllProducts();
-  renderHoneyShowcase();
-  renderHoneyModal();
+  renderAllProductsWithHoneyAccordion();
   updateCartUI();
   updateAuthUI();
   renderOrdersDrawer();
@@ -426,7 +425,7 @@ function renderTopSellingProducts() {
 
           <div class="card-actions">
             ${product.isHoney ? `
-              <button class="btn btn-red btn-block" onclick="openHoneyModal()">
+              <button class="btn btn-red btn-block" onclick="toggleHoneyAccordion()">
                 <i class="fa-solid fa-jar-wheat"></i> Choose Honey Variety
               </button>
             ` : `
@@ -441,14 +440,18 @@ function renderTopSellingProducts() {
   }).join('');
 }
 
-// 9. RENDER ALL PRODUCTS (8 Items with Live Weight Variant Selectors)
-function renderAllProducts() {
+// 9. RENDER ALL PRODUCTS WITH INLINE HONEY ACCORDION (Between Pure Honey and Desi Ghee)
+function renderAllProductsWithHoneyAccordion() {
   const container = document.getElementById('allProductsGrid');
   if (!container) return;
 
-  container.innerHTML = ALL_PRODUCTS.map(product => {
+  let html = '';
+
+  ALL_PRODUCTS.forEach((product) => {
     const activeVar = product.variants[product.selectedWeightIndex];
-    return `
+
+    // Render the Product Card
+    html += `
       <div class="product-card" id="allcard-${product.id}">
         <div class="product-img-box">
           <img src="${product.image}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
@@ -497,8 +500,8 @@ function renderAllProducts() {
 
           <div class="card-actions">
             ${product.isHoney ? `
-              <button class="btn btn-red btn-block" onclick="openHoneyModal()">
-                <i class="fa-solid fa-jar-wheat"></i> Select Honey Variety
+              <button class="btn btn-red btn-block" onclick="toggleHoneyAccordion()">
+                <i class="fa-solid fa-jar-wheat"></i> Choose Honey Variety
               </button>
             ` : `
               <button class="btn btn-red btn-block" onclick="addProductToCart('${product.id}', false)">
@@ -509,87 +512,79 @@ function renderAllProducts() {
         </div>
       </div>
     `;
-  }).join('');
-}
 
-// 10. RENDER HONEY VARIETIES SHOWCASE (4 Images, 4 Varieties)
-function renderHoneyShowcase() {
-  const container = document.getElementById('honeyShowcaseGrid');
-  if (!container) return;
-
-  container.innerHTML = HONEY_CATEGORIES.map(category => {
-    const activeVar = category.variants[category.selectedWeightIndex];
-    return `
-      <div class="honey-card" id="hcard-${category.id}">
-        <span class="honey-card-badge">${category.tag}</span>
-        <div class="honey-card-img-box">
-          <img src="${category.image}" alt="${category.name}" loading="lazy">
-        </div>
-
-        <div class="honey-card-body">
-          <h3 class="honey-card-title">${category.name}</h3>
-
-          <div class="weight-selector-box">
-            <span class="weight-selector-label">Select Weight:</span>
-            <div class="honey-weights-row">
-              ${category.variants.map((v, idx) => `
-                <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
-                        onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
-                  ${v.weight}
-                </button>
-              `).join('')}
+    // Immediately after PURE HONEY (before Desi Ghee), inject the Inline Honey Varieties Section
+    if (product.id === 'prod-honey') {
+      html += `
+        <div class="honey-inline-accordion ${isHoneyAccordionOpen ? 'active' : ''}" id="honeyInlineAccordion">
+          <div class="honey-inline-header">
+            <div>
+              <span class="section-subtitle"><i class="fa-solid fa-jar-wheat text-red"></i> 100% Pure & Raw</span>
+              <h3>Select Honey Variety & Weight</h3>
             </div>
+            <button class="honey-close-btn" onclick="toggleHoneyAccordion()">&times;</button>
           </div>
 
-          <div class="honey-card-price-row">
-            <span class="honey-price-val" id="hprice-${category.id}">Rs. ${activeVar.price.toLocaleString()}</span>
-            <span class="honey-unit-label">per ${activeVar.weight}</span>
-          </div>
+          <div class="honey-inline-grid">
+            ${HONEY_CATEGORIES.map(category => {
+              const catVar = category.variants[category.selectedWeightIndex];
+              return `
+                <div class="honey-card" id="hcard-${category.id}">
+                  <span class="honey-card-badge">${category.tag}</span>
+                  <div class="honey-card-img-box">
+                    <img src="${category.image}" alt="${category.name}" loading="lazy">
+                  </div>
 
-          <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
-            <i class="fa-solid fa-bag-shopping"></i> Add To Cart
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
+                  <div class="honey-card-body">
+                    <h3 class="honey-card-title">${category.name}</h3>
 
-// 11. RENDER HONEY SELECTION MODAL
-function renderHoneyModal() {
-  const container = document.getElementById('honeyModalGrid');
-  if (!container) return;
+                    <div class="weight-selector-box">
+                      <span class="weight-selector-label">Select Weight:</span>
+                      <div class="honey-weights-row">
+                        ${category.variants.map((v, idx) => `
+                          <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
+                                  onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
+                            ${v.weight}
+                          </button>
+                        `).join('')}
+                      </div>
+                    </div>
 
-  container.innerHTML = HONEY_CATEGORIES.map(category => {
-    const activeVar = category.variants[category.selectedWeightIndex];
-    return `
-      <div class="honey-modal-item">
-        <img src="${category.image}" alt="${category.name}" class="honey-modal-img">
-        <div class="honey-modal-details">
-          <div class="honey-modal-title">${category.name}</div>
+                    <div class="honey-card-price-row">
+                      <span class="honey-price-val" id="hprice-${category.id}">Rs. ${catVar.price.toLocaleString()}</span>
+                      <span class="honey-unit-label">per ${catVar.weight}</span>
+                    </div>
 
-          <div class="honey-modal-weights">
-            ${category.variants.map((v, idx) => `
-              <button class="honey-modal-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
-                      onclick="selectHoneyModalWeight('${category.id}', ${idx})">
-                ${v.weight}
-              </button>
-            `).join('')}
-          </div>
-
-          <div class="honey-modal-foot">
-            <span class="honey-modal-price" id="hmodal-price-${category.id}">Rs. ${activeVar.price.toLocaleString()}</span>
-            <button class="btn btn-red btn-sm" onclick="addHoneyCategoryToCart('${category.id}'); closeHoneyModal();">
-              <i class="fa-solid fa-bag-shopping"></i> Add
-            </button>
+                    <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
+                      <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }
+  });
+
+  container.innerHTML = html;
 }
 
-// 12. WEIGHT SELECTOR INTERACTION HANDLERS
+// 10. TOGGLE INLINE HONEY ACCORDION
+function toggleHoneyAccordion() {
+  isHoneyAccordionOpen = !isHoneyAccordionOpen;
+  renderAllProductsWithHoneyAccordion();
+
+  if (isHoneyAccordionOpen) {
+    const accordion = document.getElementById('honeyInlineAccordion');
+    if (accordion) {
+      accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+}
+
+// 11. WEIGHT SELECTOR INTERACTION HANDLERS
 function selectProductWeight(productId, weightIndex, isTopSelling) {
   const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
   const product = list.find(p => p.id === productId);
@@ -605,7 +600,7 @@ function selectProductWeight(productId, weightIndex, isTopSelling) {
   if (allPriceElem) allPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
 
   if (isTopSelling) renderTopSellingProducts();
-  else renderAllProducts();
+  else renderAllProductsWithHoneyAccordion();
 }
 
 function selectHoneyCategoryWeight(categoryId, weightIndex) {
@@ -613,20 +608,10 @@ function selectHoneyCategoryWeight(categoryId, weightIndex) {
   if (!category) return;
 
   category.selectedWeightIndex = weightIndex;
-  renderHoneyShowcase();
-  renderHoneyModal();
+  renderAllProductsWithHoneyAccordion();
 }
 
-function selectHoneyModalWeight(categoryId, weightIndex) {
-  const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
-  if (!category) return;
-
-  category.selectedWeightIndex = weightIndex;
-  renderHoneyModal();
-  renderHoneyShowcase();
-}
-
-// 13. CART OPERATIONS (Free delivery strictly above Rs. 5000)
+// 12. CART OPERATIONS (Free delivery strictly above Rs. 5000)
 function addProductToCart(productId, isTopSelling) {
   const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
   const product = list.find(p => p.id === productId);
@@ -766,7 +751,7 @@ function updateCartUI() {
   }
 }
 
-// 14. MY ORDERS & 24-HOUR CANCELLATION SYSTEM
+// 13. MY ORDERS & 24-HOUR CANCELLATION SYSTEM
 function renderOrdersDrawer() {
   const container = document.getElementById('ordersListContainer');
   if (!container) return;
@@ -823,7 +808,7 @@ function cancelOrder(orderId) {
   showToast(`<i class="fa-solid fa-circle-check text-red"></i> Order ${orderId} has been cancelled.`);
 }
 
-// 15. AUTH UI
+// 14. AUTH UI
 function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
@@ -843,7 +828,7 @@ function updateAuthUI() {
   }
 }
 
-// 16. MODAL & DRAWER TOGGLES
+// 15. MODAL & DRAWER TOGGLES
 function openCartDrawer() {
   document.getElementById('cartDrawer')?.classList.add('active');
   document.getElementById('cartOverlay')?.classList.add('active');
@@ -863,15 +848,6 @@ function openOrdersDrawer() {
 function closeOrdersDrawer() {
   document.getElementById('ordersDrawer')?.classList.remove('active');
   document.getElementById('ordersOverlay')?.classList.remove('active');
-}
-
-function openHoneyModal() {
-  renderHoneyModal();
-  document.getElementById('honeyCategoryModal')?.classList.add('active');
-}
-
-function closeHoneyModal() {
-  document.getElementById('honeyCategoryModal')?.classList.remove('active');
 }
 
 function openQuickView(productId) {
@@ -933,7 +909,7 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal')?.classList.remove('active');
 }
 
-// 17. EVENT LISTENERS
+// 16. EVENT LISTENERS
 function initEventListeners() {
   // Orders Drawer
   document.getElementById('myOrdersDrawerBtn')?.addEventListener('click', openOrdersDrawer);
@@ -944,9 +920,6 @@ function initEventListeners() {
   document.getElementById('cartToggleBtn')?.addEventListener('click', openCartDrawer);
   document.getElementById('closeCartBtn')?.addEventListener('click', closeCartDrawer);
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
-
-  // Honey Modal
-  document.getElementById('closeHoneyModalBtn')?.addEventListener('click', closeHoneyModal);
 
   // Account Button
   document.getElementById('userAccountBtn')?.addEventListener('click', () => {
@@ -1142,7 +1115,7 @@ function initEventListeners() {
   });
 }
 
-// 18. TOAST NOTIFICATIONS
+// 17. TOAST NOTIFICATIONS
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
