@@ -1,6 +1,9 @@
- /* ==========================================================================
+/* ==========================================================================
    DESI TASTE LAND - Master Application JavaScript Logic
    ========================================================================== */
+
+// Free Delivery Threshold: Exactly Rs. 5,000
+const FREE_SHIPPING_THRESHOLD = 5000;
 
 // 1. HONEY CATEGORIES (4 Varieties with Uploaded Images & Exact Prices)
 const HONEY_CATEGORIES = [
@@ -223,8 +226,7 @@ const ALL_PRODUCTS = [
   }
 ];
 
-// 4. STATE MANAGEMENT & FREE SHIPPING THRESHOLD (Rs. 5000)
-const FREE_SHIPPING_THRESHOLD = 5000;
+// 4. STATE MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
 let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
@@ -624,14 +626,14 @@ function selectHoneyModalWeight(categoryId, weightIndex) {
   renderHoneyShowcase();
 }
 
-// 13. CART OPERATIONS (Free delivery above Rs. 5000)
+// 13. CART OPERATIONS (Free delivery strictly above Rs. 5000)
 function addProductToCart(productId, isTopSelling) {
   const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
   const product = list.find(p => p.id === productId);
   if (!product) return;
 
   const variant = product.variants[product.selectedWeightIndex];
-  const itemUniqueId = `${product.id}-${variant.weight.replace(/\\s+/g, '')}`;
+  const itemUniqueId = `${product.id}-${variant.weight.replace(/\s+/g, '')}`;
 
   const existing = cart.find(item => item.id === itemUniqueId);
   if (existing) {
@@ -657,7 +659,7 @@ function addHoneyCategoryToCart(categoryId) {
   if (!category) return;
 
   const variant = category.variants[category.selectedWeightIndex];
-  const itemUniqueId = `${category.id}-${variant.weight.replace(/\\s+/g, '')}`;
+  const itemUniqueId = `${category.id}-${variant.weight.replace(/\s+/g, '')}`;
 
   const existing = cart.find(item => item.id === itemUniqueId);
   if (existing) {
@@ -794,7 +796,7 @@ function renderOrdersDrawer() {
           <span class="order-status-badge ${order.status === 'Cancelled' ? 'cancelled' : ''}">${order.status}</span>
         </div>
         <div class="order-items-list">
-          ${order.items.map(i => `<div>    ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
+          ${order.items.map(i => `<div>- ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
         </div>
         <div class="summary-line" style="margin-top: 4px;">
           <strong>Total: Rs. ${order.total.toLocaleString()}</strong>
