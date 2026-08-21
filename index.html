@@ -111,21 +111,6 @@
     </div>
   </section>
 
-  <!-- HONEY VARIETIES SHOWCASE SECTION (Wild & Farmy Big/Small Bee with 4 Images) -->
-  <section class="section-padding honey-showcase-section reveal-section" id="honeyShowcase">
-    <div class="container">
-      <div class="section-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-jar-wheat text-red"></i> 100% Pure & Raw Honey Varieties</span>
-        <h2 class="section-title">CHOOSE YOUR HONEY VARIETY</h2>
-        <p class="section-desc">Select from our 4 certified pure varieties â€” collected with zero sugar adulteration guarantee.</p>
-      </div>
-
-      <div class="honey-cards-grid" id="honeyShowcaseGrid">
-        <!-- Injected via JS (WILD BIG BEE, WILD SMALL BEE, FARMY BIG BEE, FARMY SMALL BEE) -->
-      </div>
-    </div>
-  </section>
-
   <!-- ALL PRODUCTS SECTION (With Interactive Weight Selectors & Simple Font Prices) -->
   <section class="section-padding all-products-section reveal-section" id="allProductsSection">
     <div class="container">
@@ -137,6 +122,21 @@
 
       <div class="products-responsive-grid" id="allProductsGrid">
         <!-- Injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- HONEY VARIETIES SHOWCASE SECTION (Wild & Farmy Big/Small Bee with 4 Images - Below All Products) -->
+  <section class="section-padding honey-showcase-section reveal-section" id="honeyShowcase">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-subtitle"><i class="fa-solid fa-jar-wheat text-red"></i> 100% Pure & Raw Honey Varieties</span>
+        <h2 class="section-title">CHOOSE YOUR HONEY VARIETY</h2>
+        <p class="section-desc">Select from our 4 certified pure varieties â€” collected with zero sugar adulteration guarantee.</p>
+      </div>
+
+      <div class="honey-cards-grid" id="honeyShowcaseGrid">
+        <!-- Injected via JS (WILD BIG BEE, WILD SMALL BEE, FARMY BIG BEE, FARMY SMALL BEE) -->
       </div>
     </div>
   </section>
@@ -186,7 +186,7 @@
     </div>
   </section>
 
-  <!-- SPECIAL DEALS SECTION (Clean Design, Full Image Visibility, NO Timer, Direct & Bold) -->
+  <!-- SPECIAL DEALS SECTION (Sleek, Clean, No Stock Bar, No Description List) -->
   <section class="section-padding special-deal-section reveal-section" id="specialDeal">
     <div class="container">
       <div class="deal-card-ultra">
@@ -217,45 +217,10 @@
             </div>
           </div>
 
-          <!-- Deal Information & Conversion Details (Clean, Direct, No Timer) -->
+          <!-- Deal Information & Conversion Details -->
           <div class="deal-details-panel">
             <div class="deal-tagline"><i class="fa-solid fa-crown text-red"></i> EXCLUSIVE LIMITED COMBO OFFER</div>
             <h2 class="deal-heading">PURE DESI GHEE & ROYAL KASHMIRI SAFFRON</h2>
-
-            <div class="deal-items-included">
-              <div class="deal-item-row">
-                <div class="deal-check-icon"><i class="fa-solid fa-check"></i></div>
-                <div class="deal-item-text">
-                  <strong>500g Pure Wood-Pressed Desi Ghee</strong>
-                  <span>Traditional bilona churned from grass-fed pure milk</span>
-                </div>
-              </div>
-              <div class="deal-item-row">
-                <div class="deal-check-icon"><i class="fa-solid fa-check"></i></div>
-                <div class="deal-item-text">
-                  <strong>1g Royal Kashmiri Saffron (100% Pure Mongra)</strong>
-                  <span>Direct from Kashmir valley, intensely aromatic & rich</span>
-                </div>
-              </div>
-              <div class="deal-item-row">
-                <div class="deal-check-icon"><i class="fa-solid fa-check"></i></div>
-                <div class="deal-item-text">
-                  <strong>FREE Express Nationwide Delivery</strong>
-                  <span>Delivered safely to your doorstep with Cash on Delivery</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Stock Status Bar -->
-            <div class="deal-stock-bar-box">
-              <div class="stock-labels">
-                <span><i class="fa-solid fa-boxes-stacked"></i> Remaining Stock:</span>
-                <span class="stock-highlight" id="dealStockText">ðŸ”¥ Only 4 deals left in stock</span>
-              </div>
-              <div class="stock-progress-track">
-                <div class="stock-progress-meter" style="width: 88%;"></div>
-              </div>
-            </div>
 
             <!-- Price & Action CTA (Simple Clean Font) -->
             <div class="deal-action-panel">
@@ -523,8 +488,8 @@
         <ul>
           <li><a href="#hero">Home</a></li>
           <li><a href="#topSelling">Top Selling Products</a></li>
-          <li><a href="#honeyShowcase">Pure Honey Varieties</a></li>
           <li><a href="#allProductsSection">All Products</a></li>
+          <li><a href="#honeyShowcase">Pure Honey Varieties</a></li>
           <li><a href="#specialDeal">Today's Mega Deal</a></li>
           <li><a href="#whyUs">Why Desi Taste Land</a></li>
           <li><a href="#aboutSection">About Us</a></li>
@@ -578,9 +543,9 @@
       <button class="close-btn" id="closeCartBtn">&times;</button>
     </div>
 
-    <!-- Free Shipping Bar -->
+    <!-- Free Shipping Bar (Updated to Rs. 5000) -->
     <div class="free-shipping-box">
-      <p id="shippingText">Add <strong>Rs. 3,000</strong> more to get FREE Delivery!</p>
+      <p id="shippingText">Add <strong>Rs. 5,000</strong> more to get FREE Delivery!</p>
       <div class="shipping-progress-bg">
         <div class="shipping-progress-fill" id="shippingProgressFill" style="width: 0%;"></div>
       </div>
