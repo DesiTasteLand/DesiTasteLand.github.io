@@ -223,7 +223,8 @@ const ALL_PRODUCTS = [
   }
 ];
 
-// 4. STATE MANAGEMENT
+// 4. STATE MANAGEMENT & FREE SHIPPING THRESHOLD (Rs. 5000)
+const FREE_SHIPPING_THRESHOLD = 5000;
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
 let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
@@ -233,8 +234,8 @@ let slideInterval;
 // 5. INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
-  renderHoneyShowcase();
   renderAllProducts();
+  renderHoneyShowcase();
   renderHoneyModal();
   updateCartUI();
   updateAuthUI();
@@ -438,50 +439,7 @@ function renderTopSellingProducts() {
   }).join('');
 }
 
-// 9. RENDER HONEY VARIETIES SHOWCASE (4 Images, 4 Varieties)
-function renderHoneyShowcase() {
-  const container = document.getElementById('honeyShowcaseGrid');
-  if (!container) return;
-
-  container.innerHTML = HONEY_CATEGORIES.map(category => {
-    const activeVar = category.variants[category.selectedWeightIndex];
-    return `
-      <div class="honey-card" id="hcard-${category.id}">
-        <span class="honey-card-badge">${category.tag}</span>
-        <div class="honey-card-img-box">
-          <img src="${category.image}" alt="${category.name}" loading="lazy">
-        </div>
-
-        <div class="honey-card-body">
-          <h3 class="honey-card-title">${category.name}</h3>
-
-          <div class="weight-selector-box">
-            <span class="weight-selector-label">Select Weight:</span>
-            <div class="honey-weights-row">
-              ${category.variants.map((v, idx) => `
-                <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
-                        onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
-                  ${v.weight}
-                </button>
-              `).join('')}
-            </div>
-          </div>
-
-          <div class="honey-card-price-row">
-            <span class="honey-price-val" id="hprice-${category.id}">Rs. ${activeVar.price.toLocaleString()}</span>
-            <span class="honey-unit-label">per ${activeVar.weight}</span>
-          </div>
-
-          <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
-            <i class="fa-solid fa-bag-shopping"></i> Add To Cart
-          </button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// 10. RENDER ALL PRODUCTS (8 Items with Live Weight Variant Selectors)
+// 9. RENDER ALL PRODUCTS (8 Items with Live Weight Variant Selectors)
 function renderAllProducts() {
   const container = document.getElementById('allProductsGrid');
   if (!container) return;
@@ -546,6 +504,49 @@ function renderAllProducts() {
               </button>
             `}
           </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 10. RENDER HONEY VARIETIES SHOWCASE (4 Images, 4 Varieties)
+function renderHoneyShowcase() {
+  const container = document.getElementById('honeyShowcaseGrid');
+  if (!container) return;
+
+  container.innerHTML = HONEY_CATEGORIES.map(category => {
+    const activeVar = category.variants[category.selectedWeightIndex];
+    return `
+      <div class="honey-card" id="hcard-${category.id}">
+        <span class="honey-card-badge">${category.tag}</span>
+        <div class="honey-card-img-box">
+          <img src="${category.image}" alt="${category.name}" loading="lazy">
+        </div>
+
+        <div class="honey-card-body">
+          <h3 class="honey-card-title">${category.name}</h3>
+
+          <div class="weight-selector-box">
+            <span class="weight-selector-label">Select Weight:</span>
+            <div class="honey-weights-row">
+              ${category.variants.map((v, idx) => `
+                <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
+                        onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
+                  ${v.weight}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="honey-card-price-row">
+            <span class="honey-price-val" id="hprice-${category.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+            <span class="honey-unit-label">per ${activeVar.weight}</span>
+          </div>
+
+          <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
+            <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+          </button>
         </div>
       </div>
     `;
@@ -623,7 +624,7 @@ function selectHoneyModalWeight(categoryId, weightIndex) {
   renderHoneyShowcase();
 }
 
-// 13. CART OPERATIONS
+// 13. CART OPERATIONS (Free delivery above Rs. 5000)
 function addProductToCart(productId, isTopSelling) {
   const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
   const product = list.find(p => p.id === productId);
@@ -704,28 +705,27 @@ function saveCart() {
 function updateCartUI() {
   const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const freeShippingThreshold = 3000;
 
   document.getElementById('cartCountBadge').textContent = totalItems;
   document.getElementById('cartCountTitle').textContent = totalItems;
 
-  const deliveryCharge = (subtotal >= freeShippingThreshold || subtotal === 0) ? 0 : 250;
+  const deliveryCharge = (subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0) ? 0 : 250;
   const grandTotal = subtotal + deliveryCharge;
 
   document.getElementById('cartSubtotal').textContent = `Rs. ${subtotal.toLocaleString()}`;
   document.getElementById('deliveryChargeText').textContent = deliveryCharge === 0 ? 'FREE' : `Rs. ${deliveryCharge}`;
   document.getElementById('cartGrandTotal').textContent = `Rs. ${grandTotal.toLocaleString()}`;
 
-  const progressPercent = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+  const progressPercent = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
   const fillBar = document.getElementById('shippingProgressFill');
   const textBar = document.getElementById('shippingText');
 
   if (fillBar) fillBar.style.width = `${progressPercent}%`;
   if (textBar) {
-    if (subtotal >= freeShippingThreshold) {
+    if (subtotal >= FREE_SHIPPING_THRESHOLD) {
       textBar.innerHTML = `<span class="text-forest"><i class="fa-solid fa-crown text-red"></i> You unlocked <strong>FREE Delivery</strong>!</span>`;
     } else {
-      const needed = freeShippingThreshold - subtotal;
+      const needed = FREE_SHIPPING_THRESHOLD - subtotal;
       textBar.innerHTML = `Add <strong>Rs. ${needed.toLocaleString()}</strong> more to get <strong>FREE Delivery</strong>!`;
     }
   }
@@ -917,7 +917,7 @@ function openCheckoutModal() {
   closeCartDrawer();
 
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const shipping = subtotal >= 3000 ? 0 : 250;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 250;
   const finalTotal = subtotal + shipping;
 
   document.getElementById('checkoutItemsTotal').textContent = `Rs. ${subtotal.toLocaleString()}`;
@@ -1090,7 +1090,7 @@ function initEventListeners() {
     const refId = '#DTL-' + Math.floor(10000 + Math.random() * 90000);
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const shipping = subtotal >= 3000 ? 0 : 250;
+    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 250;
     const grandTotal = subtotal + shipping;
 
     const itemsSummary = cart.map(i => `${i.name} (${i.qty}x) = Rs. ${i.price * i.qty}`).join(', ');
