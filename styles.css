@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    DESI TASTE LAND - Brand Logo Matched Premium Design System
    ========================================================================== */
 
@@ -46,7 +46,7 @@
   --radius-pill: 999px;
 
   --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --transition-fast: all 0.2s ease;
   --transition-normal: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -118,7 +118,7 @@ button {
 .margin-top-40 { margin-top: 40px; }
 .margin-bottom-20 { margin-bottom: 20px; }
 
-/* Scroll Reveal Animation Classes */
+/* Scroll Reveal Animation */
 .reveal-section {
   opacity: 0;
   transform: translateY(30px);
@@ -197,6 +197,40 @@ button {
 
 .shadow-red {
   box-shadow: var(--shadow-red);
+}
+
+/* ==========================================================================
+   SIMPLE CLEAN FONT FOR ALL PRICES (Every single price on site)
+   ========================================================================== */
+.price-current,
+.current-price,
+.original-price,
+.cart-item-price,
+.cart-subtotal-row strong,
+.cart-total-row strong,
+.order-summary-box .summary-line span,
+.order-summary-box .summary-line strong,
+.deal-pricing-row .current-price,
+.deal-pricing-row .original-price,
+.deal-action-panel .current-price,
+.deal-action-panel .original-price,
+.qv-info .price-current,
+.weight-btn,
+.weight-btn .w-price,
+.honey-card-price,
+.honey-price-val,
+.summary-line strong,
+.price-now-wrap .current-price,
+.price-original-wrap .original-price,
+.honey-modal-price,
+#checkoutFinalTotal,
+#checkoutItemsTotal,
+#cartSubtotal,
+#cartGrandTotal {
+  font-family: var(--font-body) !important;
+  font-weight: 800 !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.2px;
 }
 
 /* ULTRA-PREMIUM NAVBAR (Logo Centered, Menu Icon Left) */
@@ -400,7 +434,6 @@ button {
   border-radius: var(--radius-md);
   padding: 16px;
   background: var(--bg-surface);
-
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -460,7 +493,9 @@ button {
   color: #FFFFFF;
 }
 
-/* HERO SLIDER SECTION */
+/* ==========================================================================
+   HERO SLIDER (Touch & Mouse Drag Swipe, No Side Buttons)
+   ========================================================================== */
 .hero-slider-section {
   position: relative;
   width: 100%;
@@ -578,18 +613,15 @@ button {
   margin: 0 auto;
 }
 
-/* TOP SELLING PRODUCTS GRID (3 Items Only - NO BADGES & NO PRICES) */
+/* ==========================================================================
+   PRODUCT CARDS & INTERACTIVE WEIGHT SELECTORS
+   ========================================================================== */
 .top-selling-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-.top-selling-grid .product-badge {
-  display: none !important;
-}
-
-/* PRODUCTS RESPONSIVE GRID (Exact 3 on Laptop, Exact 2 on Mobile) */
 .products-responsive-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -640,7 +672,7 @@ button {
 .product-img-box {
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 240px;
   background: #FFFDF9;
   display: flex;
   align-items: center;
@@ -713,11 +745,59 @@ button {
   gap: 4px;
   font-size: 0.78rem;
   color: var(--text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .stars {
   color: #F59E0B;
+}
+
+/* Weight Selection Pill Buttons */
+.weight-selector-box {
+  margin: 6px 0 12px;
+}
+
+.weight-selector-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.weight-options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.weight-btn {
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-alt);
+  border: 1.5px solid var(--border-light);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.weight-btn:hover {
+  border-color: var(--red-primary);
+  color: var(--red-primary);
+}
+
+.weight-btn.active {
+  background: linear-gradient(135deg, var(--red-primary), var(--red-dark));
+  color: #FFFFFF;
+  border-color: var(--red-primary);
+  box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
 }
 
 .price-row {
@@ -729,8 +809,7 @@ button {
 }
 
 .price-current {
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--forest-primary);
 }
@@ -741,7 +820,152 @@ button {
   margin-top: auto;
 }
 
-/* WHY US SECTION */
+/* ==========================================================================
+   HONEY VARIETIES SHOWCASE SECTION (4 Real Images + Exact Prices)
+   ========================================================================== */
+.honey-showcase-section {
+  background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg-main) 100%);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.honey-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.honey-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-gold);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-normal);
+  position: relative;
+}
+
+.honey-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--red-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.honey-card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--forest-primary);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  z-index: 2;
+}
+
+.honey-card-img-box {
+  width: 100%;
+  height: 220px;
+  background: #FFFDF9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.honey-card-img-box img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.honey-card:hover .honey-card-img-box img {
+  transform: scale(1.06);
+}
+
+.honey-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.honey-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.honey-card-urdu {
+  font-size: 0.82rem;
+  color: var(--red-primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.honey-weights-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.honey-w-btn {
+  flex: 1;
+  padding: 5px 4px;
+  border-radius: 6px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.honey-w-btn:hover {
+  border-color: var(--red-primary);
+}
+
+.honey-w-btn.active {
+  background: var(--red-primary);
+  color: #FFFFFF;
+  border-color: var(--red-primary);
+}
+
+.honey-card-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
+.honey-price-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--forest-primary);
+}
+
+.honey-unit-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   WHY US SECTION
+   ========================================================================== */
 .why-us-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -788,22 +1012,33 @@ button {
   color: var(--text-muted);
 }
 
-/* SPECIAL DEALS SECTION */
+/* ==========================================================================
+   TOTALLY REDESIGNED SPECIAL DEAL SECTION (Full Image Visibility)
+   ========================================================================== */
 .special-deal-section {
   background: var(--bg-main);
 }
 
-.deal-card-luxury {
+.deal-card-ultra {
   background: #FFFFFF;
   border-radius: var(--radius-lg);
   border: 2px solid var(--forest-primary);
-  box-shadow: var(--shadow-lg);
-  padding: 36px;
+  box-shadow: 0 16px 48px rgba(21, 71, 52, 0.15);
+  padding: 32px;
   position: relative;
   overflow: hidden;
 }
 
-.deal-badge-ribbon {
+.deal-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.deal-badge-glow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -811,151 +1046,253 @@ button {
   color: #FFFFFF;
   font-size: 0.82rem;
   font-weight: 800;
-  padding: 6px 20px;
+  padding: 6px 18px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--gold-primary);
-  margin-bottom: 24px;
+  border: 1.5px solid var(--gold-primary);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);
 }
 
-.deal-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 36px;
+.deal-urgency-badge {
+  display: inline-flex;
   align-items: center;
-}
-
-.deal-image-container {
-  position: relative;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-gold);
-}
-
-.deal-img {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
-}
-
-.deal-savings-tag {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: var(--red-primary);
-  color: #FFFFFF;
+  gap: 6px;
+  background: var(--red-light);
+  color: var(--red-primary);
+  font-size: 0.8rem;
   font-weight: 800;
   padding: 6px 14px;
   border-radius: var(--radius-pill);
-  font-size: 0.82rem;
+  border: 1px solid var(--border-red);
 }
 
-.deal-category {
-  font-size: 0.82rem;
+.deal-grid-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.deal-media-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.deal-img-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  max-height: 420px;
+  background: #FFFDF9;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.deal-banner-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.deal-img-wrapper:hover .deal-banner-image {
+  transform: scale(1.03);
+}
+
+.deal-discount-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, var(--red-primary), var(--red-dark));
+  color: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+}
+
+.discount-percent {
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.discount-sub {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.deal-trust-pills {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.deal-details-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.deal-tagline {
+  font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 1.5px;
   color: var(--red-primary);
   margin-bottom: 6px;
 }
 
-.deal-title {
+.deal-heading {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--text-dark);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  line-height: 1.25;
 }
 
-.deal-description {
+.deal-lead-text {
   font-size: 0.92rem;
   color: var(--text-body);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  line-height: 1.5;
 }
 
-.deal-includes {
-  list-style: none;
-  margin-bottom: 20px;
+.deal-items-included {
   display: grid;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
-.deal-includes li {
+.deal-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--bg-surface);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.deal-check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--forest-light);
+  color: var(--forest-primary);
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.88rem;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
-.countdown-wrapper {
+.deal-item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.deal-item-text strong {
+  font-size: 0.88rem;
+  color: var(--text-dark);
+}
+
+.deal-item-text span {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.deal-countdown-box {
   background: var(--bg-alt);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 12px 18px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
-  gap: 10px;
-}
-
-.timer-label {
-  font-weight: 700;
-  color: var(--text-dark);
-  font-size: 0.85rem;
-}
-
-.countdown-boxes {
-  display: flex;
-  align-items: center;
   gap: 8px;
 }
 
-.time-box {
+.countdown-header {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.countdown-digits {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timer-unit {
   background: var(--forest-dark);
   color: #FFFFFF;
-  border-radius: 8px;
-  padding: 6px 10px;
+  border-radius: 6px;
+  padding: 4px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 48px;
+  min-width: 44px;
 }
 
-.time-box span {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
+.timer-val {
+  font-size: 1.1rem;
   font-weight: 800;
   line-height: 1;
   color: var(--gold-primary);
 }
 
-.time-box small {
-  font-size: 0.6rem;
-  color: #FFFFFF;
+.timer-sub {
+  font-size: 0.55rem;
   text-transform: uppercase;
+  color: #CBD5E1;
 }
 
-.colon {
-  font-size: 1.2rem;
+.timer-sep {
   font-weight: 800;
   color: var(--forest-primary);
 }
 
-.stock-progress-wrapper {
-  margin-bottom: 24px;
+.deal-stock-bar-box {
+  margin-bottom: 20px;
 }
 
-.stock-info {
+.stock-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   margin-bottom: 6px;
   color: var(--text-body);
 }
 
-.progress-bar {
+.stock-highlight {
+  font-weight: 800;
+  color: var(--red-primary);
+}
+
+.stock-progress-track {
   width: 100%;
   height: 8px;
   background: var(--border-light);
@@ -963,17 +1300,34 @@ button {
   overflow: hidden;
 }
 
-.progress-fill {
+.stock-progress-meter {
   height: 100%;
   background: linear-gradient(90deg, var(--gold-primary), var(--red-primary));
   border-radius: var(--radius-pill);
 }
 
-.deal-pricing-row {
+.deal-action-panel {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.deal-price-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-original-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-was-label {
+  font-size: 0.75rem;
+  color: var(--text-light);
 }
 
 .original-price {
@@ -982,14 +1336,36 @@ button {
   text-decoration: line-through;
 }
 
-.current-price {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--red-primary);
+.price-now-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
 }
 
-/* ABOUT DESI TASTE LAND SECTION */
+.current-price {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--red-primary);
+  line-height: 1;
+}
+
+.free-shipping-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  background: var(--forest-light);
+  color: var(--forest-primary);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.deal-cta-btn {
+  flex-grow: 1;
+  max-width: 320px;
+}
+
+/* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
 .about-section {
   background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-alt) 100%);
 }
@@ -1093,7 +1469,9 @@ button {
   color: var(--gold-dark);
 }
 
-/* REVIEWS SECTION & SUBMIT REVIEW FORM */
+/* ==========================================================================
+   REVIEWS SECTION & SUBMIT FORM
+   ========================================================================== */
 .reviews-section {
   background: var(--bg-main);
 }
@@ -1197,7 +1575,7 @@ button {
   gap: 14px;
 }
 
-/* SIGN UP / LOGIN SECTION STYLES (In-Place Swapping) */
+/* AUTH SECTION */
 .auth-section {
   background: var(--bg-alt);
 }
@@ -1386,7 +1764,7 @@ button {
   color: #CBD5E1;
 }
 
-/* FLOATING WHATSAPP BUTTON */
+/* FLOATING WHATSAPP */
 .floating-whatsapp {
   position: fixed;
   bottom: 20px;
@@ -1588,7 +1966,9 @@ button {
   border-top: 1px dashed var(--border-light);
 }
 
-/* MODALS */
+/* ==========================================================================
+   MODALS (Quick View, Honey Selection, Checkout, Success)
+   ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1622,6 +2002,7 @@ button {
   padding: 24px;
 }
 
+.modal-card-lg { max-width: 860px; }
 .modal-card-md { max-width: 480px; }
 .modal-card-sm { max-width: 380px; }
 
@@ -1692,6 +2073,96 @@ button {
   gap: 6px;
 }
 
+/* Honey Modal Grid */
+.honey-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.honey-modal-item {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-gold);
+  padding: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  transition: var(--transition-normal);
+}
+
+.honey-modal-item:hover {
+  border-color: var(--red-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.honey-modal-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.honey-modal-details {
+  flex-grow: 1;
+}
+
+.honey-modal-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.honey-modal-urdu {
+  font-size: 0.78rem;
+  color: var(--red-primary);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.honey-modal-weights {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.honey-modal-w-btn {
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.honey-modal-w-btn.active {
+  background: var(--red-primary);
+  color: #FFFFFF;
+  border-color: var(--red-primary);
+}
+
+.honey-modal-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.honey-modal-price {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--forest-primary);
+}
+
+/* CHECKOUT FORM */
 .checkout-form {
   display: grid;
   gap: 12px;
@@ -1800,12 +2271,14 @@ button {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* MOBILE RESPONSIVENESS */
+/* RESPONSIVE DESIGN */
 @media (max-width: 992px) {
   .top-selling-grid { grid-template-columns: repeat(2, 1fr); }
-  .deal-grid, .quick-view-grid { grid-template-columns: 1fr; }
+  .honey-cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .deal-grid-layout, .quick-view-grid { grid-template-columns: 1fr; }
   .reviews-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .honey-modal-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -1820,13 +2293,16 @@ button {
   .about-card-luxury, .auth-card-luxury { padding: 24px 16px; }
   .about-main-title { font-size: 1.7rem; }
 
-  .deal-card-luxury { padding: 18px; }
-  .deal-title { font-size: 1.4rem; }
-  .countdown-wrapper { justify-content: center; }
+  .deal-card-ultra { padding: 20px 16px; }
+  .deal-heading { font-size: 1.35rem; }
+  .deal-action-panel { flex-direction: column; align-items: stretch; }
+  .deal-cta-btn { max-width: 100%; }
+
   .reviews-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 20px; }
   .form-row { grid-template-columns: 1fr; }
   .top-selling-grid { grid-template-columns: 1fr; }
+  .honey-cards-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
@@ -1835,6 +2311,6 @@ button {
   .section-title { font-size: 1.4rem; }
   .product-img-box { height: 180px; padding: 10px; }
   .product-title { font-size: 0.95rem; }
-  .price-current { font-size: 1.05rem; }
+  .price-current { font-size: 1.1rem; }
   .btn-sm { padding: 6px 12px; font-size: 0.78rem; }
 }
