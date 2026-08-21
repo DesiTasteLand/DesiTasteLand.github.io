@@ -5,49 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DESI TASTE LAND | Pure, Organic & Authentic Desi Goodness</title>
   <meta name="description" content="Discover 100% pure, organic Sidr Honey, Desi Ghee, Pure Olive Oil, Premium Tea, Talbina, Shilajit, Kashmiri Saffron & Imli Chutney from DESI TASTE LAND.">
-  
-  <!-- Browser Tab Favicon Logo -->
+
+  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="assets/images/brand_logo.jpg">
   <link rel="shortcut icon" type="image/jpeg" href="assets/images/brand_logo.jpg">
   <link rel="apple-touch-icon" href="assets/images/brand_logo.jpg">
 
-  <!-- Google Fonts: Courier Prime & Space Mono (Typewriter style) + Plus Jakarta Sans -->
+  <!-- Google Fonts: Playfair Display Bold + Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Main Navbar (Logo Centered, Menu Icon Left for Orders History) -->
+  <!-- NAVBAR -->
   <header class="header" id="mainHeader">
     <div class="container header-inner">
-      <!-- Left: My Orders History Menu Icon -->
-      <button class="nav-left-btn" id="myOrdersDrawerBtn" title="My Orders & Order History">
+      <button class="nav-left-btn" id="myOrdersDrawerBtn" title="My Orders">
         <i class="fa-solid fa-bars"></i>
         <span class="nav-btn-label">My Orders</span>
       </button>
 
-      <!-- Center: Brand Logo -->
       <a href="#" class="brand-logo logo-mid">
-        <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Official Logo" class="brand-logo-img">
+        <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Logo" class="brand-logo-img">
         <div class="logo-text">
           <span class="brand-title">DESI TASTE LAND</span>
           <span class="brand-subtitle">PURE | ORGANIC | LUXURY</span>
         </div>
       </a>
 
-      <!-- Right: Action Icons (Account + Cart) -->
       <div class="header-actions">
-        <button class="icon-btn" id="userAccountBtn" title="Account / Profile">
+        <button class="icon-btn" id="userAccountBtn" title="Account">
           <i class="fa-solid fa-user"></i>
         </button>
-
-        <button class="icon-btn cart-btn-trigger" id="cartToggleBtn" title="Shopping Cart">
+        <button class="icon-btn cart-btn-trigger" id="cartToggleBtn" title="Cart">
           <i class="fa-solid fa-bag-shopping"></i>
           <span class="cart-badge" id="cartCountBadge">0</span>
         </button>
@@ -55,7 +51,7 @@
     </div>
   </header>
 
-  <!-- MY ORDERS & ORDER HISTORY DRAWER -->
+  <!-- MY ORDERS DRAWER -->
   <div class="orders-drawer-overlay" id="ordersOverlay"></div>
   <aside class="orders-drawer" id="ordersDrawer">
     <div class="orders-header">
@@ -63,36 +59,30 @@
       <button class="close-btn" id="closeOrdersBtn">&times;</button>
     </div>
     <div class="orders-notice">
-      <small><i class="fa-solid fa-circle-info"></i> You can cancel any placed order within <strong>24 hours</strong> of ordering.</small>
+      <small><i class="fa-solid fa-circle-info"></i> You can cancel any order within <strong>24 hours</strong> of placing it.</small>
     </div>
-    <div class="orders-body" id="ordersListContainer">
-      <!-- Injected via JS -->
-    </div>
+    <div class="orders-body" id="ordersListContainer"></div>
   </aside>
 
-  <!-- HERO SECTION (Touch & Drag Swipe + Golden Progress Bar, NO Side Buttons) -->
+  <!-- HERO SLIDER -->
   <section class="hero-slider-section" id="hero">
     <div class="slider-container" id="heroSlider">
       <div class="slide active">
-        <img src="assets/images/hero_banner_1.jpg" alt="Pure Honey Straight from Nature Banner" class="hero-slide-img">
+        <img src="assets/images/hero_banner_1.jpg" alt="Pure Honey Banner" class="hero-slide-img">
       </div>
       <div class="slide">
         <img src="assets/images/hero_banner_2.jpg" alt="Traditional Achar Banner" class="hero-slide-img">
       </div>
       <div class="slide">
-        <img src="assets/images/hero_banner_3.jpg" alt="100% Pure & Natural Olive Oil Banner" class="hero-slide-img">
+        <img src="assets/images/hero_banner_3.jpg" alt="Olive Oil Banner" class="hero-slide-img">
       </div>
       <div class="slide">
-        <img src="assets/images/hero_banner_4.jpg" alt="Premium Tea Patti Banner" class="hero-slide-img">
+        <img src="assets/images/hero_banner_4.jpg" alt="Premium Tea Banner" class="hero-slide-img">
       </div>
     </div>
-
-    <!-- Golden Progress Line Bar -->
     <div class="golden-progress-bar">
       <div class="golden-progress-fill" id="goldenProgressFill"></div>
     </div>
-
-    <!-- Slider Dot Indicators -->
     <div class="slider-dots" id="sliderDots">
       <span class="dot active" data-index="0"></span>
       <span class="dot" data-index="1"></span>
@@ -101,26 +91,22 @@
     </div>
   </section>
 
-  <!-- TOP SELLING PRODUCTS SECTION (Mobile Horizontal Swipe Slider) -->
+  <!-- TOP SELLING SECTION -->
   <section class="section-padding top-selling-section reveal-section" id="topSelling">
     <div class="container">
       <div class="section-header text-center">
         <span class="section-subtitle"><i class="fa-solid fa-crown text-red"></i> Customer Favorites</span>
         <h2 class="section-title">TOP SELLING PRODUCTS</h2>
-        <p class="section-desc">Our signature organic delicacies crafted for purity and unmatched rich taste.</p>
+        <p class="section-desc">Our signature organic delicacies trusted by thousands of families across Pakistan.</p>
       </div>
-
-      <!-- Single horizontal swipe row on mobile, 3-column grid on desktop -->
-      <div class="top-selling-grid" id="topSellingGrid">
-        <!-- Injected via JS -->
-      </div>
+      <div class="top-selling-grid" id="topSellingGrid"></div>
       <div class="mobile-swipe-hint text-center">
-        <small><i class="fa-solid fa-arrows-left-right text-red"></i> Swipe horizontally to view all favorites</small>
+        <small><i class="fa-solid fa-arrows-left-right text-red"></i> Swipe to view all products</small>
       </div>
     </div>
   </section>
 
-  <!-- ALL PRODUCTS SECTION (With Inline Expandable Honey Varieties between Honey & Desi Ghee) -->
+  <!-- ALL PRODUCTS SECTION -->
   <section class="section-padding all-products-section reveal-section" id="allProductsSection">
     <div class="container">
       <div class="section-header text-center">
@@ -128,14 +114,11 @@
         <h2 class="section-title">ALL PRODUCTS</h2>
         <p class="section-desc">Choose your preferred weight variant for instant price updates.</p>
       </div>
-
-      <div class="products-responsive-grid" id="allProductsGrid">
-        <!-- Injected via JS (Pure Honey -> Honey Varieties Accordion -> Desi Ghee -> Other Products) -->
-      </div>
+      <div class="products-responsive-grid" id="allProductsGrid"></div>
     </div>
   </section>
 
-  <!-- WHY DESI TASTE LAND SECTION -->
+  <!-- WHY US SECTION -->
   <section class="section-padding why-us-section reveal-section" id="whyUs">
     <div class="container">
       <div class="section-header text-center">
@@ -143,44 +126,32 @@
         <h2 class="section-title">WHY DESI TASTE LAND</h2>
         <p class="section-desc">We never compromise on purity. Here is why thousands of households trust us every single day.</p>
       </div>
-
       <div class="why-us-grid">
         <div class="why-card">
-          <div class="why-icon-box">
-            <i class="fa-solid fa-flask-vial"></i>
-          </div>
+          <div class="why-icon-box"><i class="fa-solid fa-flask-vial"></i></div>
           <h3>100% Lab Tested Pure</h3>
-          <p>Every single batch undergoes rigorous lab testing to ensure zero chemical adulteration, 0% added sugar, and 100% raw natural nutrition.</p>
+          <p>Every batch undergoes rigorous lab testing to ensure zero chemical adulteration and 100% raw natural nutrition.</p>
         </div>
-
         <div class="why-card">
-          <div class="why-icon-box">
-            <i class="fa-solid fa-tractor"></i>
-          </div>
+          <div class="why-icon-box"><i class="fa-solid fa-tractor"></i></div>
           <h3>Direct From Organic Farms</h3>
-          <p>We work directly with traditional beekeepers, local dairy artisans, and olive growers to preserve authentic traditional methods.</p>
+          <p>We work directly with traditional beekeepers, local dairy artisans, and olive growers to preserve authentic methods.</p>
         </div>
-
         <div class="why-card">
-          <div class="why-icon-box">
-            <i class="fa-solid fa-box-open"></i>
-          </div>
+          <div class="why-icon-box"><i class="fa-solid fa-box-open"></i></div>
           <h3>Hygienic Food-Grade Packaging</h3>
-          <p>Packed in food-grade, airtight premium packaging to maintain natural aroma, rich taste, and essential health nutrients safely and securely.</p>
+          <p>Packed in food-grade, airtight premium packaging to maintain natural aroma, rich taste, and essential nutrients.</p>
         </div>
-
         <div class="why-card">
-          <div class="why-icon-box">
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-          </div>
+          <div class="why-icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
           <h3>Money-Back Guarantee</h3>
-          <p>If you find any imperfection or impurity in our products, we offer an immediate 100% full money-back guarantee without hassle.</p>
+          <p>If you find any imperfection in our products, we offer an immediate 100% full money-back guarantee without hassle.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SPECIAL DEALS SECTION -->
+  <!-- SPECIAL DEAL SECTION -->
   <section class="section-padding special-deal-section reveal-section" id="specialDeal">
     <div class="container">
       <div class="deal-card-ultra">
@@ -194,12 +165,10 @@
             <span>LIMITED SPECIAL OFFER</span>
           </div>
         </div>
-
         <div class="deal-grid-layout">
-          <!-- Deal Visual Showcase (Full Image Visibility) -->
           <div class="deal-media-frame">
             <div class="deal-img-wrapper">
-              <img src="assets/images/deal_banner.jpg" alt="Special Mega Offer - Pure Desi Ghee and Kashmiri Saffron" class="deal-banner-image">
+              <img src="assets/images/deal_banner.jpg" alt="Mega Offer - Pure Desi Ghee and Kashmiri Saffron" class="deal-banner-image">
               <div class="deal-discount-pill">
                 <span class="discount-percent">SAVE 28%</span>
                 <small class="discount-sub">Special Discount</small>
@@ -210,13 +179,9 @@
               <span><i class="fa-solid fa-shield-check text-gold"></i> 100% Pure & Lab Tested</span>
             </div>
           </div>
-
-          <!-- Deal Information & Conversion Details -->
           <div class="deal-details-panel">
             <div class="deal-tagline"><i class="fa-solid fa-crown text-red"></i> EXCLUSIVE LIMITED COMBO OFFER</div>
             <h2 class="deal-heading">PURE DESI GHEE & ROYAL KASHMIRI SAFFRON</h2>
-
-            <!-- Price & Action CTA -->
             <div class="deal-action-panel">
               <div class="deal-price-stack">
                 <div class="price-original-wrap">
@@ -239,28 +204,31 @@
     </div>
   </section>
 
-  <!-- ABOUT DESI TASTE LAND SECTION -->
+  <!-- ABOUT SECTION - Heritage Image on top, text below -->
   <section class="section-padding about-section reveal-section" id="aboutSection">
     <div class="container">
       <div class="about-card-luxury">
-        <div class="about-header text-center">
-          <span class="section-subtitle"><i class="fa-solid fa-hand-holding-heart text-red"></i> OUR COMMITMENT</span>
-          <h2 class="about-main-title">About Desi Taste Land</h2>
-          <div class="gold-divider"><i class="fa-solid fa-seedling"></i></div>
-        </div>
+        <!-- Heritage Image at the top -->
+        <img src="assets/images/about_heritage.jpg" alt="Our Heritage - Desi Taste Land" class="about-heritage-img">
 
-        <div class="about-body-content text-center">
-          <p class="about-lead">
-            Desi Taste Land is a humble effort to bring pure, wholesome and authentic desi goodness to your home. Our mission is to serve with honesty, quality and pure values, while keeping purity at the heart of our work.
-          </p>
-
-          <div class="about-promise-box">
-            <p><strong>Purity is our promise, trust is our responsibility, and quality is what we deliver.</strong></p>
+        <!-- About Content Below the Image -->
+        <div class="about-content-body">
+          <div class="about-header text-center">
+            <span class="section-subtitle"><i class="fa-solid fa-hand-holding-heart text-red"></i> OUR COMMITMENT</span>
+            <h2 class="about-main-title">About Desi Taste Land</h2>
+            <div class="gold-divider"><i class="fa-solid fa-seedling"></i></div>
           </div>
-
-          <p class="about-closing-dua">
-            100% Raw, Natural & Authentic Desi Goodness Guaranteed.
-          </p>
+          <div class="about-body-content text-center">
+            <p class="about-lead">
+              Desi Taste Land is a humble effort to bring pure, wholesome and authentic desi goodness to your home. Our mission is to serve with honesty, quality and pure values, while keeping purity at the heart of our work.
+            </p>
+            <div class="about-promise-box">
+              <p><strong>Purity is our promise, trust is our responsibility, and quality is what we deliver.</strong></p>
+            </div>
+            <p class="about-closing-dua">
+              100% Raw, Natural & Authentic Desi Goodness Guaranteed.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -274,85 +242,47 @@
         <h2 class="section-title">What Our Customers Say</h2>
         <p class="section-desc">Real words of trust from households across Pakistan.</p>
       </div>
-
       <div class="reviews-grid" id="reviewsGrid">
         <div class="review-card">
           <div class="review-top">
-            <div class="stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
           </div>
-          <p class="review-text">
-            "Sidr Honey aur Desi Ghee bilkul 100% pure hain. Taste aur aroma lajawab hai. Packing bhi bohot hygienic aur secure thi. Bohot shukriya!"
-          </p>
+          <p class="review-text">"Sidr Honey aur Desi Ghee bilkul 100% pure hain. Taste aur aroma lajawab hai. Packing bhi bohot hygienic aur secure thi. Bohot shukriya!"</p>
           <div class="reviewer-meta">
             <div class="reviewer-initial">S</div>
-            <div class="reviewer-info">
-              <strong>Syed Hammad Raza</strong>
-              <small>Lahore, Pakistan</small>
-            </div>
+            <div class="reviewer-info"><strong>Syed Hammad Raza</strong><small>Lahore, Pakistan</small></div>
           </div>
         </div>
-
         <div class="review-card">
           <div class="review-top">
-            <div class="stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
           </div>
-          <p class="review-text">
-            "Main ne Pehli dafa Desi Taste Land se Olive Oil mangwaya tha. Delivery fast thi aur quality unmatched hai. Health aur taste dono me 100/100!"
-          </p>
+          <p class="review-text">"Maine pehli dafa Desi Taste Land se Olive Oil mangwaya. Delivery fast thi aur quality unmatched hai. Health aur taste dono me 100/100!"</p>
           <div class="reviewer-meta">
             <div class="reviewer-initial">F</div>
-            <div class="reviewer-info">
-              <strong>Fatima Zehra</strong>
-              <small>Islamabad, Pakistan</small>
-            </div>
+            <div class="reviewer-info"><strong>Fatima Zehra</strong><small>Islamabad, Pakistan</small></div>
           </div>
         </div>
-
         <div class="review-card">
           <div class="review-top">
-            <div class="stars">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
           </div>
-          <p class="review-text">
-            "Special Combo Offer mangwaya tha Ghee aur Saffron ka. Packing bohot hi luxury thi aur taste 100% authentic desi hai."
-          </p>
+          <p class="review-text">"Special Combo mangwaya tha Ghee aur Saffron ka. Packing bohot hi luxury thi aur taste 100% authentic desi hai."</p>
           <div class="reviewer-meta">
             <div class="reviewer-initial">C</div>
-            <div class="reviewer-info">
-              <strong>Chaudhry Bilal</strong>
-              <small>Karachi, Pakistan</small>
-            </div>
+            <div class="reviewer-info"><strong>Chaudhry Bilal</strong><small>Karachi, Pakistan</small></div>
           </div>
         </div>
       </div>
 
-      <!-- Submit a Review Form -->
       <div class="submit-review-card margin-top-40">
         <div class="text-center margin-bottom-20">
           <h3><i class="fa-solid fa-pen-to-square text-red"></i> Write a Customer Review</h3>
           <p>Share your authentic feedback with our team</p>
         </div>
-
         <form id="submitReviewForm" class="review-form">
           <div class="form-row">
             <div class="form-group">
@@ -361,15 +291,13 @@
             </div>
             <div class="form-group">
               <label for="revCity">City *</label>
-              <input type="text" id="revCity" placeholder="Lahore, Karachi, Rawalpindi..." required>
+              <input type="text" id="revCity" placeholder="Lahore, Karachi..." required>
             </div>
           </div>
-
           <div class="form-group">
-            <label for="revComment">Your Experience / Feedback *</label>
-            <textarea id="revComment" rows="3" placeholder="Share your thoughts about our pure organic products..." required></textarea>
+            <label for="revComment">Your Feedback *</label>
+            <textarea id="revComment" rows="3" placeholder="Share your thoughts about our products..." required></textarea>
           </div>
-
           <button type="submit" class="btn btn-red btn-block shadow-red">
             <i class="fa-solid fa-paper-plane"></i> Submit Review
           </button>
@@ -378,7 +306,7 @@
     </div>
   </section>
 
-  <!-- SIGN UP / LOGIN SECTION -->
+  <!-- AUTH SECTION -->
   <section class="section-padding auth-section reveal-section" id="authSection">
     <div class="container">
       <div class="auth-card-luxury">
@@ -386,57 +314,46 @@
           <button class="auth-tab-btn active" id="loginTabBtn">Login to Account</button>
           <button class="auth-tab-btn" id="signupTabBtn">Create New Account</button>
         </div>
-
         <div class="auth-form-container">
-          <!-- Login Form -->
           <form id="loginForm" class="auth-form active">
             <div class="auth-header text-center">
               <h3>Welcome Back</h3>
-              <p>Login to track your orders and order history</p>
+              <p>Login to track your orders and history</p>
             </div>
-
             <div class="form-group">
               <label for="loginEmail">Email / Phone Number *</label>
               <input type="text" id="loginEmail" placeholder="Enter your email or 03070016113" required>
             </div>
-
             <div class="form-group">
               <label for="loginPassword">Password *</label>
               <input type="password" id="loginPassword" placeholder="Enter your password" required>
             </div>
-
             <button type="submit" class="btn btn-red btn-block btn-lg shadow-red">
               <i class="fa-solid fa-right-to-bracket"></i> Login Now
             </button>
           </form>
 
-          <!-- Sign Up Form -->
           <form id="signupForm" class="auth-form" style="display: none;">
             <div class="auth-header text-center">
               <h3>Create New Account</h3>
               <p>Join Desi Taste Land for pure organic goodness</p>
             </div>
-
             <div class="form-group">
               <label for="signupName">Full Name *</label>
               <input type="text" id="signupName" placeholder="e.g. Muhammad Ali" required>
             </div>
-
             <div class="form-group">
               <label for="signupPhone">Phone Number *</label>
               <input type="tel" id="signupPhone" placeholder="03070016113" required>
             </div>
-
             <div class="form-group">
               <label for="signupEmail">Email Address *</label>
               <input type="email" id="signupEmail" placeholder="desitasteland@gmail.com" required>
             </div>
-
             <div class="form-group">
               <label for="signupPassword">Password *</label>
               <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required>
             </div>
-
             <button type="submit" class="btn btn-red btn-block btn-lg shadow-red">
               <i class="fa-solid fa-user-plus"></i> Create Account
             </button>
@@ -444,9 +361,9 @@
 
           <div id="userLoggedInState" class="user-logged-state" style="display: none;">
             <div class="user-avatar-circle"><i class="fa-solid fa-user"></i></div>
-            <h3 id="loggedInUserName">Logged in User</h3>
-            <p id="loggedInUserEmail">email@example.com</p>
-            <button class="btn btn-red-outline btn-sm" id="logoutBtn" style="margin-top: 16px;">
+            <h3 id="loggedInUserName">User</h3>
+            <p id="loggedInUserEmail">email</p>
+            <button class="btn btn-red-outline btn-sm" id="logoutBtn" style="margin-top:16px;">
               <i class="fa-solid fa-right-from-bracket"></i> Logout
             </button>
           </div>
@@ -460,36 +377,31 @@
     <div class="container footer-grid">
       <div class="footer-col brand-col">
         <a href="#" class="brand-logo footer-logo">
-          <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Official Logo" class="brand-logo-img">
+          <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Logo" class="brand-logo-img">
           <div class="logo-text">
             <span class="brand-title">DESI TASTE LAND</span>
             <span class="brand-subtitle">PURE | ORGANIC | LUXURY</span>
           </div>
         </a>
-        <p class="footer-about">
-          DESI TASTE LAND brings authentic, farm-fresh, 100% natural organic delicacies straight from pristine farms to your home with unmatched purity and elegance.
-        </p>
+        <p class="footer-about">DESI TASTE LAND brings authentic, farm-fresh, 100% natural organic delicacies straight from pristine farms to your home with unmatched purity.</p>
         <div class="social-links">
           <a href="https://www.facebook.com/profile.php?id=61584915339912" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/desitasteland?fbclid=IwY2xjawTztANwZG9mAWV4dG4DYWVtAjEwAGJyaWQRMEJXV0liOHFJU3RWcU5aOUtzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEe6tF8oHgwicK_J7Tt6gjESwBnG2rTl7IfkGREiYenxsA2Kioxh04QvJAwc7g_aem_ukDTJik3oora3aB591MIJA" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.instagram.com/desitasteland" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="https://wa.me/923070016113" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
       </div>
-
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
           <li><a href="#hero">Home</a></li>
-          <li><a href="#topSelling">Top Selling Products</a></li>
+          <li><a href="#topSelling">Top Selling</a></li>
           <li><a href="#allProductsSection">All Products</a></li>
-          <li><a href="#specialDeal">Today's Mega Deal</a></li>
-          <li><a href="#whyUs">Why Desi Taste Land</a></li>
+          <li><a href="#specialDeal">Today's Deal</a></li>
+          <li><a href="#whyUs">Why Choose Us</a></li>
           <li><a href="#aboutSection">About Us</a></li>
-          <li><a href="#reviewsSection">Customer Reviews</a></li>
-          <li><a href="#authSection">Login / Register</a></li>
+          <li><a href="#reviewsSection">Reviews</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>Our Guarantee</h4>
         <ul>
@@ -499,16 +411,14 @@
           <li><a href="#"><i class="fa-solid fa-check text-red"></i> Safe & Pure Packaging</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>Contact & Orders</h4>
-        <p><i class="fa-solid fa-location-dot text-red"></i> Aqua Market Phool Nagar , Bhai Pheru, Pakistan, 55260</p>
-        <p><i class="fa-solid fa-phone text-red"></i> Phone: +92 307 0016113</p>
-        <p><i class="fa-solid fa-envelope text-red"></i> Email: desitasteland@gmail.com</p>
+        <p><i class="fa-solid fa-location-dot text-red"></i> Aqua Market Phool Nagar, Bhai Pheru, Pakistan 55260</p>
+        <p><i class="fa-solid fa-phone text-red"></i> +92 307 0016113</p>
+        <p><i class="fa-solid fa-envelope text-red"></i> desitasteland@gmail.com</p>
         <p><i class="fa-solid fa-clock text-red"></i> Mon - Sat: 9:00 AM - 9:00 PM</p>
       </div>
     </div>
-
     <div class="footer-bottom">
       <div class="container footer-bottom-flex">
         <p>&copy; 2026 DESI TASTE LAND. All Rights Reserved.</p>
@@ -521,48 +431,32 @@
     </div>
   </footer>
 
-  <!-- FLOATING WHATSAPP BUTTON -->
-  <a href="https://wa.me/923070016113?text=Hello%20Desi%20Taste%20Land,%20I%20want%20to%20place%20an%20order!" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/923070016113?text=Hello%20Desi%20Taste%20Land,%20I%20want%20to%20place%20an%20order!" target="_blank" class="floating-whatsapp" title="Order on WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
     <span class="whatsapp-text">Quick Order</span>
   </a>
 
-  <!-- SLIDE-OVER CART DRAWER -->
+  <!-- CART DRAWER -->
   <div class="cart-drawer-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
       <h3><i class="fa-solid fa-bag-shopping text-red"></i> Shopping Cart (<span id="cartCountTitle">0</span>)</h3>
       <button class="close-btn" id="closeCartBtn">&times;</button>
     </div>
-
-    <!-- Free Shipping Bar (Strictly Rs. 5000) -->
     <div class="free-shipping-box">
       <p id="shippingText">Add <strong>Rs. 5,000</strong> more to get FREE Delivery!</p>
       <div class="shipping-progress-bg">
-        <div class="shipping-progress-fill" id="shippingProgressFill" style="width: 0%;"></div>
+        <div class="shipping-progress-fill" id="shippingProgressFill" style="width:0%;"></div>
       </div>
     </div>
-
-    <div class="cart-items-body" id="cartItemsContainer">
-      <!-- Items dynamically populated -->
-    </div>
-
+    <div class="cart-items-body" id="cartItemsContainer"></div>
     <div class="cart-footer">
-      <div class="cart-subtotal-row">
-        <span>Subtotal:</span>
-        <strong id="cartSubtotal">Rs. 0</strong>
-      </div>
-      <div class="cart-subtotal-row">
-        <span>Delivery Charges:</span>
-        <span id="deliveryChargeText">Rs. 250</span>
-      </div>
-      <div class="cart-total-row">
-        <span>Total Amount:</span>
-        <strong class="text-red" id="cartGrandTotal">Rs. 0</strong>
-      </div>
+      <div class="cart-subtotal-row"><span>Subtotal:</span><strong id="cartSubtotal">Rs. 0</strong></div>
+      <div class="cart-subtotal-row"><span>Delivery Charges:</span><span id="deliveryChargeText">Rs. 250</span></div>
+      <div class="cart-total-row"><span>Total Amount:</span><strong class="text-red" id="cartGrandTotal">Rs. 0</strong></div>
       <button class="btn btn-red btn-block shadow-red" id="checkoutBtn">
-        <span>Proceed to Checkout</span>
-        <i class="fa-solid fa-arrow-right"></i>
+        <span>Proceed to Checkout</span><i class="fa-solid fa-arrow-right"></i>
       </button>
     </div>
   </aside>
@@ -571,9 +465,7 @@
   <div class="modal-overlay" id="quickViewModal">
     <div class="modal-card">
       <button class="modal-close" id="closeQuickViewBtn">&times;</button>
-      <div class="quick-view-grid" id="quickViewContent">
-        <!-- Dynamically filled -->
-      </div>
+      <div id="quickViewContent"></div>
     </div>
   </div>
 
@@ -587,36 +479,31 @@
           <h2>Complete Your Order</h2>
           <p>Cash on Delivery across Pakistan</p>
         </div>
-
         <form id="checkoutForm" class="checkout-form">
           <div class="form-group">
             <label for="custName">Full Name *</label>
             <input type="text" id="custName" placeholder="e.g. Ali Ahmed" required>
           </div>
-
           <div class="form-row">
             <div class="form-group">
-              <label for="custPhone">Phone / WhatsApp Number *</label>
+              <label for="custPhone">Phone / WhatsApp *</label>
               <input type="tel" id="custPhone" placeholder="03070016113" required>
             </div>
             <div class="form-group">
               <label for="custCity">City *</label>
-              <input type="text" id="custCity" placeholder="Phool Nagar, Lahore, Karachi..." required>
+              <input type="text" id="custCity" placeholder="Lahore, Karachi..." required>
             </div>
           </div>
-
           <div class="form-group">
-            <label for="custAddress">Full Shipping Address *</label>
-            <textarea id="custAddress" rows="3" placeholder="Aqua Market Phool Nagar, House No, Street..." required></textarea>
+            <label for="custAddress">Full Address *</label>
+            <textarea id="custAddress" rows="3" placeholder="House No, Street, Area..." required></textarea>
           </div>
-
           <div class="order-summary-box">
             <h4>Order Summary</h4>
-            <div class="summary-line"><span>Items Total:</span> <span id="checkoutItemsTotal">Rs. 0</span></div>
-            <div class="summary-line"><span>Shipping Fee:</span> <span id="checkoutShippingFee">Rs. 250</span></div>
-            <div class="summary-line total-line"><span>Payable Amount (COD):</span> <strong id="checkoutFinalTotal" class="text-red">Rs. 0</strong></div>
+            <div class="summary-line"><span>Items Total:</span><span id="checkoutItemsTotal">Rs. 0</span></div>
+            <div class="summary-line"><span>Shipping Fee:</span><span id="checkoutShippingFee">Rs. 250</span></div>
+            <div class="summary-line total-line"><span>Payable (COD):</span><strong id="checkoutFinalTotal" class="text-red">Rs. 0</strong></div>
           </div>
-
           <button type="submit" class="btn btn-red btn-block btn-lg shadow-red" id="submitOrderBtn">
             <i class="fa-solid fa-circle-check"></i> Submit Order
           </button>
@@ -625,20 +512,18 @@
     </div>
   </div>
 
-  <!-- ORDER SUCCESS IN-APP CONFIRMATION MODAL -->
+  <!-- ORDER SUCCESS MODAL -->
   <div class="modal-overlay" id="orderSuccessModal">
     <div class="modal-card text-center modal-card-sm">
-      <div class="success-icon-box">
-        <i class="fa-solid fa-circle-check"></i>
-      </div>
-      <h2>YOUR ORDER HAS SUBMITTED SUCCESSFULLY</h2>
+      <div class="success-icon-box"><i class="fa-solid fa-circle-check"></i></div>
+      <h2>ORDER SUBMITTED SUCCESSFULLY!</h2>
       <p class="order-ref-text">Order Reference: <strong id="orderRefId" class="text-red">#DTL-89421</strong></p>
-      <p>Shukriya! Your order details have been received. You can view or cancel your order within 24 hours in the <strong>My Orders</strong> drawer.</p>
+      <p>Shukriya! Your order has been received. You can view or cancel your order within 24 hours in the <strong>My Orders</strong> drawer.</p>
       <button class="btn btn-red btn-block" id="closeSuccessBtn">Continue Shopping</button>
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
+  <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
   <script src="app.js"></script>
