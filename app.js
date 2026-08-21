@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+ /* ==========================================================================
    DESI TASTE LAND - Master Application JavaScript Logic
    ========================================================================== */
 
@@ -794,7 +794,7 @@ function renderOrdersDrawer() {
           <span class="order-status-badge ${order.status === 'Cancelled' ? 'cancelled' : ''}">${order.status}</span>
         </div>
         <div class="order-items-list">
-          ${order.items.map(i => `<div>â€¢ ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
+          ${order.items.map(i => `<div>    ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
         </div>
         <div class="summary-line" style="margin-top: 4px;">
           <strong>Total: Rs. ${order.total.toLocaleString()}</strong>
