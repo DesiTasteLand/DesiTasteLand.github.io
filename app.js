@@ -2,12 +2,11 @@
    DESI TASTE LAND - Master Application JavaScript Logic
    ========================================================================== */
 
-// 1. HONEY CATEGORIES (4 Real Varieties with Uploaded Images & Exact Prices)
+// 1. HONEY CATEGORIES (4 Varieties with Uploaded Images & Exact Prices)
 const HONEY_CATEGORIES = [
   {
     id: 'honey-wild-big',
     name: 'WILD HONEY BIG BEE',
-    urdu: 'Ø¬Ù†Ú¯Ù„ÛŒ Ø¨ÛŒØ±ÛŒ Ø¨Ú‘Ø§ Ø´ÛØ¯ (Ø¨Ú‘ÛŒ Ù…Ú©Ú¾ÛŒ)',
     tag: 'Wild Harvest',
     image: 'assets/images/honey_wild_big.jpg',
     description: '100% pure wild Sidr honey collected from wild big bees in natural forests.',
@@ -21,7 +20,6 @@ const HONEY_CATEGORIES = [
   {
     id: 'honey-wild-small',
     name: 'WILD HONEY SMALL BEE',
-    urdu: 'Ø¬Ù†Ú¯Ù„ÛŒ Ø¨ÛŒØ±ÛŒ Ú†Ú¾ÙˆÙ¹Ø§ Ø´ÛØ¯ (Ú†Ú¾ÙˆÙ¹ÛŒ Ù…Ú©Ú¾ÛŒ)',
     tag: 'Rare & Precious',
     image: 'assets/images/honey_wild_small.jpg',
     description: 'Rare wild small bee honey collected from mountain flora. Supreme health and immunity booster.',
@@ -35,7 +33,6 @@ const HONEY_CATEGORIES = [
   {
     id: 'honey-farmy-big',
     name: 'FARMY HONEY BIG BEE',
-    urdu: 'ÙØ§Ø±Ù…ÛŒ Ø¨Ú‘ÛŒ Ù…Ú©Ú¾ÛŒ Ú©Ø§ Ø´ÛØ¯',
     tag: 'Farm Fresh',
     image: 'assets/images/honey_farmy_big.jpg',
     description: 'Pure farm-harvested big bee honey from certified floral blossom fields.',
@@ -49,7 +46,6 @@ const HONEY_CATEGORIES = [
   {
     id: 'honey-farmy-small',
     name: 'FARMY HONEY SMALL BEE',
-    urdu: 'ÙØ§Ø±Ù…ÛŒ Ú†Ú¾ÙˆÙ¹ÛŒ Ù…Ú©Ú¾ÛŒ Ú©Ø§ Ø´ÛØ¯',
     tag: 'Farm Premium',
     image: 'assets/images/honey_farmy_small.jpg',
     description: 'Exquisite farm small bee honey, amber in color with delicate floral aroma.',
@@ -67,7 +63,6 @@ const TOP_SELLING_PRODUCTS = [
   {
     id: 'top-honey',
     name: 'PURE HONEY (4 VARIETIES)',
-    urdu: 'Ø®Ø§Ù„Øµ Ù‚Ø¯Ø±ØªÛŒ Ø´ÛØ¯',
     isHoney: true,
     rating: 5.0,
     reviewsCount: 450,
@@ -84,7 +79,6 @@ const TOP_SELLING_PRODUCTS = [
   {
     id: 'top-ghee',
     name: 'DESI GHEE',
-    urdu: 'Ø®Ø§Ù„Øµ Ú©ÙˆÛÙ„Ùˆ Ø¯ÛŒØ³ÛŒ Ú¯Ú¾ÛŒ',
     rating: 5.0,
     reviewsCount: 620,
     image: 'assets/images/all_ghee.jpg',
@@ -99,7 +93,6 @@ const TOP_SELLING_PRODUCTS = [
   {
     id: 'top-olive',
     name: 'OLIVE OIL',
-    urdu: 'Ø®Ø§Ù„Øµ Ú©ÙˆÙ„Úˆ Ù¾Ø±ÛŒØ³Úˆ Ø²ÛŒØªÙˆÙ† Ú©Ø§ ØªÛŒÙ„',
     rating: 5.0,
     reviewsCount: 310,
     image: 'assets/images/all_olive_oil.jpg',
@@ -112,12 +105,11 @@ const TOP_SELLING_PRODUCTS = [
   }
 ];
 
-// 3. ALL PRODUCTS DATABASE (With Weight Variants & Exact Requested Prices)
+// 3. ALL PRODUCTS DATABASE (With Exact Requested Prices & Weight Variants)
 const ALL_PRODUCTS = [
   {
     id: 'prod-honey',
     name: 'PURE HONEY',
-    urdu: 'Ø®Ø§Ù„Øµ Ù‚Ø¯Ø±ØªÛŒ Ø´ÛØ¯ (4 Ø§Ù‚Ø³Ø§Ù…)',
     isHoney: true,
     rating: 5.0,
     reviewsCount: 480,
@@ -134,7 +126,6 @@ const ALL_PRODUCTS = [
   {
     id: 'prod-ghee',
     name: 'DESI GHEE',
-    urdu: 'Ú©ÙˆÛÙ„Ùˆ Ø¯ÛŒØ³ÛŒ Ú¯Ú¾ÛŒ',
     rating: 5.0,
     reviewsCount: 610,
     image: 'assets/images/all_ghee.jpg',
@@ -149,7 +140,6 @@ const ALL_PRODUCTS = [
   {
     id: 'prod-imli',
     name: 'IMLI CHUTNEY',
-    urdu: 'Ù„Ø°ÛŒØ° Ø§Ù…Ù„ÛŒ Ú†Ù¹Ù†ÛŒ',
     rating: 4.9,
     reviewsCount: 310,
     image: 'assets/images/prod_imli_chutney.jpg',
@@ -164,7 +154,6 @@ const ALL_PRODUCTS = [
   {
     id: 'prod-talbina',
     name: 'TALBINA',
-    urdu: 'Ø³Ù†Øª Ù†Ø¨ÙˆÛŒ ØªÙ„Ø¨ÛŒÙ†Û',
     rating: 4.9,
     reviewsCount: 340,
     image: 'assets/images/prod_talbina.jpg',
@@ -174,12 +163,11 @@ const ALL_PRODUCTS = [
       { weight: '450g', price: 1300 }
     ],
     selectedWeightIndex: 0,
-    benefits: ['Sunnah Food', 'Eases Digestive Stress & Boosts Energy']
+    benefits: ['Nutritious Sunnah Food', 'Eases Digestive Stress & Boosts Energy']
   },
   {
     id: 'prod-olive',
     name: 'OLIVE OIL',
-    urdu: 'Ø®Ø§Ù„Øµ Ø²ÛŒØªÙˆÙ† Ú©Ø§ ØªÛŒÙ„',
     rating: 5.0,
     reviewsCount: 290,
     image: 'assets/images/all_olive_oil.jpg',
@@ -193,7 +181,6 @@ const ALL_PRODUCTS = [
   {
     id: 'prod-shilajit',
     name: 'SHILAJIT',
-    urdu: 'Ø®Ø§Ù„Øµ ÛÙ…Ø§Ù„ÛŒØ§Ø¦ÛŒ Ø³Ù„Ø§Ø¬ÛŒØª',
     rating: 5.0,
     reviewsCount: 190,
     image: 'assets/images/prod_shilajit.jpg',
@@ -209,7 +196,6 @@ const ALL_PRODUCTS = [
   {
     id: 'prod-pickle',
     name: 'MIX PICKLE',
-    urdu: 'Ø®Ø§Ù„Øµ Ø¯ÛŒØ³ÛŒ Ø§Ú†Ø§Ø±',
     rating: 4.9,
     reviewsCount: 280,
     image: 'assets/images/prod_mix_pickle2.jpg',
@@ -224,7 +210,6 @@ const ALL_PRODUCTS = [
   {
     id: 'prod-tea',
     name: 'TEA (PATTI)',
-    urdu: 'Ù¾Ø±ÛŒÙ…ÛŒÙ… Ú†Ø§Ø¦Û’ Ù¾ØªÛŒ',
     rating: 4.9,
     reviewsCount: 380,
     image: 'assets/images/all_tea.jpg',
@@ -256,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOrdersDrawer();
   initHeroTouchSlider();
   initScrollRevealObserver();
-  initCountdownTimer();
   initEventListeners();
 });
 
@@ -407,7 +391,6 @@ function renderTopSellingProducts() {
         <div class="product-content">
           <span class="product-category">${activeVar.weight}</span>
           <h3 class="product-title">${product.name}</h3>
-          <div class="product-urdu">${product.urdu}</div>
 
           <div class="rating-row">
             <div class="stars">
@@ -471,7 +454,6 @@ function renderHoneyShowcase() {
 
         <div class="honey-card-body">
           <h3 class="honey-card-title">${category.name}</h3>
-          <div class="honey-card-urdu">${category.urdu}</div>
 
           <div class="weight-selector-box">
             <span class="weight-selector-label">Select Weight:</span>
@@ -518,7 +500,6 @@ function renderAllProducts() {
         <div class="product-content">
           <span class="product-category">${activeVar.weight}</span>
           <h3 class="product-title">${product.name}</h3>
-          <div class="product-urdu">${product.urdu}</div>
 
           <div class="rating-row">
             <div class="stars">
@@ -583,7 +564,6 @@ function renderHoneyModal() {
         <img src="${category.image}" alt="${category.name}" class="honey-modal-img">
         <div class="honey-modal-details">
           <div class="honey-modal-title">${category.name}</div>
-          <div class="honey-modal-urdu">${category.urdu}</div>
 
           <div class="honey-modal-weights">
             ${category.variants.map((v, idx) => `
@@ -615,15 +595,12 @@ function selectProductWeight(productId, weightIndex, isTopSelling) {
   product.selectedWeightIndex = weightIndex;
   const selectedVariant = product.variants[weightIndex];
 
-  // Update Top Selling card if matched
   const topPriceElem = document.getElementById(`price-${productId}`);
   if (topPriceElem) topPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
 
-  // Update All Products card if matched
   const allPriceElem = document.getElementById(`allprice-${productId}`);
   if (allPriceElem) allPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
 
-  // Re-render active buttons
   if (isTopSelling) renderTopSellingProducts();
   else renderAllProducts();
 }
@@ -909,7 +886,6 @@ function openQuickView(productId) {
     </div>
     <div class="qv-info">
       <h2>${product.name}</h2>
-      <div class="qv-urdu">${product.urdu}</div>
       <p class="qv-desc">${product.description}</p>
 
       <ul class="qv-benefits">
@@ -1086,7 +1062,6 @@ function initEventListeners() {
     const dealItem = {
       id: 'deal-ghee-saffron',
       name: 'DESI GHEE (500g) + ROYAL KASHMIRI SAFFRON (1g) COMBO',
-      urdu: 'Ø¯ÛŒØ³ÛŒ Ú¯Ú¾ÛŒ Ø§ÙˆØ± Ú©Ø´Ù…ÛŒØ±ÛŒ Ø²Ø¹ÙØ±Ø§Ù† Ù…ÛŒÚ¯Ø§ Ø¢ÙØ±',
       price: 2750,
       qty: 1,
       image: 'assets/images/deal_banner.jpg'
@@ -1165,40 +1140,7 @@ function initEventListeners() {
   });
 }
 
-// 18. COUNTDOWN TIMER
-function initCountdownTimer() {
-  let hours = 8;
-  let mins = 42;
-  let secs = 19;
-
-  setInterval(() => {
-    if (secs > 0) {
-      secs--;
-    } else {
-      secs = 59;
-      if (mins > 0) {
-        mins--;
-      } else {
-        mins = 59;
-        if (hours > 0) {
-          hours--;
-        } else {
-          hours = 12;
-        }
-      }
-    }
-
-    const hElem = document.getElementById('hoursVal');
-    const mElem = document.getElementById('minsVal');
-    const sElem = document.getElementById('secsVal');
-
-    if (hElem) hElem.textContent = String(hours).padStart(2, '0');
-    if (mElem) mElem.textContent = String(mins).padStart(2, '0');
-    if (sElem) sElem.textContent = String(secs).padStart(2, '0');
-  }, 1000);
-}
-
-// 19. TOAST NOTIFICATIONS
+// 18. TOAST NOTIFICATIONS
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
