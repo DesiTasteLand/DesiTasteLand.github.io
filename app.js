@@ -1,158 +1,256 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    DESI TASTE LAND - Master Application JavaScript Logic
    ========================================================================== */
 
-// 1. TOP SELLING PRODUCTS DATABASE (3 Items Only - NO BADGES & NO PRICES)
-const TOP_SELLING_PRODUCTS = [
+// 1. HONEY CATEGORIES (4 Real Varieties with Uploaded Images & Exact Prices)
+const HONEY_CATEGORIES = [
   {
-    id: 'top-1',
-    name: 'PURE HONEY',
-    urdu: 'خالص سدر بیری کا شہد',
-    unit: '500g Luxury Jar',
-    rating: 5.0,
-    reviewsCount: 450,
-    price: 1800,
-    image: 'assets/images/all_honey.jpg',
-    description: '100% pure, unpasteurized Sidr honey collected directly from wild Sidr flower blossoms. Natural immune booster.',
-    benefits: ['100% Raw & Unprocessed', 'Zero sugar adulteration guarantee']
+    id: 'honey-wild-big',
+    name: 'WILD HONEY BIG BEE',
+    urdu: 'Ø¬Ù†Ú¯Ù„ÛŒ Ø¨ÛŒØ±ÛŒ Ø¨Ú‘Ø§ Ø´ÛØ¯ (Ø¨Ú‘ÛŒ Ù…Ú©Ú¾ÛŒ)',
+    tag: 'Wild Harvest',
+    image: 'assets/images/honey_wild_big.jpg',
+    description: '100% pure wild Sidr honey collected from wild big bees in natural forests.',
+    variants: [
+      { weight: '200g', price: 560 },
+      { weight: '500g', price: 1400, isDefault: true },
+      { weight: '1000g', price: 2800 }
+    ],
+    selectedWeightIndex: 1
   },
   {
-    id: 'top-2',
+    id: 'honey-wild-small',
+    name: 'WILD HONEY SMALL BEE',
+    urdu: 'Ø¬Ù†Ú¯Ù„ÛŒ Ø¨ÛŒØ±ÛŒ Ú†Ú¾ÙˆÙ¹Ø§ Ø´ÛØ¯ (Ú†Ú¾ÙˆÙ¹ÛŒ Ù…Ú©Ú¾ÛŒ)',
+    tag: 'Rare & Precious',
+    image: 'assets/images/honey_wild_small.jpg',
+    description: 'Rare wild small bee honey collected from mountain flora. Supreme health and immunity booster.',
+    variants: [
+      { weight: '200g', price: 1080 },
+      { weight: '500g', price: 2700, isDefault: true },
+      { weight: '1000g', price: 5400 }
+    ],
+    selectedWeightIndex: 1
+  },
+  {
+    id: 'honey-farmy-big',
+    name: 'FARMY HONEY BIG BEE',
+    urdu: 'ÙØ§Ø±Ù…ÛŒ Ø¨Ú‘ÛŒ Ù…Ú©Ú¾ÛŒ Ú©Ø§ Ø´ÛØ¯',
+    tag: 'Farm Fresh',
+    image: 'assets/images/honey_farmy_big.jpg',
+    description: 'Pure farm-harvested big bee honey from certified floral blossom fields.',
+    variants: [
+      { weight: '200g', price: 360 },
+      { weight: '500g', price: 900, isDefault: true },
+      { weight: '1000g', price: 1800 }
+    ],
+    selectedWeightIndex: 1
+  },
+  {
+    id: 'honey-farmy-small',
+    name: 'FARMY HONEY SMALL BEE',
+    urdu: 'ÙØ§Ø±Ù…ÛŒ Ú†Ú¾ÙˆÙ¹ÛŒ Ù…Ú©Ú¾ÛŒ Ú©Ø§ Ø´ÛØ¯',
+    tag: 'Farm Premium',
+    image: 'assets/images/honey_farmy_small.jpg',
+    description: 'Exquisite farm small bee honey, amber in color with delicate floral aroma.',
+    variants: [
+      { weight: '200g', price: 800 },
+      { weight: '500g', price: 2000, isDefault: true },
+      { weight: '1000g', price: 4000 }
+    ],
+    selectedWeightIndex: 1
+  }
+];
+
+// 2. TOP SELLING PRODUCTS DATABASE (3 Signature Items)
+const TOP_SELLING_PRODUCTS = [
+  {
+    id: 'top-honey',
+    name: 'PURE HONEY (4 VARIETIES)',
+    urdu: 'Ø®Ø§Ù„Øµ Ù‚Ø¯Ø±ØªÛŒ Ø´ÛØ¯',
+    isHoney: true,
+    rating: 5.0,
+    reviewsCount: 450,
+    image: 'assets/images/honey_wild_big.jpg',
+    description: '100% pure raw honey available in 4 certified varieties: Wild Big Bee, Wild Small Bee, Farmy Big Bee & Farmy Small Bee.',
+    variants: [
+      { weight: '200g', price: 560 },
+      { weight: '500g', price: 1400, isDefault: true },
+      { weight: '1000g', price: 2800 }
+    ],
+    selectedWeightIndex: 1,
+    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration Guarantee']
+  },
+  {
+    id: 'top-ghee',
     name: 'DESI GHEE',
-    urdu: 'خالص کوہلو دیسی گھی',
-    unit: '1000g Glass Jar',
+    urdu: 'Ø®Ø§Ù„Øµ Ú©ÙˆÛÙ„Ùˆ Ø¯ÛŒØ³ÛŒ Ú¯Ú¾ÛŒ',
     rating: 5.0,
     reviewsCount: 620,
-    price: 3200,
     image: 'assets/images/all_ghee.jpg',
     description: 'Prepared using traditional hand-churned Bilona method from grass-fed cow milk. Golden granular texture.',
+    variants: [
+      { weight: '500g', price: 1600 },
+      { weight: '1000g', price: 3200, isDefault: true }
+    ],
+    selectedWeightIndex: 1,
     benefits: ['Traditional hand-churned Bilona method', 'Chemical-free & zero preservatives']
   },
   {
-    id: 'top-3',
+    id: 'top-olive',
     name: 'OLIVE OIL',
-    urdu: 'خالص کولڈ پریسڈ زیتون کا تیل',
-    unit: '1000ml Glass Bottle',
+    urdu: 'Ø®Ø§Ù„Øµ Ú©ÙˆÙ„Úˆ Ù¾Ø±ÛŒØ³Úˆ Ø²ÛŒØªÙˆÙ† Ú©Ø§ ØªÛŒÙ„',
     rating: 5.0,
     reviewsCount: 310,
-    price: 4800,
     image: 'assets/images/all_olive_oil.jpg',
     description: 'Cold-pressed extra virgin olive oil packed with natural anti-oxidants and healthy fats.',
+    variants: [
+      { weight: '112ml', price: 600, isDefault: true }
+    ],
+    selectedWeightIndex: 0,
     benefits: ['First cold press, zero chemical additives', 'Heart-healthy Omega-9']
   }
 ];
 
-// 2. ALL PRODUCTS DATABASE (8 Items with Exact Prices & Requested Names)
+// 3. ALL PRODUCTS DATABASE (With Weight Variants & Exact Requested Prices)
 const ALL_PRODUCTS = [
   {
-    id: 'prod-1',
+    id: 'prod-honey',
     name: 'PURE HONEY',
-    urdu: 'خالص آرگینک شہد',
-    price: 1800,
-    unit: '500g Glass Jar',
+    urdu: 'Ø®Ø§Ù„Øµ Ù‚Ø¯Ø±ØªÛŒ Ø´ÛØ¯ (4 Ø§Ù‚Ø³Ø§Ù…)',
+    isHoney: true,
     rating: 5.0,
-    reviewsCount: 420,
-    image: 'assets/images/all_honey.jpg',
-    description: '100% raw and pure Sidr honey collected directly from natural flower blossoms.',
-    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration']
+    reviewsCount: 480,
+    image: 'assets/images/honey_wild_big.jpg',
+    description: 'Select your preferred honey variety from 4 natural choices (Wild/Farmy Big/Small Bee).',
+    variants: [
+      { weight: '200g', price: 560 },
+      { weight: '500g', price: 1400, isDefault: true },
+      { weight: '1000g', price: 2800 }
+    ],
+    selectedWeightIndex: 1,
+    benefits: ['100% Raw & Unprocessed', 'Zero Sugar Adulteration Guarantee']
   },
   {
-    id: 'prod-2',
-    name: 'TEA',
-    urdu: 'پریمیم چائے پتی',
-    price: 400,
-    unit: '200g Pack',
-    rating: 4.9,
-    reviewsCount: 380,
-    image: 'assets/images/all_tea.jpg',
-    description: 'Selected top tea leaves for a rich aroma, strong color, and refreshing taste.',
-    benefits: ['Strong Rich Color', 'Natural Aroma']
-  },
-  {
-    id: 'prod-3',
-    name: 'OLIVE OIL',
-    urdu: 'خالص زیتون کا تیل',
-    price: 4800,
-    unit: '1000ml Glass Bottle',
-    rating: 5.0,
-    reviewsCount: 290,
-    image: 'assets/images/all_olive_oil.jpg',
-    description: 'Cold-pressed extra virgin olive oil packed with healthy nutrients.',
-    benefits: ['First Cold Press', 'Heart Healthy']
-  },
-  {
-    id: 'prod-4',
+    id: 'prod-ghee',
     name: 'DESI GHEE',
-    urdu: 'کوہلو دیسی گھی',
-    price: 3200,
-    unit: '1000g Glass Jar',
+    urdu: 'Ú©ÙˆÛÙ„Ùˆ Ø¯ÛŒØ³ÛŒ Ú¯Ú¾ÛŒ',
     rating: 5.0,
     reviewsCount: 610,
     image: 'assets/images/all_ghee.jpg',
     description: 'Traditional Bilona Desi Ghee prepared from pure grass-fed cow milk.',
-    benefits: ['Hand-Churned Bilona', 'Rich Aroma']
+    variants: [
+      { weight: '500g', price: 1600 },
+      { weight: '1000g', price: 3200, isDefault: true }
+    ],
+    selectedWeightIndex: 1,
+    benefits: ['Hand-Churned Bilona', 'Rich Aroma & Granular Texture']
   },
   {
-    id: 'prod-5',
-    name: 'MIX PICKLE',
-    urdu: 'خالص دیسی اچار',
-    price: 350,
-    unit: '500g Glass Jar',
+    id: 'prod-imli',
+    name: 'IMLI CHUTNEY',
+    urdu: 'Ù„Ø°ÛŒØ° Ø§Ù…Ù„ÛŒ Ú†Ù¹Ù†ÛŒ',
     rating: 4.9,
-    reviewsCount: 280,
-    image: 'assets/images/prod_mix_pickle2.jpg',
-    description: 'Handcrafted authentic mixed mustard oil pickle infused with traditional spices.',
-    benefits: ['Traditional Recipe', 'Pure Mustard Oil Base']
+    reviewsCount: 310,
+    image: 'assets/images/prod_imli_chutney.jpg',
+    description: 'Handcrafted authentic tangy and sweet Imli Chutney prepared with traditional natural spices.',
+    variants: [
+      { weight: '500g', price: 800, isDefault: true },
+      { weight: '1000g', price: 1600 }
+    ],
+    selectedWeightIndex: 0,
+    benefits: ['Handmade Recipe', 'No Synthetic Colors']
   },
   {
-    id: 'prod-6',
+    id: 'prod-talbina',
+    name: 'TALBINA',
+    urdu: 'Ø³Ù†Øª Ù†Ø¨ÙˆÛŒ ØªÙ„Ø¨ÛŒÙ†Û',
+    rating: 4.9,
+    reviewsCount: 340,
+    image: 'assets/images/prod_talbina.jpg',
+    description: 'Traditional Sunnah barley porridge blended with nuts, dates, and pure natural honey goodness.',
+    variants: [
+      { weight: '170g', price: 500, isDefault: true },
+      { weight: '450g', price: 1300 }
+    ],
+    selectedWeightIndex: 0,
+    benefits: ['Sunnah Food', 'Eases Digestive Stress & Boosts Energy']
+  },
+  {
+    id: 'prod-olive',
+    name: 'OLIVE OIL',
+    urdu: 'Ø®Ø§Ù„Øµ Ø²ÛŒØªÙˆÙ† Ú©Ø§ ØªÛŒÙ„',
+    rating: 5.0,
+    reviewsCount: 290,
+    image: 'assets/images/all_olive_oil.jpg',
+    description: 'Cold-pressed extra virgin olive oil packed with healthy nutrients and antioxidants.',
+    variants: [
+      { weight: '112ml', price: 600, isDefault: true }
+    ],
+    selectedWeightIndex: 0,
+    benefits: ['First Cold Press', 'Heart Healthy Nutrition']
+  },
+  {
+    id: 'prod-shilajit',
     name: 'SHILAJIT',
-    urdu: 'خالص ہمالیائی سلاجیت',
-    price: 1000,
-    unit: '1 Tola Jar',
+    urdu: 'Ø®Ø§Ù„Øµ ÛÙ…Ø§Ù„ÛŒØ§Ø¦ÛŒ Ø³Ù„Ø§Ø¬ÛŒØª',
     rating: 5.0,
     reviewsCount: 190,
     image: 'assets/images/prod_shilajit.jpg',
     description: '100% authentic purified Himalayan resin Shilajit. Rich in fulvic acid and natural minerals.',
+    variants: [
+      { weight: '1 Tola', price: 1000, isDefault: true },
+      { weight: '2 Tola', price: 2000 },
+      { weight: '3 Tola', price: 3000 }
+    ],
+    selectedWeightIndex: 0,
     benefits: ['100% Pure Resin', 'Boosts Natural Energy & Vitality']
   },
   {
-    id: 'prod-7',
-    name: 'TALBINA',
-    urdu: 'سنت نبوی تلبینہ',
-    price: 1300,
-    unit: '450g Pack',
+    id: 'prod-pickle',
+    name: 'MIX PICKLE',
+    urdu: 'Ø®Ø§Ù„Øµ Ø¯ÛŒØ³ÛŒ Ø§Ú†Ø§Ø±',
     rating: 4.9,
-    reviewsCount: 340,
-    image: 'assets/images/prod_talbina.jpg',
-    description: 'Traditional Sunnah barley porridge blended with nuts, dates, and natural honey goodness.',
-    benefits: ['Sunnah Food', 'Eases Digestive Stress & Anxiety']
+    reviewsCount: 280,
+    image: 'assets/images/prod_mix_pickle2.jpg',
+    description: 'Handcrafted authentic mixed mustard oil pickle infused with traditional aromatic spices.',
+    variants: [
+      { weight: '500g', price: 350, isDefault: true },
+      { weight: '1000g', price: 700 }
+    ],
+    selectedWeightIndex: 0,
+    benefits: ['Traditional Recipe', 'Pure Mustard Oil Base']
   },
   {
-    id: 'prod-8',
-    name: 'IMLI CHUTNEY',
-    urdu: 'لذیذ املی چٹنی',
-    price: 800,
-    unit: '500g Glass Jar',
+    id: 'prod-tea',
+    name: 'TEA (PATTI)',
+    urdu: 'Ù¾Ø±ÛŒÙ…ÛŒÙ… Ú†Ø§Ø¦Û’ Ù¾ØªÛŒ',
     rating: 4.9,
-    reviewsCount: 310,
-    image: 'assets/images/prod_imli_chutney.jpg',
-    description: 'Handcrafted authentic tangy and sweet Imli Chutney prepared with natural spices.',
-    benefits: ['Handmade Recipe', 'No Synthetic Colors']
+    reviewsCount: 380,
+    image: 'assets/images/all_tea.jpg',
+    description: 'Selected top tea leaves for a rich aroma, strong brisk color, and refreshing taste.',
+    variants: [
+      { weight: '200g', price: 400, isDefault: true },
+      { weight: '900g', price: 1800 }
+    ],
+    selectedWeightIndex: 0,
+    benefits: ['Strong Rich Color', 'Natural Fresh Aroma']
   }
 ];
 
-// 3. STATE MANAGEMENT
+// 4. STATE MANAGEMENT
 let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
 let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
 let currentSlideIndex = 0;
 let slideInterval;
 
-// 4. INITIALIZATION ON DOM LOAD
+// 5. INITIALIZATION ON DOM LOAD
 document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
+  renderHoneyShowcase();
   renderAllProducts();
+  renderHoneyModal();
   updateCartUI();
   updateAuthUI();
   renderOrdersDrawer();
@@ -162,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initEventListeners();
 });
 
-// 5. HERO SLIDER LOGIC (Touch Swipe + 3s Auto Loop + Golden Line)
+// 6. HERO SLIDER LOGIC (Touch Swipe + Drag, NO Side Buttons)
 function initHeroTouchSlider() {
   const sliderContainer = document.getElementById('heroSlider');
   const slides = document.querySelectorAll('.slide');
@@ -220,7 +318,7 @@ function initHeroTouchSlider() {
     isDragging = false;
     const diffX = startX - currentX;
 
-    if (Math.abs(diffX) > 40) {
+    if (Math.abs(diffX) > 35) {
       if (diffX > 0) nextSlide();
       else prevSlide();
       resetSlideTimer();
@@ -243,7 +341,7 @@ function initHeroTouchSlider() {
     isDragging = false;
     const diffX = startX - currentX;
 
-    if (Math.abs(diffX) > 40) {
+    if (Math.abs(diffX) > 35) {
       if (diffX > 0) nextSlide();
       else prevSlide();
       resetSlideTimer();
@@ -273,7 +371,7 @@ function initHeroTouchSlider() {
   startSlideTimer();
 }
 
-// 6. SCROLL REVEAL OBSERVER
+// 7. SCROLL REVEAL OBSERVER
 function initScrollRevealObserver() {
   const revealElements = document.querySelectorAll('.reveal-section');
 
@@ -290,123 +388,333 @@ function initScrollRevealObserver() {
   revealElements.forEach(el => observer.observe(el));
 }
 
-// 7. RENDER TOP SELLING PRODUCTS (3 Items Only - NO BADGES & NO PRICES)
+// 8. RENDER TOP SELLING PRODUCTS
 function renderTopSellingProducts() {
   const container = document.getElementById('topSellingGrid');
   if (!container) return;
 
-  container.innerHTML = TOP_SELLING_PRODUCTS.map(product => `
-    <div class="product-card">
-      <div class="product-img-box">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
-          <i class="fa-solid fa-eye text-red"></i> Quick View
-        </button>
-      </div>
-
-      <div class="product-content">
-        <span class="product-category">${product.unit}</span>
-        <h3 class="product-title">${product.name}</h3>
-        <div class="product-urdu">${product.urdu}</div>
-
-        <div class="rating-row">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <span>${product.rating} (${product.reviewsCount})</span>
+  container.innerHTML = TOP_SELLING_PRODUCTS.map(product => {
+    const activeVar = product.variants[product.selectedWeightIndex];
+    return `
+      <div class="product-card" id="card-${product.id}">
+        <div class="product-img-box">
+          <img src="${product.image}" alt="${product.name}" loading="lazy" id="img-${product.id}">
+          <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
+            <i class="fa-solid fa-eye text-red"></i> Quick View
+          </button>
         </div>
 
-        <div class="card-actions">
-          <button class="btn btn-red btn-block" onclick="addToCart('${product.id}')">
+        <div class="product-content">
+          <span class="product-category">${activeVar.weight}</span>
+          <h3 class="product-title">${product.name}</h3>
+          <div class="product-urdu">${product.urdu}</div>
+
+          <div class="rating-row">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span>${product.rating} (${product.reviewsCount})</span>
+          </div>
+
+          ${product.variants.length > 1 ? `
+            <div class="weight-selector-box">
+              <span class="weight-selector-label">Select Quantity:</span>
+              <div class="weight-options-row">
+                ${product.variants.map((v, idx) => `
+                  <button class="weight-btn ${idx === product.selectedWeightIndex ? 'active' : ''}" 
+                          onclick="selectProductWeight('${product.id}', ${idx}, true)">
+                    ${v.weight}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="price-row">
+            <span class="price-current" id="price-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+          </div>
+
+          <div class="card-actions">
+            ${product.isHoney ? `
+              <button class="btn btn-red btn-block" onclick="openHoneyModal()">
+                <i class="fa-solid fa-jar-wheat"></i> Choose Honey Variety
+              </button>
+            ` : `
+              <button class="btn btn-red btn-block" onclick="addProductToCart('${product.id}', true)">
+                <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+              </button>
+            `}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 9. RENDER HONEY VARIETIES SHOWCASE (4 Images, 4 Varieties)
+function renderHoneyShowcase() {
+  const container = document.getElementById('honeyShowcaseGrid');
+  if (!container) return;
+
+  container.innerHTML = HONEY_CATEGORIES.map(category => {
+    const activeVar = category.variants[category.selectedWeightIndex];
+    return `
+      <div class="honey-card" id="hcard-${category.id}">
+        <span class="honey-card-badge">${category.tag}</span>
+        <div class="honey-card-img-box">
+          <img src="${category.image}" alt="${category.name}" loading="lazy">
+        </div>
+
+        <div class="honey-card-body">
+          <h3 class="honey-card-title">${category.name}</h3>
+          <div class="honey-card-urdu">${category.urdu}</div>
+
+          <div class="weight-selector-box">
+            <span class="weight-selector-label">Select Weight:</span>
+            <div class="honey-weights-row">
+              ${category.variants.map((v, idx) => `
+                <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
+                        onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
+                  ${v.weight}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="honey-card-price-row">
+            <span class="honey-price-val" id="hprice-${category.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+            <span class="honey-unit-label">per ${activeVar.weight}</span>
+          </div>
+
+          <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
             <i class="fa-solid fa-bag-shopping"></i> Add To Cart
           </button>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-// 8. RENDER ALL PRODUCTS (8 Items with Full Prices)
+// 10. RENDER ALL PRODUCTS (8 Items with Live Weight Variant Selectors)
 function renderAllProducts() {
   const container = document.getElementById('allProductsGrid');
   if (!container) return;
 
-  container.innerHTML = ALL_PRODUCTS.map(product => `
-    <div class="product-card">
-      <div class="product-img-box">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
-          <i class="fa-solid fa-eye text-red"></i> Quick View
-        </button>
-      </div>
-
-      <div class="product-content">
-        <span class="product-category">${product.unit}</span>
-        <h3 class="product-title">${product.name}</h3>
-        <div class="product-urdu">${product.urdu}</div>
-
-        <div class="rating-row">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <span>${product.rating} (${product.reviewsCount})</span>
-        </div>
-
-        <div class="price-row">
-          <span class="price-current">Rs. ${product.price.toLocaleString()}</span>
-        </div>
-
-        <div class="card-actions">
-          <button class="btn btn-red btn-block" onclick="addToCart('${product.id}')">
-            <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+  container.innerHTML = ALL_PRODUCTS.map(product => {
+    const activeVar = product.variants[product.selectedWeightIndex];
+    return `
+      <div class="product-card" id="allcard-${product.id}">
+        <div class="product-img-box">
+          <img src="${product.image}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
+          <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
+            <i class="fa-solid fa-eye text-red"></i> Quick View
           </button>
         </div>
+
+        <div class="product-content">
+          <span class="product-category">${activeVar.weight}</span>
+          <h3 class="product-title">${product.name}</h3>
+          <div class="product-urdu">${product.urdu}</div>
+
+          <div class="rating-row">
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span>${product.rating} (${product.reviewsCount})</span>
+          </div>
+
+          ${product.variants.length > 1 ? `
+            <div class="weight-selector-box">
+              <span class="weight-selector-label">Select Quantity / Weight:</span>
+              <div class="weight-options-row">
+                ${product.variants.map((v, idx) => `
+                  <button class="weight-btn ${idx === product.selectedWeightIndex ? 'active' : ''}" 
+                          onclick="selectProductWeight('${product.id}', ${idx}, false)">
+                    ${v.weight}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          ` : `
+            <div class="weight-selector-box">
+              <span class="weight-selector-label">Standard Size:</span>
+              <span style="font-size: 0.8rem; font-weight: 700; color: var(--forest-primary);">${activeVar.weight} Bottle</span>
+            </div>
+          `}
+
+          <div class="price-row">
+            <span class="price-current" id="allprice-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+          </div>
+
+          <div class="card-actions">
+            ${product.isHoney ? `
+              <button class="btn btn-red btn-block" onclick="openHoneyModal()">
+                <i class="fa-solid fa-jar-wheat"></i> Select Honey Variety
+              </button>
+            ` : `
+              <button class="btn btn-red btn-block" onclick="addProductToCart('${product.id}', false)">
+                <i class="fa-solid fa-bag-shopping"></i> Add To Cart
+              </button>
+            `}
+          </div>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-// 9. CART OPERATIONS
-function addToCart(productId) {
-  let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_PRODUCTS.find(p => p.id === productId);
+// 11. RENDER HONEY SELECTION MODAL
+function renderHoneyModal() {
+  const container = document.getElementById('honeyModalGrid');
+  if (!container) return;
+
+  container.innerHTML = HONEY_CATEGORIES.map(category => {
+    const activeVar = category.variants[category.selectedWeightIndex];
+    return `
+      <div class="honey-modal-item">
+        <img src="${category.image}" alt="${category.name}" class="honey-modal-img">
+        <div class="honey-modal-details">
+          <div class="honey-modal-title">${category.name}</div>
+          <div class="honey-modal-urdu">${category.urdu}</div>
+
+          <div class="honey-modal-weights">
+            ${category.variants.map((v, idx) => `
+              <button class="honey-modal-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}" 
+                      onclick="selectHoneyModalWeight('${category.id}', ${idx})">
+                ${v.weight}
+              </button>
+            `).join('')}
+          </div>
+
+          <div class="honey-modal-foot">
+            <span class="honey-modal-price" id="hmodal-price-${category.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+            <button class="btn btn-red btn-sm" onclick="addHoneyCategoryToCart('${category.id}'); closeHoneyModal();">
+              <i class="fa-solid fa-bag-shopping"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 12. WEIGHT SELECTOR INTERACTION HANDLERS
+function selectProductWeight(productId, weightIndex, isTopSelling) {
+  const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
+  const product = list.find(p => p.id === productId);
   if (!product) return;
 
-  const existing = cart.find(item => item.id === productId);
+  product.selectedWeightIndex = weightIndex;
+  const selectedVariant = product.variants[weightIndex];
+
+  // Update Top Selling card if matched
+  const topPriceElem = document.getElementById(`price-${productId}`);
+  if (topPriceElem) topPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
+
+  // Update All Products card if matched
+  const allPriceElem = document.getElementById(`allprice-${productId}`);
+  if (allPriceElem) allPriceElem.textContent = `Rs. ${selectedVariant.price.toLocaleString()}`;
+
+  // Re-render active buttons
+  if (isTopSelling) renderTopSellingProducts();
+  else renderAllProducts();
+}
+
+function selectHoneyCategoryWeight(categoryId, weightIndex) {
+  const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
+  if (!category) return;
+
+  category.selectedWeightIndex = weightIndex;
+  renderHoneyShowcase();
+  renderHoneyModal();
+}
+
+function selectHoneyModalWeight(categoryId, weightIndex) {
+  const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
+  if (!category) return;
+
+  category.selectedWeightIndex = weightIndex;
+  renderHoneyModal();
+  renderHoneyShowcase();
+}
+
+// 13. CART OPERATIONS
+function addProductToCart(productId, isTopSelling) {
+  const list = isTopSelling ? TOP_SELLING_PRODUCTS : ALL_PRODUCTS;
+  const product = list.find(p => p.id === productId);
+  if (!product) return;
+
+  const variant = product.variants[product.selectedWeightIndex];
+  const itemUniqueId = `${product.id}-${variant.weight.replace(/\\s+/g, '')}`;
+
+  const existing = cart.find(item => item.id === itemUniqueId);
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ ...product, qty: 1 });
+    cart.push({
+      id: itemUniqueId,
+      name: `${product.name} (${variant.weight})`,
+      price: variant.price,
+      image: product.image,
+      qty: 1
+    });
   }
 
   saveCart();
   updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Added <strong>${product.name}</strong> to cart!`);
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Added <strong>${product.name} (${variant.weight})</strong> to cart!`);
   openCartDrawer();
 }
 
-function updateCartQty(productId, delta) {
-  const item = cart.find(i => i.id === productId);
+function addHoneyCategoryToCart(categoryId) {
+  const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
+  if (!category) return;
+
+  const variant = category.variants[category.selectedWeightIndex];
+  const itemUniqueId = `${category.id}-${variant.weight.replace(/\\s+/g, '')}`;
+
+  const existing = cart.find(item => item.id === itemUniqueId);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      id: itemUniqueId,
+      name: `${category.name} (${variant.weight})`,
+      price: variant.price,
+      image: category.image,
+      qty: 1
+    });
+  }
+
+  saveCart();
+  updateCartUI();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> Added <strong>${category.name} (${variant.weight})</strong> to cart!`);
+  openCartDrawer();
+}
+
+function updateCartQty(itemUniqueId, delta) {
+  const item = cart.find(i => i.id === itemUniqueId);
   if (!item) return;
 
   item.qty += delta;
   if (item.qty <= 0) {
-    cart = cart.filter(i => i.id !== productId);
+    cart = cart.filter(i => i.id !== itemUniqueId);
   }
 
   saveCart();
   updateCartUI();
 }
 
-function removeFromCart(productId) {
-  cart = cart.filter(i => i.id !== productId);
+function removeFromCart(itemUniqueId) {
+  cart = cart.filter(i => i.id !== itemUniqueId);
   saveCart();
   updateCartUI();
   showToast('Item removed from cart');
@@ -479,7 +787,7 @@ function updateCartUI() {
   }
 }
 
-// 10. MY ORDERS & 24-HOUR CANCELLATION SYSTEM
+// 14. MY ORDERS & 24-HOUR CANCELLATION SYSTEM
 function renderOrdersDrawer() {
   const container = document.getElementById('ordersListContainer');
   if (!container) return;
@@ -509,10 +817,10 @@ function renderOrdersDrawer() {
           <span class="order-status-badge ${order.status === 'Cancelled' ? 'cancelled' : ''}">${order.status}</span>
         </div>
         <div class="order-items-list">
-          ${order.items.map(i => `<div>• ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
+          ${order.items.map(i => `<div>â€¢ ${i.name} (x${i.qty}) = Rs. ${i.price * i.qty}</div>`).join('')}
         </div>
         <div class="summary-line" style="margin-top: 4px;">
-          <strong>Total: Rs. ${order.total}</strong>
+          <strong>Total: Rs. ${order.total.toLocaleString()}</strong>
         </div>
         <div class="order-time-text">Placed on: ${orderDateStr}</div>
 
@@ -536,7 +844,7 @@ function cancelOrder(orderId) {
   showToast(`<i class="fa-solid fa-circle-check text-red"></i> Order ${orderId} has been cancelled.`);
 }
 
-// 11. AUTH UI & IN-PLACE TAB SWAPPING
+// 15. AUTH UI
 function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
@@ -556,7 +864,7 @@ function updateAuthUI() {
   }
 }
 
-// 12. DRAWER & MODALS TOGGLE
+// 16. MODAL & DRAWER TOGGLES
 function openCartDrawer() {
   document.getElementById('cartDrawer')?.classList.add('active');
   document.getElementById('cartOverlay')?.classList.add('active');
@@ -578,10 +886,20 @@ function closeOrdersDrawer() {
   document.getElementById('ordersOverlay')?.classList.remove('active');
 }
 
+function openHoneyModal() {
+  renderHoneyModal();
+  document.getElementById('honeyCategoryModal')?.classList.add('active');
+}
+
+function closeHoneyModal() {
+  document.getElementById('honeyCategoryModal')?.classList.remove('active');
+}
+
 function openQuickView(productId) {
   let product = TOP_SELLING_PRODUCTS.find(p => p.id === productId) || ALL_PRODUCTS.find(p => p.id === productId);
   if (!product) return;
 
+  const variant = product.variants[product.selectedWeightIndex];
   const content = document.getElementById('quickViewContent');
   if (!content) return;
 
@@ -599,10 +917,10 @@ function openQuickView(productId) {
       </ul>
 
       <div class="price-row" style="margin-bottom: 20px;">
-        <span class="price-current" style="font-size: 1.5rem;">Rs. ${product.price.toLocaleString()}</span>
+        <span class="price-current" style="font-size: 1.5rem;">Rs. ${variant.price.toLocaleString()} (${variant.weight})</span>
       </div>
 
-      <button class="btn btn-red btn-lg btn-block shadow-red" onclick="addToCart('${product.id}'); closeQuickView();">
+      <button class="btn btn-red btn-lg btn-block shadow-red" onclick="addProductToCart('${product.id}', false); closeQuickView();">
         <i class="fa-solid fa-bag-shopping"></i> Add To Cart Now
       </button>
     </div>
@@ -637,9 +955,9 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal')?.classList.remove('active');
 }
 
-// 13. EVENT LISTENERS SETUP
+// 17. EVENT LISTENERS
 function initEventListeners() {
-  // My Orders Drawer Icon
+  // Orders Drawer
   document.getElementById('myOrdersDrawerBtn')?.addEventListener('click', openOrdersDrawer);
   document.getElementById('closeOrdersBtn')?.addEventListener('click', closeOrdersDrawer);
   document.getElementById('ordersOverlay')?.addEventListener('click', closeOrdersDrawer);
@@ -648,6 +966,9 @@ function initEventListeners() {
   document.getElementById('cartToggleBtn')?.addEventListener('click', openCartDrawer);
   document.getElementById('closeCartBtn')?.addEventListener('click', closeCartDrawer);
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
+
+  // Honey Modal
+  document.getElementById('closeHoneyModalBtn')?.addEventListener('click', closeHoneyModal);
 
   // Account Button
   document.getElementById('userAccountBtn')?.addEventListener('click', () => {
@@ -658,7 +979,7 @@ function initEventListeners() {
   // Quick View Close
   document.getElementById('closeQuickViewBtn')?.addEventListener('click', closeQuickView);
 
-  // In-Place Auth Tab Buttons Switching
+  // In-Place Auth Tabs
   const loginTabBtn = document.getElementById('loginTabBtn');
   const signupTabBtn = document.getElementById('signupTabBtn');
   const loginForm = document.getElementById('loginForm');
@@ -714,7 +1035,6 @@ function initEventListeners() {
     const city = document.getElementById('revCity').value;
     const comment = document.getElementById('revComment').value;
 
-    // Send payload asynchronously to zaibbabar54@gmail.com
     fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -726,7 +1046,6 @@ function initEventListeners() {
       })
     }).catch(err => console.log(err));
 
-    // Append Review Live
     const reviewsGrid = document.getElementById('reviewsGrid');
     if (reviewsGrid) {
       const card = document.createElement('div');
@@ -765,9 +1084,9 @@ function initEventListeners() {
   // Special Deal Claim Button
   document.getElementById('claimDealBtn')?.addEventListener('click', () => {
     const dealItem = {
-      id: 'deal-eid-offer',
-      name: 'BARI EID GHEE & SAFFRON OFFER',
-      urdu: 'بڑی عید خصوص پیشکش',
+      id: 'deal-ghee-saffron',
+      name: 'DESI GHEE (500g) + ROYAL KASHMIRI SAFFRON (1g) COMBO',
+      urdu: 'Ø¯ÛŒØ³ÛŒ Ú¯Ú¾ÛŒ Ø§ÙˆØ± Ú©Ø´Ù…ÛŒØ±ÛŒ Ø²Ø¹ÙØ±Ø§Ù† Ù…ÛŒÚ¯Ø§ Ø¢ÙØ±',
       price: 2750,
       qty: 1,
       image: 'assets/images/deal_banner.jpg'
@@ -781,11 +1100,11 @@ function initEventListeners() {
     }
     saveCart();
     updateCartUI();
-    showToast('<i class="fa-solid fa-crown text-red"></i> Bari Eid Deal added to cart!');
+    showToast('<i class="fa-solid fa-crown text-red"></i> Special Mega Deal added to cart!');
     openCartDrawer();
   });
 
-  // Checkout Form Submission (Background fetch - NO Redirect to External Screen!)
+  // Checkout Form Submission
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -801,7 +1120,6 @@ function initEventListeners() {
 
     const itemsSummary = cart.map(i => `${i.name} (${i.qty}x) = Rs. ${i.price * i.qty}`).join(', ');
 
-    // 1. Post order to zaibbabar54@gmail.com via FormSubmit AJAX (Background - No Redirect)
     fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -819,7 +1137,6 @@ function initEventListeners() {
       })
     }).catch(err => console.log('Order notification background sent', err));
 
-    // 2. Save order to My Orders history
     const newOrder = {
       id: refId,
       timestamp: Date.now(),
@@ -836,12 +1153,10 @@ function initEventListeners() {
     document.getElementById('orderRefId').textContent = refId;
     closeCheckoutModal();
 
-    // Clear cart
     cart = [];
     saveCart();
     updateCartUI();
 
-    // Show in-app confirmation modal (NO REDIRECT!)
     document.getElementById('orderSuccessModal')?.classList.add('active');
   });
 
@@ -850,7 +1165,7 @@ function initEventListeners() {
   });
 }
 
-// 14. COUNTDOWN TIMER LOGIC
+// 18. COUNTDOWN TIMER
 function initCountdownTimer() {
   let hours = 8;
   let mins = 42;
@@ -883,7 +1198,7 @@ function initCountdownTimer() {
   }, 1000);
 }
 
-// 15. TOAST NOTIFICATIONS
+// 19. TOAST NOTIFICATIONS
 function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
