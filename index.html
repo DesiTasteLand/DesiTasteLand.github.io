@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,10 +6,15 @@
   <title>DESI TASTE LAND | Pure, Organic & Authentic Desi Goodness</title>
   <meta name="description" content="Discover 100% pure, organic Sidr Honey, Desi Ghee, Pure Olive Oil, Premium Tea, Talbina, Shilajit, Kashmiri Saffron & Imli Chutney from DESI TASTE LAND.">
   
-  <!-- Google Fonts -->
+  <!-- Browser Tab Favicon Logo -->
+  <link rel="icon" type="image/jpeg" href="assets/images/brand_logo.jpg">
+  <link rel="shortcut icon" type="image/jpeg" href="assets/images/brand_logo.jpg">
+  <link rel="apple-touch-icon" href="assets/images/brand_logo.jpg">
+
+  <!-- Google Fonts: Courier Prime & Space Mono (Typewriter style) + Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,16 +23,16 @@
 </head>
 <body>
 
-  <!-- Main Ultra-Luxury Navbar (Logo Centered, Menu Icon Left for Orders History) -->
+  <!-- Main Navbar (Logo Centered, Menu Icon Left for Orders History) -->
   <header class="header" id="mainHeader">
     <div class="container header-inner">
-      <!-- Left: My Orders History Menu Icon (3 lines) -->
+      <!-- Left: My Orders History Menu Icon -->
       <button class="nav-left-btn" id="myOrdersDrawerBtn" title="My Orders & Order History">
         <i class="fa-solid fa-bars"></i>
         <span class="nav-btn-label">My Orders</span>
       </button>
 
-      <!-- Center (MID): Brand Logo -->
+      <!-- Center: Brand Logo -->
       <a href="#" class="brand-logo logo-mid">
         <img src="assets/images/brand_logo.jpg" alt="DESI TasteLand Official Logo" class="brand-logo-img">
         <div class="logo-text">
@@ -65,7 +70,7 @@
     </div>
   </aside>
 
-  <!-- HERO SECTION (Touch & Drag Swipe + Golden Progress Bar + Auto Loop, NO Side Buttons) -->
+  <!-- HERO SECTION (Touch & Drag Swipe + Golden Progress Bar, NO Side Buttons) -->
   <section class="hero-slider-section" id="hero">
     <div class="slider-container" id="heroSlider">
       <div class="slide active">
@@ -96,7 +101,7 @@
     </div>
   </section>
 
-  <!-- TOP SELLING PRODUCTS SECTION -->
+  <!-- TOP SELLING PRODUCTS SECTION (Mobile Horizontal Swipe Slider) -->
   <section class="section-padding top-selling-section reveal-section" id="topSelling">
     <div class="container">
       <div class="section-header text-center">
@@ -105,13 +110,17 @@
         <p class="section-desc">Our signature organic delicacies crafted for purity and unmatched rich taste.</p>
       </div>
 
+      <!-- Single horizontal swipe row on mobile, 3-column grid on desktop -->
       <div class="top-selling-grid" id="topSellingGrid">
         <!-- Injected via JS -->
+      </div>
+      <div class="mobile-swipe-hint text-center">
+        <small><i class="fa-solid fa-arrows-left-right text-red"></i> Swipe horizontally to view all favorites</small>
       </div>
     </div>
   </section>
 
-  <!-- ALL PRODUCTS SECTION (With Interactive Weight Selectors & Simple Font Prices) -->
+  <!-- ALL PRODUCTS SECTION (With Inline Expandable Honey Varieties between Honey & Desi Ghee) -->
   <section class="section-padding all-products-section reveal-section" id="allProductsSection">
     <div class="container">
       <div class="section-header text-center">
@@ -121,22 +130,7 @@
       </div>
 
       <div class="products-responsive-grid" id="allProductsGrid">
-        <!-- Injected via JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- HONEY VARIETIES SHOWCASE SECTION (Wild & Farmy Big/Small Bee with 4 Images - Below All Products) -->
-  <section class="section-padding honey-showcase-section reveal-section" id="honeyShowcase">
-    <div class="container">
-      <div class="section-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-jar-wheat text-red"></i> 100% Pure & Raw Honey Varieties</span>
-        <h2 class="section-title">CHOOSE YOUR HONEY VARIETY</h2>
-        <p class="section-desc">Select from our 4 certified pure varieties   " collected with zero sugar adulteration guarantee.</p>
-      </div>
-
-      <div class="honey-cards-grid" id="honeyShowcaseGrid">
-        <!-- Injected via JS (WILD BIG BEE, WILD SMALL BEE, FARMY BIG BEE, FARMY SMALL BEE) -->
+        <!-- Injected via JS (Pure Honey -> Honey Varieties Accordion -> Desi Ghee -> Other Products) -->
       </div>
     </div>
   </section>
@@ -186,7 +180,7 @@
     </div>
   </section>
 
-  <!-- SPECIAL DEALS SECTION (Sleek, Clean, No Stock Bar, No Description List) -->
+  <!-- SPECIAL DEALS SECTION -->
   <section class="section-padding special-deal-section reveal-section" id="specialDeal">
     <div class="container">
       <div class="deal-card-ultra">
@@ -222,7 +216,7 @@
             <div class="deal-tagline"><i class="fa-solid fa-crown text-red"></i> EXCLUSIVE LIMITED COMBO OFFER</div>
             <h2 class="deal-heading">PURE DESI GHEE & ROYAL KASHMIRI SAFFRON</h2>
 
-            <!-- Price & Action CTA (Simple Clean Font) -->
+            <!-- Price & Action CTA -->
             <div class="deal-action-panel">
               <div class="deal-price-stack">
                 <div class="price-original-wrap">
@@ -384,7 +378,7 @@
     </div>
   </section>
 
-  <!-- SIGN UP / LOGIN SECTION (In-Place Form Swapping) -->
+  <!-- SIGN UP / LOGIN SECTION -->
   <section class="section-padding auth-section reveal-section" id="authSection">
     <div class="container">
       <div class="auth-card-luxury">
@@ -393,7 +387,6 @@
           <button class="auth-tab-btn" id="signupTabBtn">Create New Account</button>
         </div>
 
-        <!-- In-Place Auth Forms Box -->
         <div class="auth-form-container">
           <!-- Login Form -->
           <form id="loginForm" class="auth-form active">
@@ -417,7 +410,7 @@
             </button>
           </form>
 
-          <!-- Sign Up Form (Swaps In-Place) -->
+          <!-- Sign Up Form -->
           <form id="signupForm" class="auth-form" style="display: none;">
             <div class="auth-header text-center">
               <h3>Create New Account</h3>
@@ -489,7 +482,6 @@
           <li><a href="#hero">Home</a></li>
           <li><a href="#topSelling">Top Selling Products</a></li>
           <li><a href="#allProductsSection">All Products</a></li>
-          <li><a href="#honeyShowcase">Pure Honey Varieties</a></li>
           <li><a href="#specialDeal">Today's Mega Deal</a></li>
           <li><a href="#whyUs">Why Desi Taste Land</a></li>
           <li><a href="#aboutSection">About Us</a></li>
@@ -543,7 +535,7 @@
       <button class="close-btn" id="closeCartBtn">&times;</button>
     </div>
 
-    <!-- Free Shipping Bar (Updated to Rs. 5000) -->
+    <!-- Free Shipping Bar (Strictly Rs. 5000) -->
     <div class="free-shipping-box">
       <p id="shippingText">Add <strong>Rs. 5,000</strong> more to get FREE Delivery!</p>
       <div class="shipping-progress-bg">
@@ -575,22 +567,6 @@
     </div>
   </aside>
 
-  <!-- HONEY CATEGORY & WEIGHT SELECTION MODAL -->
-  <div class="modal-overlay" id="honeyCategoryModal">
-    <div class="modal-card modal-card-lg">
-      <button class="modal-close" id="closeHoneyModalBtn">&times;</button>
-      <div class="honey-modal-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-jar-wheat text-red"></i> 100% PURE & RAW HONEY</span>
-        <h2>Select Honey Variety & Weight</h2>
-        <p>Choose your preferred honey variety, select weight, and add to cart</p>
-      </div>
-
-      <div class="honey-modal-grid" id="honeyModalGrid">
-        <!-- Injected via JS with 4 categories and real images -->
-      </div>
-    </div>
-  </div>
-
   <!-- QUICK VIEW MODAL -->
   <div class="modal-overlay" id="quickViewModal">
     <div class="modal-card">
@@ -601,7 +577,7 @@
     </div>
   </div>
 
-  <!-- CHECKOUT MODAL (In-App Background Submission - NO Page Redirect) -->
+  <!-- CHECKOUT MODAL -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-card modal-card-md">
       <button class="modal-close" id="closeCheckoutBtn">&times;</button>
