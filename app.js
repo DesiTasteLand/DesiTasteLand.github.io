@@ -4,7 +4,7 @@
 
 const FREE_SHIPPING_THRESHOLD = 5000;
 
-// 1. HONEY CATEGORIES (4 Varieties - 250g instead of 200g)
+// 1. HONEY CATEGORIES (4 Varieties - Exact Prices)
 const HONEY_CATEGORIES = [
   {
     id: 'honey-wild-big',
@@ -13,7 +13,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_wild_big.jpg',
     description: '100% pure wild Sidr honey collected from wild big bees in natural forests.',
     variants: [
-      { weight: '250g', price: 560 },
+      { weight: '250g', price: 700 },
       { weight: '500g', price: 1400, isDefault: true },
       { weight: '1000g', price: 2800 }
     ],
@@ -26,7 +26,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_wild_small.jpg',
     description: 'Rare wild small bee honey collected from mountain flora. Supreme health and immunity booster.',
     variants: [
-      { weight: '250g', price: 1080 },
+      { weight: '250g', price: 1400 },
       { weight: '500g', price: 2700, isDefault: true },
       { weight: '1000g', price: 5400 }
     ],
@@ -39,8 +39,8 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_farmy_big.jpg',
     description: 'Pure farm-harvested big bee honey from certified floral blossom fields.',
     variants: [
-      { weight: '250g', price: 360 },
-      { weight: '500g', price: 900, isDefault: true },
+      { weight: '250g', price: 500 },
+      { weight: '500g', price: 1000, isDefault: true },
       { weight: '1000g', price: 1800 }
     ],
     selectedWeightIndex: 1
@@ -52,7 +52,7 @@ const HONEY_CATEGORIES = [
     image: 'assets/images/honey_farmy_small.jpg',
     description: 'Exquisite farm small bee honey, amber in color with delicate floral aroma.',
     variants: [
-      { weight: '250g', price: 800 },
+      { weight: '250g', price: 1000 },
       { weight: '500g', price: 2000, isDefault: true },
       { weight: '1000g', price: 4000 }
     ],
@@ -88,7 +88,7 @@ const TOP_SELLING_PRODUCTS = [
   }
 ];
 
-// 3. ALL PRODUCTS (Full weight selectors & prices shown here)
+// 3. ALL PRODUCTS
 const ALL_PRODUCTS = [
   {
     id: 'prod-honey',
@@ -99,7 +99,7 @@ const ALL_PRODUCTS = [
     image: 'assets/images/honey_wild_big.jpg',
     description: 'Select your preferred honey variety from 4 natural choices.',
     variants: [
-      { weight: '250g', price: 560 },
+      { weight: '250g', price: 700 },
       { weight: '500g', price: 1400, isDefault: true },
       { weight: '1000g', price: 2800 }
     ],
@@ -284,6 +284,11 @@ function initScrollRevealObserver() {
   document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
 }
 
+// Modal State for Product Variant & Quantity Selection
+let currentModalProduct = null;
+let modalSelectedVariantIndex = 0;
+let modalQuantity = 1;
+
 // 8. TOP SELLING - Clean simple cards: just image, name, rating, BUY NOW
 function renderTopSellingProducts() {
   const container = document.getElementById('topSellingGrid');
@@ -304,7 +309,7 @@ function renderTopSellingProducts() {
           </div>
           <span>${product.rating} (${product.reviewsCount}+)</span>
         </div>
-        <button class="btn btn-red btn-block ts-buy-btn" onclick="${product.isHoney ? "scrollToAllProducts()" : `quickBuyTopSelling('${product.id}')`}">
+        <button class="btn btn-red btn-block ts-buy-btn" onclick="${product.isHoney ? "scrollToAllProducts()" : `openProductSelectionModal('${product.id === 'top-ghee' ? 'prod-ghee' : product.id === 'top-olive' ? 'prod-olive' : product.id}')`}">
           <i class="fa-solid fa-bag-shopping"></i> BUY NOW
         </button>
       </div>
@@ -317,18 +322,6 @@ function scrollToAllProducts() {
   if (sec) sec.scrollIntoView({ behavior: 'smooth' });
 }
 
-function quickBuyTopSelling(productId) {
-  const product = TOP_SELLING_PRODUCTS.find(p => p.id === productId);
-  if (!product || !product.defaultVariant) return;
-  const v = product.defaultVariant;
-  const itemId = `${product.id}-${v.weight.replace(/\s+/g,'')}`;
-  const existing = cart.find(i => i.id === itemId);
-  if (existing) { existing.qty += 1; } else { cart.push({ id: itemId, name: `${product.name} (${v.weight})`, price: v.price, image: product.image, qty: 1 }); }
-  saveCart(); updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${product.name}</strong> added to cart!`);
-  openCartDrawer();
-}
-
 // 9. ALL PRODUCTS WITH INLINE HONEY ACCORDION
 function renderAllProductsWithHoneyAccordion() {
   const container = document.getElementById('allProductsGrid');
@@ -336,7 +329,11 @@ function renderAllProductsWithHoneyAccordion() {
 
   let html = '';
   ALL_PRODUCTS.forEach((product) => {
-    const activeVar = product.variants[product.selectedWeightIndex];
+    const activeVar = product.variants[product.selectedWeightIndex || 0];
+    const priceDisplay = product.variants.length > 1 
+      ? `Rs. ${product.variants[0].price.toLocaleString()}`
+      : `Rs. ${activeVar.price.toLocaleString()}`;
+
     html += `
       <div class="product-card" id="allcard-${product.id}">
         <div class="product-img-box">
@@ -352,34 +349,11 @@ function renderAllProductsWithHoneyAccordion() {
             </div>
             <span>${product.rating} (${product.reviewsCount})</span>
           </div>
-          ${product.variants.length > 1 ? `
-            <div class="weight-selector-box">
-              <span class="weight-selector-label">Select Weight:</span>
-              <div class="weight-options-row">
-                ${product.variants.map((v, idx) => `
-                  <button class="weight-btn ${idx === product.selectedWeightIndex ? 'active' : ''}"
-                          onclick="selectProductWeight('${product.id}', ${idx})">
-                    <span class="w-qty">${v.weight}</span>
-                    <span class="w-price">Rs.${v.price.toLocaleString()}</span>
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-          ` : `
-            <div class="weight-selector-box">
-              <span class="weight-selector-label">Size:</span>
-              <div class="weight-options-row">
-                <button class="weight-btn active">
-                  <span class="w-qty">${activeVar.weight}</span>
-                  <span class="w-price">Rs.${activeVar.price.toLocaleString()}</span>
-                </button>
-              </div>
-            </div>
-          `}
           <div class="price-row">
-            <span class="price-current" id="allprice-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+            <span class="price-current" id="allprice-${product.id}">${priceDisplay}</span>
+            ${product.variants.length > 1 ? `<span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">(${product.variants.length} Sizes)</span>` : ''}
           </div>
-          <button class="btn btn-red btn-block buy-now-btn" onclick="${product.isHoney ? "toggleHoneyAccordion()" : `addProductToCart('${product.id}')`}">
+          <button class="btn btn-red btn-block buy-now-btn" onclick="${product.isHoney ? "toggleHoneyAccordion()" : `openProductSelectionModal('${product.id}')`}">
             <i class="fa-solid fa-bag-shopping"></i> ${product.isHoney ? 'Choose Honey' : 'BUY NOW'}
           </button>
         </div>
@@ -398,7 +372,7 @@ function renderAllProductsWithHoneyAccordion() {
           </div>
           <div class="honey-inline-grid">
             ${HONEY_CATEGORIES.map(category => {
-              const catVar = category.variants[category.selectedWeightIndex];
+              const catVar = category.variants[category.selectedWeightIndex || 0];
               return `
                 <div class="honey-card" id="hcard-${category.id}">
                   <span class="honey-card-badge">${category.tag}</span>
@@ -411,7 +385,7 @@ function renderAllProductsWithHoneyAccordion() {
                       <span class="weight-selector-label">Select Weight:</span>
                       <div class="honey-weights-row">
                         ${category.variants.map((v, idx) => `
-                          <button class="honey-w-btn ${idx === category.selectedWeightIndex ? 'active' : ''}"
+                          <button class="honey-w-btn ${idx === (category.selectedWeightIndex || 0) ? 'active' : ''}"
                                   onclick="selectHoneyCategoryWeight('${category.id}', ${idx})">
                             ${v.weight}
                           </button>
@@ -422,7 +396,7 @@ function renderAllProductsWithHoneyAccordion() {
                       <span class="honey-price-val" id="hprice-${category.id}">Rs. ${catVar.price.toLocaleString()}</span>
                       <span class="honey-unit-label">per ${catVar.weight}</span>
                     </div>
-                    <button class="btn btn-red btn-block btn-sm" onclick="addHoneyCategoryToCart('${category.id}')">
+                    <button class="btn btn-red btn-block btn-sm" onclick="openProductSelectionModal('${category.id}')">
                       <i class="fa-solid fa-bag-shopping"></i> BUY NOW
                     </button>
                   </div>
@@ -447,13 +421,6 @@ function toggleHoneyAccordion() {
   }
 }
 
-function selectProductWeight(productId, weightIndex) {
-  const product = ALL_PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
-  product.selectedWeightIndex = weightIndex;
-  renderAllProductsWithHoneyAccordion();
-}
-
 function selectHoneyCategoryWeight(categoryId, weightIndex) {
   const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
   if (!category) return;
@@ -461,30 +428,162 @@ function selectHoneyCategoryWeight(categoryId, weightIndex) {
   renderAllProductsWithHoneyAccordion();
 }
 
-// 10. CART
-function addProductToCart(productId) {
-  const product = ALL_PRODUCTS.find(p => p.id === productId);
+// 10. PRODUCT VARIANT & QUANTITY SELECTION MODAL
+function openProductSelectionModal(productId) {
+  let product = ALL_PRODUCTS.find(p => p.id === productId);
+  if (!product) {
+    product = HONEY_CATEGORIES.find(c => c.id === productId);
+  }
   if (!product) return;
-  const variant = product.variants[product.selectedWeightIndex];
+
+  currentModalProduct = product;
+  modalSelectedVariantIndex = product.selectedWeightIndex !== undefined ? product.selectedWeightIndex : 0;
+  modalQuantity = 1;
+
+  renderProductSelectionModal();
+  document.getElementById('productSelectionModal')?.classList.add('active');
+}
+
+function closeProductSelectionModal() {
+  document.getElementById('productSelectionModal')?.classList.remove('active');
+}
+
+function setModalVariant(idx) {
+  modalSelectedVariantIndex = idx;
+  if (currentModalProduct) {
+    currentModalProduct.selectedWeightIndex = idx;
+  }
+  renderProductSelectionModal();
+}
+
+function updateModalQty(delta) {
+  modalQuantity = Math.max(1, modalQuantity + delta);
+  renderProductSelectionModal();
+}
+
+function renderProductSelectionModal() {
+  const container = document.getElementById('productModalContent');
+  if (!container || !currentModalProduct) return;
+
+  const product = currentModalProduct;
+  const variant = product.variants[modalSelectedVariantIndex] || product.variants[0];
+  const itemTotal = variant.price * modalQuantity;
+
+  container.innerHTML = `
+    <div class="prod-modal-card-content">
+      <div class="prod-modal-header">
+        <img src="${product.image}" alt="${product.name}" class="prod-modal-img">
+        <div class="prod-modal-info">
+          ${product.tag ? `<span class="prod-modal-tag">${product.tag}</span>` : `<span class="prod-modal-tag">100% Pure & Authentic</span>`}
+          <h3 class="prod-modal-title">${product.name}</h3>
+          <div class="prod-modal-price-highlight">Rs. ${variant.price.toLocaleString()} <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);">/ ${variant.weight}</span></div>
+        </div>
+      </div>
+
+      ${product.variants && product.variants.length > 1 ? `
+        <div class="prod-modal-section">
+          <label class="prod-modal-label"><i class="fa-solid fa-weight-scale text-red"></i> Select Size / Weight:</label>
+          <div class="prod-modal-variants">
+            ${product.variants.map((v, idx) => `
+              <button type="button" class="pm-variant-btn ${idx === modalSelectedVariantIndex ? 'active' : ''}" onclick="setModalVariant(${idx})">
+                <span class="pm-variant-weight">${v.weight}</span>
+                <span class="pm-variant-price">Rs. ${v.price.toLocaleString()}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      ` : `
+        <div class="prod-modal-section">
+          <label class="prod-modal-label"><i class="fa-solid fa-weight-scale text-red"></i> Size / Weight:</label>
+          <div class="prod-modal-variants">
+            <button type="button" class="pm-variant-btn active" style="cursor:default;">
+              <span class="pm-variant-weight">${variant.weight}</span>
+              <span class="pm-variant-price">Rs. ${variant.price.toLocaleString()}</span>
+            </button>
+          </div>
+        </div>
+      `}
+
+      <div class="prod-modal-section">
+        <label class="prod-modal-label"><i class="fa-solid fa-calculator text-red"></i> Select Quantity:</label>
+        <div class="prod-modal-qty-control">
+          <div class="pm-qty-box">
+            <button type="button" class="pm-qty-btn" onclick="updateModalQty(-1)">-</button>
+            <span class="pm-qty-num">${modalQuantity}</span>
+            <button type="button" class="pm-qty-btn" onclick="updateModalQty(1)">+</button>
+          </div>
+          <span style="font-size:0.85rem;color:var(--text-muted);font-weight:600;">Jar(s) / Pack(s)</span>
+        </div>
+      </div>
+
+      <div class="prod-modal-total-bar">
+        <div>
+          <span class="pm-total-label">Total Amount:</span>
+          <small class="pm-total-calc">${variant.weight} × ${modalQuantity} item(s)</small>
+        </div>
+        <div class="pm-total-amount">Rs. ${itemTotal.toLocaleString()}</div>
+      </div>
+
+      <div class="prod-modal-actions">
+        <button class="btn btn-red btn-block shadow-red" onclick="proceedDirectOrderFromModal()">
+          <i class="fa-solid fa-bolt"></i> Order Now (COD)
+        </button>
+        <button class="btn btn-red-outline btn-block" onclick="addToCartFromModal()">
+          <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function addToCartFromModal() {
+  if (!currentModalProduct) return;
+  const product = currentModalProduct;
+  const variant = product.variants[modalSelectedVariantIndex] || product.variants[0];
   const itemId = `${product.id}-${variant.weight.replace(/\s+/g,'')}`;
   const existing = cart.find(i => i.id === itemId);
-  if (existing) { existing.qty += 1; } else { cart.push({ id: itemId, name: `${product.name} (${variant.weight})`, price: variant.price, image: product.image, qty: 1 }); }
-  saveCart(); updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${product.name} (${variant.weight})</strong> added to cart!`);
+  if (existing) {
+    existing.qty += modalQuantity;
+  } else {
+    cart.push({
+      id: itemId,
+      name: `${product.name} (${variant.weight})`,
+      price: variant.price,
+      image: product.image,
+      qty: modalQuantity
+    });
+  }
+  saveCart();
+  updateCartUI();
+  closeProductSelectionModal();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${modalQuantity}x ${product.name} (${variant.weight})</strong> added to cart!`);
   openCartDrawer();
 }
 
-function addHoneyCategoryToCart(categoryId) {
-  const category = HONEY_CATEGORIES.find(c => c.id === categoryId);
-  if (!category) return;
-  const variant = category.variants[category.selectedWeightIndex];
-  const itemId = `${category.id}-${variant.weight.replace(/\s+/g,'')}`;
+function proceedDirectOrderFromModal() {
+  if (!currentModalProduct) return;
+  const product = currentModalProduct;
+  const variant = product.variants[modalSelectedVariantIndex] || product.variants[0];
+  const itemId = `${product.id}-${variant.weight.replace(/\s+/g,'')}`;
   const existing = cart.find(i => i.id === itemId);
-  if (existing) { existing.qty += 1; } else { cart.push({ id: itemId, name: `${category.name} (${variant.weight})`, price: variant.price, image: category.image, qty: 1 }); }
-  saveCart(); updateCartUI();
-  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${category.name} (${variant.weight})</strong> added to cart!`);
-  openCartDrawer();
+  if (existing) {
+    existing.qty += modalQuantity;
+  } else {
+    cart.push({
+      id: itemId,
+      name: `${product.name} (${variant.weight})`,
+      price: variant.price,
+      image: product.image,
+      qty: modalQuantity
+    });
+  }
+  saveCart();
+  updateCartUI();
+  closeProductSelectionModal();
+  openCheckoutModal();
 }
+
+// 11. CART
 
 function updateCartQty(itemId, delta) {
   const item = cart.find(i => i.id === itemId);
@@ -642,6 +741,10 @@ function initEventListeners() {
   document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
   document.getElementById('userAccountBtn')?.addEventListener('click', () => document.getElementById('authSection')?.scrollIntoView({ behavior: 'smooth' }));
   document.getElementById('closeQuickViewBtn')?.addEventListener('click', closeQuickView);
+  document.getElementById('closeProductModalBtn')?.addEventListener('click', closeProductSelectionModal);
+  document.getElementById('productSelectionModal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'productSelectionModal') closeProductSelectionModal();
+  });
 
   const loginTabBtn = document.getElementById('loginTabBtn');
   const signupTabBtn = document.getElementById('signupTabBtn');
