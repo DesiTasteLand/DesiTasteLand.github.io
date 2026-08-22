@@ -11,10 +11,10 @@
   <link rel="shortcut icon" type="image/jpeg" href="assets/images/brand_logo.jpg">
   <link rel="apple-touch-icon" href="assets/images/brand_logo.jpg">
 
-  <!-- Google Fonts: Playfair Display Bold + Plus Jakarta Sans -->
+  <!-- Google Fonts: Cinzel + Playfair Display + Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -204,14 +204,11 @@
     </div>
   </section>
 
-  <!-- ABOUT SECTION - Heritage Image on top, text below -->
+  <!-- ABOUT SECTION -->
   <section class="section-padding about-section reveal-section" id="aboutSection">
     <div class="container">
       <div class="about-card-luxury">
-        <!-- Heritage Image at the top -->
-        <img src="assets/images/about_heritage.jpg" alt="Our Heritage - Desi Taste Land" class="about-heritage-img">
-
-        <!-- About Content Below the Image -->
+        <!-- About Content -->
         <div class="about-content-body">
           <div class="about-header text-center">
             <span class="section-subtitle"><i class="fa-solid fa-hand-holding-heart text-red"></i> OUR COMMITMENT</span>
@@ -466,6 +463,16 @@
     <div class="modal-card">
       <button class="modal-close" id="closeQuickViewBtn">&times;</button>
       <div id="quickViewContent"></div>
+    </div>
+  </div>
+
+  <!-- PRODUCT QUANTITY & VARIANT SELECTION MODAL -->
+  <div class="modal-overlay" id="productSelectionModal">
+    <div class="modal-card modal-card-md">
+      <button class="modal-close" id="closeProductModalBtn">&times;</button>
+      <div class="product-selection-modal-body" id="productModalContent">
+        <!-- Dynamically rendered by app.js -->
+      </div>
     </div>
   </div>
 
