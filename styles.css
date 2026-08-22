@@ -395,15 +395,15 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 .why-card h3 { font-family: var(--font-heading) !important; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
 .why-card p { font-size: 0.88rem; color: var(--text-muted); }
 
-/* SPECIAL DEAL - 100% Uncut Full Poster */
+/* SPECIAL DEAL - Full Poster, No Overflow, No Crop */
 .deal-card-ultra {
   background: #FFF;
   border-radius: var(--radius-lg);
   border: 2px solid var(--border-gold);
   box-shadow: 0 16px 48px rgba(21,71,52,0.12);
-  padding: 36px 30px;
+  padding: 32px 28px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 .deal-card-ultra::before {
   content: '';
@@ -415,24 +415,18 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 }
 .deal-grid-layout {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 36px;
-  align-items: center;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 28px;
+  align-items: start;
 }
 .deal-media-frame {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
 }
 .deal-img-wrapper {
-  position: relative;
   width: 100%;
-  max-width: 480px;
-  background: #FFFDF9;
+  background: transparent;
   border-radius: var(--radius-md);
-  border: 2px solid var(--border-gold);
-  box-shadow: var(--shadow-md);
   overflow: hidden;
   line-height: 0;
   display: block;
@@ -443,26 +437,21 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   max-width: 100% !important;
   max-height: none !important;
   min-height: 0 !important;
-  object-fit: contain !important;
+  object-fit: fill !important;
   display: block !important;
-  margin: 0 auto !important;
-  transition: transform 0.4s ease;
 }
-.deal-card-ultra:hover .deal-banner-image {
-  transform: scale(1.02);
-}
-.deal-details-panel { display: flex; flex-direction: column; }
+.deal-details-panel { display: flex; flex-direction: column; padding-top: 8px; }
 .deal-tagline { font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; color: var(--red-primary); margin-bottom: 8px; }
-.deal-heading { font-family: var(--font-heading) !important; font-size: 1.8rem; font-weight: 700; color: var(--text-dark); margin-bottom: 24px; line-height: 1.25; }
-.deal-action-panel { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.deal-price-stack { display: flex; flex-direction: column; }
+.deal-heading { font-family: var(--font-heading) !important; font-size: 1.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; line-height: 1.3; }
+.deal-action-panel { display: flex; flex-direction: column; gap: 16px; }
+.deal-price-stack { display: flex; flex-direction: column; gap: 4px; }
 .price-original-wrap { display: flex; align-items: baseline; gap: 6px; }
 .price-was-label { font-size: 0.75rem; color: var(--text-light); }
 .original-price { font-size: 0.95rem; color: var(--text-light); text-decoration: line-through; }
-.price-now-wrap { display: flex; align-items: baseline; gap: 8px; }
+.price-now-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .current-price { font-size: 1.9rem; font-weight: 800; color: var(--red-primary); line-height: 1; }
 .free-shipping-tag { font-size: 0.7rem; font-weight: 700; background: var(--forest-light); color: var(--forest-primary); padding: 3px 8px; border-radius: 4px; }
-.deal-cta-btn { flex-grow: 1; max-width: 320px; }
+.deal-cta-btn { width: 100%; max-width: 100%; font-size: 1.05rem; font-weight: 800; padding: 14px 20px; letter-spacing: 0.5px; }
 
 /* ==========================================================================
    ABOUT SECTION
@@ -740,7 +729,8 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 
 /* RESPONSIVE */
 @media (max-width: 992px) {
-  .deal-grid-layout { grid-template-columns: 1fr; }
+  .deal-grid-layout { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .deal-media-frame { max-width: 520px; margin: 0 auto; }
   .reviews-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -753,35 +743,38 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   .about-content-body { padding: 0; }
   .about-main-title { font-size: 1.6rem !important; }
   
-  /* DEAL SECTION MOBILE UNCUT */
+  /* DEAL SECTION MOBILE - IMAGE FULLY INSIDE CARD */
   .deal-card-ultra {
-    padding: 16px 12px !important;
-    border-radius: var(--radius-md) !important;
+    padding: 14px !important;
+    overflow: hidden !important;
   }
   .deal-grid-layout {
     grid-template-columns: 1fr !important;
-    gap: 18px !important;
+    gap: 16px !important;
   }
   .deal-media-frame {
-    max-width: 100% !important;
     width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
   .deal-img-wrapper {
-    max-width: 100% !important;
     width: 100% !important;
-    border-radius: var(--radius-sm) !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
   }
   .deal-banner-image {
     width: 100% !important;
     height: auto !important;
+    max-width: 100% !important;
     max-height: none !important;
-    min-height: 0 !important;
-    object-fit: contain !important;
+    object-fit: fill !important;
     display: block !important;
   }
-  .deal-heading { font-size: 1.35rem; margin-bottom: 14px; }
-  .deal-action-panel { flex-direction: column; align-items: stretch; gap: 14px; }
-  .deal-cta-btn { max-width: 100%; width: 100%; }
+  .deal-heading { font-size: 1.2rem !important; margin-bottom: 12px !important; }
+  .deal-action-panel { flex-direction: column !important; gap: 12px !important; }
+  .deal-cta-btn { width: 100% !important; max-width: 100% !important; padding: 13px 16px !important; font-size: 1rem !important; }
+  .current-price { font-size: 1.6rem !important; }
 
   .reviews-grid { grid-template-columns: 1fr; }
   .submit-review-card { padding: 24px 16px; margin-top: 32px; }
