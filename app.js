@@ -785,7 +785,7 @@ function initEventListeners() {
     if (grid) {
       const card = document.createElement('div');
       card.className = 'review-card';
-      card.innerHTML = `<div class="review-top"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified</span></div><p class="review-text">"${comment}"</p><div class="reviewer-meta"><div class="reviewer-initial">${name.charAt(0).toUpperCase()}</div><div class="reviewer-info"><strong>${name}</strong><small>${city}</small></div></div>`;
+      card.innerHTML = `<div class="review-top"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified</span></div><p class="review-text">"${comment}"</p><div class="reviewer-meta"><div class="reviewer-initial">${name.charAt(0).toUpperCase()}</div><div class="reviewer-info"><strong>${name}</strong><small>${city}</small></div><i class="fa-solid fa-quote-right quote-decor-gold"></i></div>`;
       grid.prepend(card);
     }
     document.getElementById('submitReviewForm').reset();
