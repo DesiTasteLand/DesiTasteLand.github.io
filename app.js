@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroTouchSlider();
   initScrollRevealObserver();
   initCountdownTimer();
+  initSearchSystem();
   initEventListeners();
 });
 
@@ -296,7 +297,7 @@ function renderTopSellingProducts() {
   if (!container) return;
 
   container.innerHTML = TOP_SELLING_PRODUCTS.map(product => `
-    <div class="product-card">
+    <div class="product-card" id="card-${product.id}">
       <div class="product-img-box">
         <img src="${product.image}" alt="${product.name}" loading="lazy">
         <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
@@ -336,7 +337,7 @@ function renderAllProducts() {
   if (!container) return;
 
   container.innerHTML = ALL_PRODUCTS.map(product => `
-    <div class="product-card">
+    <div class="product-card" id="card-${product.id}">
       <div class="product-img-box">
         <img src="${product.image}" alt="${product.name}" loading="lazy">
         <button class="btn btn-glass btn-sm quick-view-overlay-btn" onclick="openQuickView('${product.id}')">
@@ -899,4 +900,154 @@ function showToast(message) {
     toast.style.transform = 'translateY(20px)';
     setTimeout(() => toast.remove(), 300);
   }, 3000);
+}
+
+// 16. LIVE SEARCH SYSTEM WITH RECOMMENDATIONS & FILTERING
+function initSearchSystem() {
+  const searchInput = document.getElementById('searchInput');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+  const dropdown = document.getElementById('searchResultsDropdown');
+
+  if (!searchInput || !dropdown) return;
+
+  // 2-3 Featured Recommendations (Honey, Desi Ghee, Olive Oil)
+  const RECOMMENDATIONS = [
+    ALL_PRODUCTS.find(p => p.id === 'prod-1') || TOP_SELLING_PRODUCTS[0],
+    ALL_PRODUCTS.find(p => p.id === 'prod-4') || TOP_SELLING_PRODUCTS[1],
+    ALL_PRODUCTS.find(p => p.id === 'prod-3') || TOP_SELLING_PRODUCTS[2]
+  ];
+
+  function renderRecommendations() {
+    dropdown.innerHTML = `
+      <div class="search-dropdown-header">
+        <span class="search-header-title"><i class="fa-solid fa-fire text-gold"></i> Recommended Products</span>
+        <small class="search-header-subtitle">Click to view product</small>
+      </div>
+      <div class="search-items-list">
+        ${RECOMMENDATIONS.map(prod => `
+          <div class="search-item" onclick="handleSearchItemClick('${prod.id}')">
+            <img src="${prod.image}" alt="${prod.name}" class="search-item-img">
+            <div class="search-item-info">
+              <div class="search-item-title">${prod.name}</div>
+              <div class="search-item-urdu">${prod.urdu || ''}</div>
+              <div class="search-item-price">Rs. ${prod.price.toLocaleString()}</div>
+            </div>
+            <button class="search-item-view-btn" title="View Product"><i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    dropdown.style.display = 'block';
+  }
+
+  function renderSearchResults(query) {
+    const cleanQuery = query.toLowerCase().trim();
+    if (!cleanQuery) {
+      renderRecommendations();
+      return;
+    }
+
+    const allCombined = [...ALL_PRODUCTS, ...TOP_SELLING_PRODUCTS];
+    const uniqueProducts = Array.from(new Map(allCombined.map(item => [item.name, item])).values());
+
+    const matches = uniqueProducts.filter(prod => {
+      const nameMatch = prod.name.toLowerCase().includes(cleanQuery);
+      const urduMatch = (prod.urdu || '').toLowerCase().includes(cleanQuery);
+      const descMatch = (prod.description || '').toLowerCase().includes(cleanQuery);
+      return nameMatch || urduMatch || descMatch;
+    });
+
+    if (clearSearchBtn) clearSearchBtn.style.display = 'block';
+
+    if (matches.length === 0) {
+      dropdown.innerHTML = `
+        <div class="search-no-results">
+          <i class="fa-solid fa-magnifying-glass text-red"></i>
+          <p>No products found matching "<strong>${escapeHTML(query)}</strong>"</p>
+          <small>Try searching for "Honey", "Desi Ghee", "Olive Oil", or "Tea"</small>
+        </div>
+      `;
+    } else {
+      dropdown.innerHTML = `
+        <div class="search-dropdown-header">
+          <span class="search-header-title"><i class="fa-solid fa-magnifying-glass text-gold"></i> Search Results (${matches.length})</span>
+        </div>
+        <div class="search-items-list">
+          ${matches.map(prod => `
+            <div class="search-item" onclick="handleSearchItemClick('${prod.id}')">
+              <img src="${prod.image}" alt="${prod.name}" class="search-item-img">
+              <div class="search-item-info">
+                <div class="search-item-title">${prod.name}</div>
+                <div class="search-item-urdu">${prod.urdu || ''}</div>
+                <div class="search-item-price">Rs. ${prod.price.toLocaleString()}</div>
+              </div>
+              <button class="search-item-view-btn" title="View Product"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+    dropdown.style.display = 'block';
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  }
+
+  // Events: Click / Focus opens recommendations if empty, or filters if typed
+  searchInput.addEventListener('focus', () => {
+    if (!searchInput.value.trim()) {
+      renderRecommendations();
+    } else {
+      renderSearchResults(searchInput.value);
+    }
+  });
+
+  searchInput.addEventListener('click', () => {
+    if (!searchInput.value.trim()) {
+      renderRecommendations();
+    } else {
+      renderSearchResults(searchInput.value);
+    }
+  });
+
+  searchInput.addEventListener('input', (e) => {
+    const val = e.target.value;
+    if (clearSearchBtn) clearSearchBtn.style.display = val ? 'block' : 'none';
+    renderSearchResults(val);
+  });
+
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearchBtn.style.display = 'none';
+      renderRecommendations();
+      searchInput.focus();
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#searchContainer')) {
+      dropdown.style.display = 'none';
+    }
+  });
+}
+
+function handleSearchItemClick(productId) {
+  const dropdown = document.getElementById('searchResultsDropdown');
+  if (dropdown) dropdown.style.display = 'none';
+
+  // Scroll to product card if present on page
+  const cardElem = document.getElementById(`card-${productId}`);
+  if (cardElem) {
+    cardElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    cardElem.classList.remove('product-card-highlight');
+    void cardElem.offsetWidth;
+    cardElem.classList.add('product-card-highlight');
+  }
+
+  // Open Quick View Modal for instant viewing & ordering
+  openQuickView(productId);
 }
