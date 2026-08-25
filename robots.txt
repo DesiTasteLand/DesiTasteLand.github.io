@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://desitasteland.github.io/sitemap.xml
