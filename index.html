@@ -105,7 +105,12 @@
     </div>
   </div>
   <script>
-    document.body.style.overflow = 'hidden';
+    if (sessionStorage.getItem('welcomeSplashShown')) {
+      var splashEl = document.getElementById('welcomeSplash');
+      if (splashEl) splashEl.style.display = 'none';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
   </script>
 
   <!-- NAVBAR -->

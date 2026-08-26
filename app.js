@@ -275,11 +275,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initEventListeners();
 });
 
-// 5b. WELCOME SPLASH SCREEN (3s smooth reveal)
+// 5b. WELCOME SPLASH SCREEN (Shows only once per visit)
 function initWelcomeSplash() {
   const splash = document.getElementById('welcomeSplash');
   if (!splash) return;
 
+  if (sessionStorage.getItem('welcomeSplashShown')) {
+    if (splash.parentNode) {
+      splash.parentNode.removeChild(splash);
+    }
+    document.body.style.overflow = '';
+    return;
+  }
+
+  sessionStorage.setItem('welcomeSplashShown', 'true');
   document.body.style.overflow = 'hidden';
 
   setTimeout(() => {
@@ -362,7 +371,7 @@ let currentModalProduct = null;
 let modalSelectedVariantIndex = 0;
 let modalQuantity = 1;
 
-// 8. TOP SELLING - Clean simple cards: image, heart button, name, rating, BUY NOW
+// 8. TOP SELLING - Only BUY NOW button
 function renderTopSellingProducts() {
   const container = document.getElementById('topSellingGrid');
   if (!container) return;
@@ -372,9 +381,6 @@ function renderTopSellingProducts() {
     return `
       <div class="product-card ts-card" id="card-${product.id}">
         <div class="product-img-box ts-img-box">
-          <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
-            <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-          </button>
           <img src="${product.image}" alt="${product.name}" loading="lazy" onclick="openProductQuickView('${targetProdId}')" style="cursor:pointer;" title="Click to view full image">
         </div>
         <div class="product-content ts-content">
@@ -390,14 +396,9 @@ function renderTopSellingProducts() {
             </div>
             <span>${product.rating} (${product.reviewsCount}+)</span>
           </div>
-          <div class="product-card-actions">
-            <button class="btn btn-view-outline" onclick="openProductQuickView('${targetProdId}')" title="Quick View">
-              <i class="fa-solid fa-eye"></i> View
-            </button>
-            <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honey.html'" : `openProductSelectionModal('${targetProdId}')`}">
-              <i class="fa-solid fa-bag-shopping"></i> BUY NOW
-            </button>
-          </div>
+          <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honey.html'" : `openProductSelectionModal('${targetProdId}')`}">
+            <i class="fa-solid fa-bag-shopping"></i> BUY NOW
+          </button>
         </div>
       </div>
     `;
