@@ -405,7 +405,7 @@ function renderTopSellingProducts() {
   }).join('');
 }
 
-// 9. ALL PRODUCTS - With heart icon, View Button & Buy Now
+// 9. ALL PRODUCTS - Top-left view icon, Cart icon next to BUY NOW
 function renderAllProducts() {
   const container = document.getElementById('allProductsGrid');
   if (!container) return;
@@ -420,6 +420,9 @@ function renderAllProducts() {
     html += `
       <div class="product-card" id="allcard-${product.id}">
         <div class="product-img-box">
+          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Clear Image">
+            <i class="fa-solid fa-eye"></i>
+          </button>
           <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
             <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
@@ -443,8 +446,8 @@ function renderAllProducts() {
             ${product.variants.length > 1 ? `<span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">(${product.variants.length} Sizes)</span>` : ''}
           </div>
           <div class="product-card-actions">
-            <button class="btn btn-view-outline" onclick="openProductQuickView('${product.id}')" title="Quick View">
-              <i class="fa-solid fa-eye"></i> View
+            <button class="btn btn-cart-action" onclick="${product.isHoney ? "window.location.href='honey.html'" : `addProductToCartDirect('${product.id}')`}" title="Add to Cart">
+              <i class="fa-solid fa-cart-shopping"></i>
             </button>
             <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honey.html'" : `openProductSelectionModal('${product.id}')`}">
               <i class="fa-solid fa-bag-shopping"></i> BUY NOW
@@ -456,6 +459,41 @@ function renderAllProducts() {
   });
 
   container.innerHTML = html;
+}
+
+function addProductToCartDirect(productId) {
+  let product = ALL_PRODUCTS.find(p => p.id === productId);
+  if (!product) {
+    product = HONEY_CATEGORIES.find(c => c.id === productId);
+  }
+  if (!product) return;
+
+  if (product.isHoney) {
+    window.location.href = 'honey.html';
+    return;
+  }
+
+  const variantIndex = product.selectedWeightIndex !== undefined ? product.selectedWeightIndex : 0;
+  const variant = (product.variants && product.variants[variantIndex]) || (product.variants && product.variants[0]);
+  if (!variant) return;
+
+  const itemId = `${product.id}-${variant.weight.replace(/\s+/g, '')}`;
+  const existing = cart.find(i => i.id === itemId);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      id: itemId,
+      name: `${product.name} (${variant.weight})`,
+      price: variant.price,
+      image: product.image,
+      qty: 1
+    });
+  }
+  saveCart();
+  updateCartUI();
+  showToast(`<i class="fa-solid fa-circle-check text-red"></i> <strong>${product.name} (${variant.weight})</strong> added to cart!`);
+  openCartDrawer();
 }
 
 // 9b. DEDICATED HONEY PAGE (honey.html) - Strictly 4 varieties with heart icon
