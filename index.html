@@ -50,7 +50,7 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <link rel="stylesheet" href="styles.css?v=3.7">
+  <link rel="stylesheet" href="styles.css?v=3.8">
 
   <!-- JSON-LD SEO Schema for Google Search Site Name & Identity -->
   <script type="application/ld+json">
@@ -139,6 +139,17 @@
         </button>
       </div>
     </div>
+
+    <!-- NAVBAR LINKS UNDER LOGO -->
+    <nav class="nav-links-bar" id="navLinksBar">
+      <div class="container nav-links-inner">
+        <a href="#hero" class="nav-link nav-link-home">HOME</a>
+        <a href="#allProductsSection" class="nav-link">ALL PRODUCTS</a>
+        <a href="#aboutSection" class="nav-link">ABOUT US</a>
+        <a href="#reviewsSection" class="nav-link">REVIEWS</a>
+        <a href="#contactSection" class="nav-link">CONTACT US</a>
+      </div>
+    </nav>
   </header>
 
   <!-- MY ORDERS DRAWER -->
@@ -167,16 +178,16 @@
   <!-- HERO SLIDER -->
   <section class="hero-slider-section" id="hero">
     <div class="slider-container" id="heroSlider">
-      <div class="slide active">
+      <div class="slide active" onclick="scrollToProduct('prod-honey')" style="cursor:pointer;" title="Click to view Pure Honey">
         <img src="assets/images/hero_banner_1.jpg" alt="Pure Honey Banner" class="hero-slide-img">
       </div>
-      <div class="slide">
+      <div class="slide" onclick="scrollToProduct('prod-pickle')" style="cursor:pointer;" title="Click to view Mix Pickle">
         <img src="assets/images/hero_banner_2.jpg" alt="Traditional Achar Banner" class="hero-slide-img">
       </div>
-      <div class="slide">
+      <div class="slide" onclick="scrollToProduct('prod-olive')" style="cursor:pointer;" title="Click to view Olive Oil">
         <img src="assets/images/hero_banner_3.jpg" alt="Olive Oil Banner" class="hero-slide-img">
       </div>
-      <div class="slide">
+      <div class="slide" onclick="scrollToProduct('prod-tea')" style="cursor:pointer;" title="Click to view Premium Tea">
         <img src="assets/images/hero_banner_4.jpg" alt="Premium Tea Banner" class="hero-slide-img">
       </div>
     </div>
@@ -267,24 +278,28 @@
       </div>
       <div class="why-us-grid">
         <div class="why-card">
-          <div class="why-icon-box"><i class="fa-solid fa-flask-vial"></i></div>
-          <h3>100% Lab Tested Pure</h3>
-          <p>Every batch undergoes rigorous lab testing to ensure zero chemical adulteration and 100% raw natural nutrition.</p>
+          <div class="why-icon-box"><i class="fa-solid fa-seedling"></i></div>
+          <span class="why-badge">100% Pure</span>
+          <h3 class="why-card-title">Pure & Natural</h3>
+          <p class="why-card-desc">No compromise on quality.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon-box"><i class="fa-solid fa-tractor"></i></div>
-          <h3>Direct From Organic Farms</h3>
-          <p>We work directly with traditional beekeepers, local dairy artisans, and olive growers to preserve authentic methods.</p>
+          <div class="why-icon-box"><i class="fa-solid fa-award"></i></div>
+          <span class="why-badge">Premium Quality</span>
+          <h3 class="why-card-title">Handpicked Products</h3>
+          <p class="why-card-desc">Only the finest for you.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon-box"><i class="fa-solid fa-box-open"></i></div>
-          <h3>Hygienic Food-Grade Packaging</h3>
-          <p>Packed in food-grade, airtight premium packaging to maintain natural aroma, rich taste, and essential nutrients.</p>
+          <div class="why-icon-box"><i class="fa-solid fa-utensils"></i></div>
+          <span class="why-badge">Desi & Authentic</span>
+          <h3 class="why-card-title">True Desi Taste</h3>
+          <p class="why-card-desc">Traditional taste, original quality.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-          <h3>Money-Back Guarantee</h3>
-          <p>If you find any imperfection in our products, we offer an immediate 100% full money-back guarantee without hassle.</p>
+          <div class="why-icon-box"><i class="fa-solid fa-truck-fast"></i></div>
+          <span class="why-badge">Fresh & Hygienic</span>
+          <h3 class="why-card-title">Packed With Care</h3>
+          <p class="why-card-desc">Freshness delivered to your door.</p>
         </div>
       </div>
     </div>
@@ -497,7 +512,7 @@
           <li><a href="#"><i class="fa-solid fa-check text-red"></i> Safe & Pure Packaging</a></li>
         </ul>
       </div>
-      <div class="footer-col">
+      <div class="footer-col" id="contactSection">
         <h4>Contact & Orders</h4>
         <p><i class="fa-solid fa-location-dot text-red"></i> Aqua Market Phool Nagar, Bhai Pheru, Pakistan 55260</p>
         <p><i class="fa-solid fa-phone text-red"></i> +92 307 0016113</p>
@@ -622,6 +637,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <script src="app.js?v=3.7"></script>
+  <script src="app.js?v=3.8"></script>
 </body>
 </html>

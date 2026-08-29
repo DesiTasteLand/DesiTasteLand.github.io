@@ -229,12 +229,80 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 }
 
 /* NAVBAR */
-.header { position: sticky; top: 0; z-index: 100; background: rgba(250,244,235,0.96); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); }
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,244,235,0.98);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-light);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.header.header-hidden {
+  transform: translateY(-100%);
+}
+
 .header-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  height: 94px;
+  height: 88px;
+}
+
+/* NAVBAR LINKS BAR (UNDER LOGO) */
+.nav-links-bar {
+  border-top: 1px solid rgba(217, 119, 6, 0.15);
+  background: rgba(255, 253, 249, 0.85);
+  padding: 8px 0;
+  transition: var(--transition-fast);
+}
+.nav-links-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.nav-link {
+  font-family: var(--font-heading) !important;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--forest-dark);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  position: relative;
+  padding: 4px 6px;
+  transition: var(--transition-fast);
+}
+.nav-link:hover {
+  color: var(--red-primary);
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--red-primary);
+  transition: width 0.25s ease;
+  border-radius: 2px;
+}
+.nav-link:hover::after {
+  width: 80%;
+}
+
+/* HIGHLIGHT PULSE FOR HERO PRODUCT CLICK */
+@keyframes cardPulseHighlight {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.6); }
+  50% { transform: scale(1.03); box-shadow: 0 0 24px 6px rgba(211, 47, 47, 0.45); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
+}
+.highlight-pulse {
+  animation: cardPulseHighlight 1.5s ease;
+  border-color: var(--red-primary) !important;
 }
 
 .nav-left-btn {
@@ -627,7 +695,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 .w-price { font-size: 0.62rem; opacity: 0.85; }
 
 .price-row { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
-.price-current { font-size: 1.05rem; font-weight: 800; color: var(--forest-primary); }
+.price-current { font-size: 1.25rem !important; font-weight: 900 !important; color: var(--forest-primary); letter-spacing: 0.3px; }
 
 /* PRODUCT CARD ACTIONS (CART ICON + BUY NOW) */
 .product-card-actions {
@@ -745,11 +813,34 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 
 /* WHY US */
 .why-us-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
-.why-card { background: var(--bg-surface); border-radius: var(--radius-md); padding: 28px 20px; border: 1px solid var(--border-light); transition: var(--transition-normal); }
+.why-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 28px 20px;
+  border: 1.5px solid var(--border-gold);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 .why-card:hover { border-color: var(--red-primary); transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.why-icon-box { width: 52px; height: 52px; border-radius: 12px; background: var(--red-light); color: var(--red-primary); font-size: 1.4rem; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-.why-card h3 { font-family: var(--font-heading) !important; font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
-.why-card p { font-size: 0.88rem; color: var(--text-muted); }
+.why-icon-box { width: 52px; height: 52px; border-radius: 12px; background: var(--red-light); color: var(--red-primary); font-size: 1.4rem; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.why-badge {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--red-primary);
+  background: var(--red-light);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.why-card-title { font-family: var(--font-heading) !important; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+.why-card-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
 
 /* SPECIAL DEAL - Full Poster, No Overflow, No Crop */
 .deal-card-ultra {
@@ -822,6 +913,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   margin: 0 auto;
   padding: 48px 40px;
   position: relative;
+  overflow: hidden;
 }
 .about-card-luxury::before {
   content: '';
@@ -855,14 +947,16 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
 }
 .review-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 24px; right: 24px;
-  height: 3px;
+  top: 0; left: 0; right: 0;
+  height: 3.5px;
   background: linear-gradient(90deg, var(--gold-primary), var(--red-primary));
-  border-radius: 0 0 4px 4px;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -938,6 +1032,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   margin: 48px auto 0;
   box-shadow: var(--shadow-md);
   position: relative;
+  overflow: hidden;
 }
 .submit-review-card::before {
   content: '';
@@ -951,7 +1046,17 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 
 /* AUTH */
 .auth-section { background: var(--bg-alt); }
-.auth-card-luxury { background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--border-gold); box-shadow: var(--shadow-lg); max-width: 480px; margin: 0 auto; padding: 36px 32px; }
+.auth-card-luxury {
+  background: #FFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-lg);
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+}
 .auth-tabs { display: flex; border-bottom: 2px solid var(--border-light); margin-bottom: 24px; }
 .auth-tab-btn { flex: 1; padding: 12px; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: var(--transition-fast); }
 .auth-tab-btn.active { color: var(--red-primary); border-bottom-color: var(--red-primary); }
@@ -1018,59 +1123,17 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 .modal-card-sm { max-width: 380px; }
 .modal-card-quickview { max-width: 760px; padding: 22px; }
 
-/* QUICK VIEW MODAL */
-.qv-modal-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 22px;
-  align-items: center;
-}
-.qv-modal-image-side {
-  position: relative;
-  background: #FFFDF9;
-  border-radius: var(--radius-md);
-  border: 1.5px solid var(--border-gold);
-  padding: 16px;
+/* QUICK VIEW MODAL (IMAGE + SIZES ONLY) */
+.qv-modal-compact {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   align-items: center;
-  justify-content: center;
-  min-height: 300px;
+  text-align: center;
+  width: 100%;
 }
-.qv-modal-main-img {
-  max-width: 100%;
-  max-height: 270px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-  transition: transform 0.3s ease;
-}
-.qv-modal-main-img:hover {
-  transform: scale(1.04);
-}
-.qv-modal-zoom-badge {
-  margin-top: 10px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--forest-primary);
-  background: var(--forest-light);
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-}
-.qv-modal-details-side {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.qv-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--red-primary);
-  background: var(--red-light);
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-  align-self: flex-start;
+.qv-modal-header {
+  width: 100%;
 }
 .qv-title {
   font-family: var(--font-heading) !important;
@@ -1085,66 +1148,86 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 .qv-title-en { color: var(--text-dark); }
 .qv-title-ur {
   font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: var(--forest-primary);
+  color: var(--red-primary);
   line-height: 1.5;
   direction: rtl;
   unicode-bidi: embed;
 }
-.qv-desc {
-  font-size: 0.86rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.qv-benefits-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.qv-benefits-list li {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--forest-primary);
+.qv-modal-image-box {
+  width: 100%;
+  max-height: 380px;
+  background: #FFFDF9;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-gold);
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  overflow: hidden;
+}
+.qv-modal-main-img {
+  max-width: 100%;
+  max-height: 340px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  transition: transform 0.3s ease;
+}
+.qv-modal-main-img:hover {
+  transform: scale(1.03);
 }
 .qv-variants-wrap {
+  width: 100%;
   background: var(--bg-alt);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-gold);
   border-radius: var(--radius-sm);
-  padding: 10px 12px;
+  padding: 12px 14px;
 }
 .qv-variants-label {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-dark);
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 .qv-variants-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
+  justify-content: center;
 }
 .qv-variant-chip {
-  padding: 5px 10px;
+  padding: 6px 14px;
   background: #FFF;
   border: 1.5px solid var(--border-gold);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   display: inline-flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
+  box-shadow: var(--shadow-sm);
 }
-.qv-v-weight { font-size: 0.8rem; font-weight: 700; color: var(--text-dark); }
-.qv-v-price { font-size: 0.8rem; font-weight: 800; color: var(--red-primary); }
-.qv-actions-row { margin-top: 4px; }
+.qv-v-weight { font-size: 0.82rem; font-weight: 700; color: var(--text-dark); }
+.qv-v-price { font-size: 0.85rem; font-weight: 900; color: var(--red-primary); }
+
+@media (max-width: 640px) {
+  .qv-modal-image-box {
+    max-height: 270px;
+    padding: 10px;
+  }
+  .qv-modal-main-img {
+    max-height: 250px;
+  }
+  .qv-variant-chip {
+    padding: 4px 10px;
+    gap: 6px;
+  }
+}
 .modal-close { position: absolute; top: 14px; right: 14px; font-size: 1.6rem; color: var(--text-muted); line-height: 1; z-index: 10; cursor: pointer; }
 .modal-header-block { text-align: center; margin-bottom: 20px; }
 .modal-header-block h2 { font-family: var(--font-heading) !important; font-size: 1.5rem; }
@@ -1332,12 +1415,66 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   .deal-heading { font-size: 1.2rem !important; margin-bottom: 12px !important; }
   .deal-action-panel { flex-direction: column !important; gap: 12px !important; }
   .deal-cta-btn { width: 100% !important; max-width: 100% !important; padding: 13px 16px !important; font-size: 1rem !important; }
-  .current-price { font-size: 1.6rem !important; }
-
   .reviews-grid { grid-template-columns: 1fr; }
   .submit-review-card { padding: 24px 16px; margin-top: 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 20px; }
   .form-row { grid-template-columns: 1fr; }
+
+  /* MOBILE NAVBAR LINKS (HOME HIDDEN, 4 LINKS DISPLAYED) */
+  .nav-links-bar {
+    padding: 6px 0 !important;
+  }
+  .nav-links-inner {
+    gap: 10px !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none;
+    padding: 0 4px !important;
+  }
+  .nav-links-inner::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-link.nav-link-home {
+    display: none !important;
+  }
+  .nav-link {
+    font-size: 0.72rem !important;
+    padding: 2px 4px !important;
+    letter-spacing: 0.3px !important;
+    white-space: nowrap !important;
+  }
+
+  /* MOBILE WHY DESI TASTE LAND (2 CARDS PER LINE) */
+  .why-us-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .why-card {
+    padding: 16px 10px !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  .why-icon-box {
+    margin: 0 auto 8px !important;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1.05rem !important;
+  }
+  .why-badge {
+    font-size: 0.66rem !important;
+    padding: 2px 7px !important;
+    margin-bottom: 5px !important;
+    align-self: center !important;
+  }
+  .why-card-title {
+    font-size: 0.9rem !important;
+    margin-bottom: 4px !important;
+  }
+  .why-card-desc {
+    font-size: 0.75rem !important;
+    line-height: 1.35 !important;
+  }
 }
 
 /* ==========================================================================

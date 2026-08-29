@@ -263,6 +263,7 @@ let slideInterval;
 // 5. INIT
 document.addEventListener('DOMContentLoaded', () => {
   initWelcomeSplash();
+  initNavbarScrollBehavior();
   renderTopSellingProducts();
   renderAllProducts();
   renderDedicatedHoneyPage();
@@ -300,6 +301,51 @@ function initWelcomeSplash() {
       }
     }, 900);
   }, 3000);
+}
+
+// 5c. NAVBAR HIDE ON SCROLL DOWN, SHOW ON SCROLL UP
+function initNavbarScrollBehavior() {
+  const header = document.getElementById('mainHeader');
+  if (!header) return;
+  let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScrollY <= 60) {
+          // At or near the top: always show navbar
+          header.classList.remove('header-hidden');
+        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          // Scrolling down: hide navbar
+          header.classList.add('header-hidden');
+        } else if (currentScrollY < lastScrollY) {
+          // Scrolling up: show navbar
+          header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = Math.max(0, currentScrollY);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+// 5d. SCROLL TO PRODUCT (Used by Hero Slider Banners)
+function scrollToProduct(productId) {
+  const card = document.getElementById(`allcard-${productId}`);
+  if (card) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('highlight-pulse');
+    void card.offsetWidth; // Trigger DOM reflow to restart CSS animation
+    card.classList.add('highlight-pulse');
+    setTimeout(() => card.classList.remove('highlight-pulse'), 2500);
+  } else {
+    document.getElementById('allProductsSection')?.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
 // 6. HERO SLIDER
@@ -381,7 +427,7 @@ function renderTopSellingProducts() {
     return `
       <div class="product-card ts-card" id="card-${product.id}">
         <div class="product-img-box ts-img-box">
-          <img src="${product.image}" alt="${product.name}" loading="lazy" onclick="openProductQuickView('${targetProdId}')" style="cursor:pointer;" title="Click to view full image">
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
         </div>
         <div class="product-content ts-content">
           <h3 class="product-title">
@@ -420,13 +466,13 @@ function renderAllProducts() {
     html += `
       <div class="product-card" id="allcard-${product.id}">
         <div class="product-img-box">
-          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Clear Image">
+          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Product Image">
             <i class="fa-solid fa-eye"></i>
           </button>
           <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
             <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
-          <img src="${product.image}" alt="${product.name}" loading="lazy" id="allimg-${product.id}" onclick="openProductQuickView('${product.id}')" style="cursor:pointer;" title="Click to view full image">
+          <img src="${product.image}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
         </div>
         <div class="product-content">
           <h3 class="product-title">
@@ -443,7 +489,7 @@ function renderAllProducts() {
           </div>
           <div class="price-row">
             <span class="price-current" id="allprice-${product.id}">${priceDisplay}</span>
-            ${product.variants.length > 1 ? `<span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">(${product.variants.length} Sizes)</span>` : ''}
+            ${product.variants.length > 1 ? `<span style="font-size:0.78rem;color:var(--text-muted);font-weight:700;">(${product.variants.length} Sizes)</span>` : ''}
           </div>
           <div class="product-card-actions">
             <button class="btn btn-cart-action" onclick="${product.isHoney ? "window.location.href='honey.html'" : `addProductToCartDirect('${product.id}')`}" title="Add to Cart">
@@ -953,53 +999,29 @@ function openProductQuickView(productId) {
   if (!content) return;
 
   content.innerHTML = `
-    <div class="qv-modal-grid">
-      <div class="qv-modal-image-side">
-        <img src="${product.image}" alt="${product.name}" class="qv-modal-main-img">
-        <span class="qv-modal-zoom-badge"><i class="fa-solid fa-circle-check text-red"></i> 100% Original High Quality View</span>
-      </div>
-      <div class="qv-modal-details-side">
-        <span class="qv-badge">100% Pure & Authentic</span>
-        <h2 class="qv-title">
+    <div class="qv-modal-compact">
+      <div class="qv-modal-header text-center">
+        <h3 class="qv-title">
           <span class="qv-title-en">${product.name}</span>
-          <span class="qv-title-ur">${product.urduName || ''}</span>
-        </h2>
-        <div class="rating-row" style="margin-bottom:6px;">
-          <div class="stars">
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <span>${product.rating || 5.0} (${product.reviewsCount || 300}+ verified reviews)</span>
-        </div>
-        <p class="qv-desc">${product.description || '100% Raw, Natural & Authentic Desi Goodness Guaranteed.'}</p>
-        
-        ${product.benefits ? `
-          <ul class="qv-benefits-list">
-            ${product.benefits.map(b => `<li><i class="fa-solid fa-circle-check text-red"></i> ${b}</li>`).join('')}
-          </ul>
-        ` : ''}
-
-        ${product.variants && product.variants.length > 0 ? `
-          <div class="qv-variants-wrap">
-            <label class="qv-variants-label"><i class="fa-solid fa-weight-scale text-red"></i> Available Sizes / Prices:</label>
-            <div class="qv-variants-chips">
-              ${product.variants.map(v => `
-                <div class="qv-variant-chip">
-                  <span class="qv-v-weight">${v.weight}</span>
-                  <span class="qv-v-price">Rs. ${v.price.toLocaleString()}</span>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        ` : ''}
-
-        <div class="qv-actions-row">
-          <button class="btn btn-red btn-lg btn-block shadow-red" onclick="closeQuickView(); ${product.isHoney ? "window.location.href='honey.html'" : `openProductSelectionModal('${product.id}')`}">
-            <i class="fa-solid fa-bag-shopping"></i> Order Now / Buy Now
-          </button>
-        </div>
+          ${product.urduName ? `<span class="qv-title-ur">${product.urduName}</span>` : ''}
+        </h3>
       </div>
+      <div class="qv-modal-image-box">
+        <img src="${product.image}" alt="${product.name}" class="qv-modal-main-img">
+      </div>
+      ${product.variants && product.variants.length > 0 ? `
+        <div class="qv-variants-wrap">
+          <label class="qv-variants-label"><i class="fa-solid fa-weight-scale text-red"></i> Available Sizes:</label>
+          <div class="qv-variants-chips">
+            ${product.variants.map(v => `
+              <div class="qv-variant-chip">
+                <span class="qv-v-weight">${v.weight}</span>
+                <span class="qv-v-price">Rs. ${v.price.toLocaleString()}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
     </div>
   `;
 
