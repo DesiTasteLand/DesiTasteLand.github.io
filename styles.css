@@ -214,6 +214,45 @@ button { cursor: pointer; background: none; }
 .btn-glass { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border: 1px solid var(--border-light); color: var(--text-dark); }
 .shadow-red { box-shadow: var(--shadow-red); }
 
+/* GOOGLE AUTH BUTTON */
+.btn-google {
+  background: #FFFFFF;
+  color: #374151;
+  border: 1.5px solid #E5E7EB;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  gap: 10px;
+}
+.btn-google:hover {
+  background: #F9FAFB;
+  border-color: #D1D5DB;
+  color: #111827;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+}
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-light);
+}
+.auth-divider span {
+  padding: 0 12px;
+  letter-spacing: 1px;
+}
+.google-auth-box {
+  padding: 10px 4px;
+}
+
 /* PRICES - clean sans */
 .price-current, .current-price, .original-price, .cart-item-price,
 .cart-subtotal-row strong, .cart-total-row strong, .honey-price-val,
@@ -227,6 +266,12 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   font-family: var(--font-heading) !important;
   font-weight: 700 !important;
 }
+
+/* TEXT COLOR UTILITIES */
+.text-red { color: var(--red-primary) !important; }
+.text-forest { color: var(--forest-primary) !important; }
+.text-gold { color: var(--gold-primary) !important; }
+.text-muted { color: var(--text-muted) !important; }
 
 /* NAVBAR */
 .header {
@@ -1276,7 +1321,8 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 .pm-total-calc { font-size: 0.78rem; color: var(--text-muted); display: block; }
 .pm-total-amount { font-size: 1.35rem; font-weight: 800; color: var(--red-primary); }
 
-.prod-modal-actions { display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; margin-top: 4px; }
+.prod-modal-actions { display: grid; grid-template-columns: 1.15fr 1fr; gap: 8px; margin-top: 6px; width: 100%; }
+.prod-modal-actions .btn { padding: 11px 8px !important; font-size: 0.82rem !important; min-width: 0 !important; gap: 6px !important; }
 .checkout-form { display: grid; gap: 12px; margin-top: 14px; }
 .form-group { display: flex; flex-direction: column; gap: 4px; }
 .form-group label { font-size: 0.8rem; font-weight: 700; color: var(--text-dark); }
@@ -1474,6 +1520,77 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   .why-card-desc {
     font-size: 0.75rem !important;
     line-height: 1.35 !important;
+  }
+
+  /* PRODUCT SELECTION MODAL MOBILE FIX - ZERO SIDE SCROLL */
+  .modal-overlay {
+    padding: 8px !important;
+    overflow-x: hidden !important;
+  }
+  .modal-card {
+    padding: 18px 12px !important;
+    max-width: calc(100vw - 16px) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  .modal-card-md {
+    max-width: calc(100vw - 16px) !important;
+  }
+  .product-selection-modal-body,
+  .prod-modal-card-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    gap: 12px !important;
+  }
+  .prod-modal-header {
+    gap: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  .prod-modal-img {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  .prod-modal-title {
+    font-size: 0.98rem !important;
+  }
+  .prod-modal-price-highlight {
+    font-size: 1.15rem !important;
+  }
+  .prod-modal-variants {
+    gap: 6px !important;
+  }
+  .pm-variant-btn {
+    min-width: 65px !important;
+    padding: 7px 4px !important;
+  }
+  .pm-variant-weight {
+    font-size: 0.78rem !important;
+  }
+  .pm-variant-price {
+    font-size: 0.7rem !important;
+  }
+  .prod-modal-total-bar {
+    padding: 10px 12px !important;
+  }
+  .pm-total-amount {
+    font-size: 1.15rem !important;
+  }
+  .prod-modal-actions {
+    grid-template-columns: 1.1fr 1fr !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+  .prod-modal-actions .btn {
+    padding: 10px 4px !important;
+    font-size: 0.74rem !important;
+    gap: 4px !important;
+    width: 100% !important;
+  }
+  .prod-modal-actions .btn i {
+    font-size: 0.72rem !important;
   }
 }
 

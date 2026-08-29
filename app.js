@@ -257,8 +257,31 @@ let cart = JSON.parse(localStorage.getItem('dtl_cart')) || [];
 let myOrders = JSON.parse(localStorage.getItem('dtl_orders')) || [];
 let favorites = JSON.parse(localStorage.getItem('dtl_favorites')) || [];
 let currentUser = JSON.parse(localStorage.getItem('dtl_user')) || null;
+let registeredUsers = JSON.parse(localStorage.getItem('dtl_registered_users')) || [];
 let currentSlideIndex = 0;
 let slideInterval;
+
+// 4b. VALIDATION HELPERS
+function isValidPakistaniPhone(phone) {
+  if (!phone) return false;
+  const clean = String(phone).replace(/[\s\-\(\)]/g, '');
+  return /^((\+92)|(0092)|(92)|0)?3[0-9]{9}$/.test(clean);
+}
+
+function normalizePhone(phone) {
+  if (!phone) return '';
+  let clean = String(phone).replace(/[\s\-\(\)]/g, '');
+  if (clean.startsWith('+92')) clean = '0' + clean.slice(3);
+  else if (clean.startsWith('0092')) clean = '0' + clean.slice(4);
+  else if (clean.startsWith('92') && clean.length === 12) clean = '0' + clean.slice(2);
+  else if (clean.startsWith('3') && clean.length === 10) clean = '0' + clean;
+  return clean;
+}
+
+function isValidEmail(email) {
+  if (!email) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
+}
 
 // 5. INIT
 document.addEventListener('DOMContentLoaded', () => {
@@ -970,12 +993,31 @@ function updateAuthUI() {
     if (loggedState) {
       loggedState.style.display = 'block';
       document.getElementById('loggedInUserName').textContent = currentUser.name;
-      document.getElementById('loggedInUserEmail').textContent = currentUser.email;
+      document.getElementById('loggedInUserEmail').textContent = currentUser.email || currentUser.phone || 'Verified User';
     }
   } else {
     if (loggedState) loggedState.style.display = 'none';
-    if (loginForm) loginForm.style.display = 'flex';
+    const isSignup = document.getElementById('signupTabBtn')?.classList.contains('active');
+    if (isSignup) {
+      if (signupForm) signupForm.style.display = 'flex';
+      if (loginForm) loginForm.style.display = 'none';
+    } else {
+      if (loginForm) loginForm.style.display = 'flex';
+      if (signupForm) signupForm.style.display = 'none';
+    }
   }
+}
+
+function openGoogleAuthModal() {
+  document.getElementById('googleAuthModal')?.classList.add('active');
+}
+
+function closeGoogleAuthModal() {
+  document.getElementById('googleAuthModal')?.classList.remove('active');
+}
+
+function handleGoogleSignIn() {
+  openGoogleAuthModal();
 }
 
 // 13. MODALS & DRAWERS
@@ -1071,29 +1113,189 @@ function initEventListeners() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
 
-  loginTabBtn?.addEventListener('click', () => { loginTabBtn.classList.add('active'); signupTabBtn?.classList.remove('active'); if (loginForm) loginForm.style.display = 'flex'; if (signupForm) signupForm.style.display = 'none'; });
-  signupTabBtn?.addEventListener('click', () => { signupTabBtn.classList.add('active'); loginTabBtn?.classList.remove('active'); if (signupForm) signupForm.style.display = 'flex'; if (loginForm) loginForm.style.display = 'none'; });
+  loginTabBtn?.addEventListener('click', () => {
+    loginTabBtn.classList.add('active');
+    signupTabBtn?.classList.remove('active');
+    if (loginForm) loginForm.style.display = 'flex';
+    if (signupForm) signupForm.style.display = 'none';
+  });
 
+  signupTabBtn?.addEventListener('click', () => {
+    signupTabBtn.classList.add('active');
+    loginTabBtn?.classList.remove('active');
+    if (signupForm) signupForm.style.display = 'flex';
+    if (loginForm) loginForm.style.display = 'none';
+  });
+
+  // GOOGLE SIGN IN LISTENERS
+  document.querySelectorAll('.google-signin-btn').forEach(btn => {
+    btn.addEventListener('click', handleGoogleSignIn);
+  });
+  document.getElementById('closeGoogleAuthBtn')?.addEventListener('click', closeGoogleAuthModal);
+  document.getElementById('googleAuthModal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'googleAuthModal') closeGoogleAuthModal();
+  });
+  document.getElementById('googleQuickSignInForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const gName = document.getElementById('googleNameInput')?.value.trim();
+    const gEmail = document.getElementById('googleEmailInput')?.value.trim();
+
+    if (!gName) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam apna naam darj karein.');
+      return;
+    }
+    if (!isValidEmail(gEmail)) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam durust Google email address darj karein.');
+      return;
+    }
+
+    let existing = registeredUsers.find(u => u.email && u.email.toLowerCase() === gEmail.toLowerCase());
+    if (!existing) {
+      existing = {
+        id: 'usr_g_' + Date.now(),
+        name: gName,
+        email: gEmail.toLowerCase(),
+        phone: '',
+        provider: 'google'
+      };
+      registeredUsers.push(existing);
+      localStorage.setItem('dtl_registered_users', JSON.stringify(registeredUsers));
+    }
+
+    currentUser = { name: existing.name, email: existing.email, phone: existing.phone || '', provider: 'google' };
+    localStorage.setItem('dtl_user', JSON.stringify(currentUser));
+    closeGoogleAuthModal();
+    updateAuthUI();
+    showToast(`<i class="fa-brands fa-google text-red"></i> Google ke zariye login ho gaya! Khushamdeed ${currentUser.name}!`);
+  });
+
+  // LOGIN FORM
   loginForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    currentUser = { name: email.split('@')[0], email };
+    const input = document.getElementById('loginEmail')?.value.trim();
+    const password = document.getElementById('loginPassword')?.value;
+
+    if (!input) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Phone number ya email darj karein.');
+      return;
+    }
+    if (!password) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Password darj karein.');
+      return;
+    }
+
+    const isPhone = isValidPakistaniPhone(input);
+    const isEmail = isValidEmail(input);
+
+    if (!isPhone && !isEmail) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Durust Pakistani phone (03070016113) ya email darj karein.');
+      return;
+    }
+
+    const cleanPhoneVal = isPhone ? normalizePhone(input) : '';
+    const cleanEmailVal = isEmail ? input.toLowerCase() : '';
+
+    const matchedUser = registeredUsers.find(u => {
+      if (cleanPhoneVal && u.phone && normalizePhone(u.phone) === cleanPhoneVal) return true;
+      if (cleanEmailVal && u.email && u.email.toLowerCase() === cleanEmailVal) return true;
+      return false;
+    });
+
+    if (!matchedUser) {
+      showToast('<i class="fa-solid fa-circle-xmark text-red"></i> Account nahi mila! Pehle "Create New Account" karein.');
+      setTimeout(() => {
+        signupTabBtn?.click();
+        if (isPhone) {
+          const phoneField = document.getElementById('signupPhone');
+          if (phoneField) phoneField.value = input;
+        } else if (isEmail) {
+          const emailField = document.getElementById('signupEmail');
+          if (emailField) emailField.value = input;
+        }
+      }, 1500);
+      return;
+    }
+
+    if (matchedUser.password && matchedUser.password !== password) {
+      showToast('<i class="fa-solid fa-triangle-exclamation text-red"></i> Ghalat password! Barahe karam sahi password darj karein.');
+      return;
+    }
+
+    currentUser = { name: matchedUser.name, email: matchedUser.email || '', phone: matchedUser.phone || '' };
     localStorage.setItem('dtl_user', JSON.stringify(currentUser));
     updateAuthUI();
-    showToast('Welcome back to Desi Taste Land!');
+    showToast(`<i class="fa-solid fa-circle-check text-forest"></i> Welcome back, ${matchedUser.name}!`);
   });
 
+  // SIGNUP FORM
   signupForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('signupName').value;
-    const email = document.getElementById('signupEmail').value;
-    currentUser = { name, email };
+    const name = document.getElementById('signupName')?.value.trim();
+    const phone = document.getElementById('signupPhone')?.value.trim();
+    const email = document.getElementById('signupEmail')?.value.trim();
+    const password = document.getElementById('signupPassword')?.value;
+
+    if (!name || name.length < 2) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam apna pura naam darj karein.');
+      return;
+    }
+
+    if (!isValidPakistaniPhone(phone)) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Ghalat number! Sahi Pakistani mobile number darj karein (e.g. 03070016113).');
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam durust email address darj karein.');
+      return;
+    }
+
+    if (!password || password.length < 6) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Password kam az kam 6 characters ka hona chahiye.');
+      return;
+    }
+
+    const normPhone = normalizePhone(phone);
+    const normEmail = email.toLowerCase();
+
+    const alreadyRegistered = registeredUsers.find(u => 
+      (u.phone && normalizePhone(u.phone) === normPhone) ||
+      (u.email && u.email.toLowerCase() === normEmail)
+    );
+
+    if (alreadyRegistered) {
+      showToast('<i class="fa-solid fa-circle-info text-gold"></i> Yeh number/email pehle se registered hai! Barahe karam Login karein.');
+      setTimeout(() => {
+        loginTabBtn?.click();
+        const loginField = document.getElementById('loginEmail');
+        if (loginField) loginField.value = phone;
+      }, 1500);
+      return;
+    }
+
+    const newUser = {
+      id: 'usr_' + Date.now(),
+      name: name,
+      phone: normPhone,
+      email: normEmail,
+      password: password
+    };
+
+    registeredUsers.push(newUser);
+    localStorage.setItem('dtl_registered_users', JSON.stringify(registeredUsers));
+
+    currentUser = { name: newUser.name, phone: newUser.phone, email: newUser.email };
     localStorage.setItem('dtl_user', JSON.stringify(currentUser));
     updateAuthUI();
-    showToast('Account created successfully!');
+    showToast(`<i class="fa-solid fa-circle-check text-forest"></i> Account kamyabi se ban gaya! Khushamdeed ${newUser.name}!`);
   });
 
-  document.getElementById('logoutBtn')?.addEventListener('click', () => { currentUser = null; localStorage.removeItem('dtl_user'); updateAuthUI(); showToast('Logged out'); });
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    currentUser = null;
+    localStorage.removeItem('dtl_user');
+    updateAuthUI();
+    showToast('Logged out successfully');
+  });
 
   document.getElementById('submitReviewForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -1125,10 +1327,16 @@ function initEventListeners() {
 
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('custName').value;
-    const phone = document.getElementById('custPhone').value;
-    const city = document.getElementById('custCity').value;
-    const address = document.getElementById('custAddress').value;
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const city = document.getElementById('custCity').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+
+    if (!isValidPakistaniPhone(phone)) {
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Ghalat number! Barahe karam sahi Pakistani phone number darj karein (e.g. 03070016113).');
+      return;
+    }
+
     const refId = '#DTL-' + Math.floor(10000 + Math.random() * 90000);
     const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
     const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 250;
