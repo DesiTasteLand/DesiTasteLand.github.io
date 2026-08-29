@@ -296,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOrdersDrawer();
   initHeroTouchSlider();
   initScrollRevealObserver();
+  initGoogleAuth();
   initEventListeners();
 });
 
@@ -359,8 +360,16 @@ function initNavbarScrollBehavior() {
 
 // 5d. SCROLL TO PRODUCT (Used by Hero Slider Banners)
 function scrollToProduct(productId) {
+  if (productId === 'prod-honey') {
+    window.location.href = 'honey.html';
+    return;
+  }
   const card = document.getElementById(`allcard-${productId}`);
   if (card) {
+    const parentSection = card.closest('.reveal-section');
+    if (parentSection) {
+      parentSection.classList.add('visible');
+    }
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     card.classList.remove('highlight-pulse');
     void card.offsetWidth; // Trigger DOM reflow to restart CSS animation
@@ -371,7 +380,7 @@ function scrollToProduct(productId) {
   }
 }
 
-// 6. HERO SLIDER
+// 6. HERO SLIDER (With gesture detection & precise product routing)
 function initHeroTouchSlider() {
   const sliderContainer = document.getElementById('heroSlider');
   const slides = document.querySelectorAll('.slide');
@@ -379,7 +388,7 @@ function initHeroTouchSlider() {
   const progressFill = document.getElementById('goldenProgressFill');
   if (!sliderContainer || slides.length === 0) return;
 
-  let startX = 0, currentX = 0, isDragging = false;
+  let startX = 0, currentX = 0, isDragging = false, hasSwiped = false;
 
   function showSlide(index) {
     slides.forEach(s => s.classList.remove('active'));
@@ -399,40 +408,109 @@ function initHeroTouchSlider() {
     progressFill.style.width = '100%';
   }
 
-  sliderContainer.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX; }, { passive: true });
-  sliderContainer.addEventListener('touchmove', (e) => { if (!isDragging) return; currentX = e.touches[0].clientX; }, { passive: true });
+  sliderContainer.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    hasSwiped = false;
+    startX = e.touches[0].clientX;
+    currentX = startX;
+  }, { passive: true });
+
+  sliderContainer.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    if (Math.abs(startX - currentX) > 10) {
+      hasSwiped = true;
+    }
+  }, { passive: true });
+
   sliderContainer.addEventListener('touchend', () => {
     if (!isDragging) return;
     isDragging = false;
-    if (Math.abs(startX - currentX) > 35) { startX - currentX > 0 ? showSlide(currentSlideIndex + 1) : showSlide(currentSlideIndex - 1); resetSlideTimer(); }
+    if (hasSwiped && Math.abs(startX - currentX) > 35) {
+      startX - currentX > 0 ? showSlide(currentSlideIndex + 1) : showSlide(currentSlideIndex - 1);
+      resetSlideTimer();
+    }
+    setTimeout(() => { hasSwiped = false; }, 120);
   });
-  sliderContainer.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; });
-  sliderContainer.addEventListener('mousemove', (e) => { if (!isDragging) return; currentX = e.clientX; });
+
+  sliderContainer.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    hasSwiped = false;
+    startX = e.clientX;
+    currentX = startX;
+  });
+
+  sliderContainer.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    currentX = e.clientX;
+    if (Math.abs(startX - currentX) > 10) {
+      hasSwiped = true;
+    }
+  });
+
   sliderContainer.addEventListener('mouseup', () => {
     if (!isDragging) return;
     isDragging = false;
-    if (Math.abs(startX - currentX) > 35) { startX - currentX > 0 ? showSlide(currentSlideIndex + 1) : showSlide(currentSlideIndex - 1); resetSlideTimer(); }
+    if (hasSwiped && Math.abs(startX - currentX) > 35) {
+      startX - currentX > 0 ? showSlide(currentSlideIndex + 1) : showSlide(currentSlideIndex - 1);
+      resetSlideTimer();
+    }
+    setTimeout(() => { hasSwiped = false; }, 120);
   });
 
-  dots.forEach(dot => dot.addEventListener('click', (e) => { showSlide(parseInt(e.target.getAttribute('data-index'))); resetSlideTimer(); }));
+  // Slide click routing
+  slides.forEach((slide) => {
+    slide.addEventListener('click', (e) => {
+      if (hasSwiped) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+      const isHoney = slide.getAttribute('data-is-honey') === 'true';
+      const prodId = slide.getAttribute('data-product');
+      if (isHoney || prodId === 'prod-honey') {
+        window.location.href = 'honey.html';
+      } else if (prodId) {
+        scrollToProduct(prodId);
+      }
+    });
+  });
 
-  function startSlideTimer() { resetProgressBar(); slideInterval = setInterval(() => showSlide(currentSlideIndex + 1), 3000); }
-  function resetSlideTimer() { clearInterval(slideInterval); startSlideTimer(); }
+  dots.forEach(dot => dot.addEventListener('click', (e) => {
+    showSlide(parseInt(e.target.getAttribute('data-index')));
+    resetSlideTimer();
+  }));
+
+  function startSlideTimer() {
+    resetProgressBar();
+    slideInterval = setInterval(() => showSlide(currentSlideIndex + 1), 3000);
+  }
+  function resetSlideTimer() {
+    clearInterval(slideInterval);
+    startSlideTimer();
+  }
   startSlideTimer();
 }
 
-// 7. SCROLL REVEAL (Repeats on every scroll up and scroll down)
+// 7. SCROLL REVEAL (Reveals smoothly once without jitter or layout shifts)
 function initScrollRevealObserver() {
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-      } else {
-        entry.target.classList.remove('visible');
+        obs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.reveal-section').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('visible');
+    } else {
+      observer.observe(el);
+    }
+  });
 }
 
 // Modal State for Product Variant & Quantity Selection
@@ -982,7 +1060,137 @@ function cancelOrder(orderId) {
   showToast(`Order ${orderId} cancelled.`);
 }
 
-// 12. AUTH
+// 12. GOOGLE AUTH & AUTH STATE MANAGEMENT
+const GOOGLE_CLIENT_ID = '919597334771-33hbbftcqf2ks4slqf4a0a5r1v46r20i.apps.googleusercontent.com';
+let googleTokenClient = null;
+let isGoogleAuthInitialized = false;
+
+function decodeJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (err) {
+    console.error('Error decoding Google JWT:', err);
+    return null;
+  }
+}
+
+function loginGoogleUser(name, email, picture) {
+  if (!email) return;
+  const cleanEmail = email.toLowerCase().trim();
+  let existing = registeredUsers.find(u => u.email && u.email.toLowerCase() === cleanEmail);
+  if (!existing) {
+    existing = {
+      id: 'usr_g_' + Date.now(),
+      name: name || cleanEmail.split('@')[0],
+      email: cleanEmail,
+      phone: '',
+      picture: picture || '',
+      provider: 'google',
+      registeredAt: new Date().toISOString()
+    };
+    registeredUsers.push(existing);
+    localStorage.setItem('dtl_registered_users', JSON.stringify(registeredUsers));
+  }
+
+  currentUser = {
+    name: existing.name,
+    email: existing.email,
+    phone: existing.phone || '',
+    picture: existing.picture || picture || '',
+    provider: 'google'
+  };
+  localStorage.setItem('dtl_user', JSON.stringify(currentUser));
+  updateAuthUI();
+  showToast(`<i class="fa-brands fa-google text-red"></i> Google login kamiyab! Khushamdeed ${currentUser.name}!`);
+}
+
+function handleGoogleCredentialResponse(response) {
+  if (!response || !response.credential) return;
+  const payload = decodeJwt(response.credential);
+  if (payload && payload.email) {
+    loginGoogleUser(payload.name || payload.given_name || 'Google User', payload.email, payload.picture);
+  }
+}
+
+function initGoogleAuth() {
+  if (typeof google === 'undefined' || !google.accounts) {
+    setTimeout(initGoogleAuth, 400);
+    return;
+  }
+  if (isGoogleAuthInitialized) return;
+
+  try {
+    // 1. Google Identity Services ID Token (One Tap / Credential)
+    if (google.accounts.id) {
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredentialResponse,
+        auto_select: false,
+        cancel_on_tap_outside: true,
+        context: 'signin'
+      });
+    }
+
+    // 2. Google OAuth 2.0 Token Client with prompt='select_account'
+    // Shows all Google accounts on the user's mobile/laptop screen
+    if (google.accounts.oauth2) {
+      googleTokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: 'openid email profile',
+        prompt: 'select_account',
+        callback: async (tokenResponse) => {
+          if (tokenResponse && tokenResponse.access_token) {
+            try {
+              const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+              });
+              const profile = await res.json();
+              if (profile && profile.email) {
+                loginGoogleUser(profile.name || profile.given_name || 'Google User', profile.email, profile.picture);
+              }
+            } catch (err) {
+              console.error('Error retrieving Google user info:', err);
+              showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Google account verification me masla hua.');
+            }
+          }
+        }
+      });
+    }
+
+    isGoogleAuthInitialized = true;
+  } catch (err) {
+    console.warn('Google Identity initialization notice:', err);
+  }
+}
+
+function handleGoogleSignIn() {
+  if (currentUser) {
+    showToast(`<i class="fa-solid fa-circle-info text-forest"></i> Aap pehle se "${currentUser.name}" ke naam se logged in hain.`);
+    return;
+  }
+
+  if (typeof google !== 'undefined' && google.accounts) {
+    if (googleTokenClient) {
+      // Direct native account selection popup with all device accounts
+      googleTokenClient.requestAccessToken({ prompt: 'select_account' });
+    } else if (google.accounts.id) {
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          console.log('GIS One Tap status:', notification.getNotDisplayedReason());
+        }
+      });
+    }
+  } else {
+    showToast('<i class="fa-brands fa-google text-red"></i> Google service load ho rahi hai, dobara koshish karein...');
+    initGoogleAuth();
+  }
+}
+
 function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
@@ -1006,18 +1214,6 @@ function updateAuthUI() {
       if (signupForm) signupForm.style.display = 'none';
     }
   }
-}
-
-function openGoogleAuthModal() {
-  document.getElementById('googleAuthModal')?.classList.add('active');
-}
-
-function closeGoogleAuthModal() {
-  document.getElementById('googleAuthModal')?.classList.remove('active');
-}
-
-function handleGoogleSignIn() {
-  openGoogleAuthModal();
 }
 
 // 13. MODALS & DRAWERS
@@ -1127,46 +1323,9 @@ function initEventListeners() {
     if (loginForm) loginForm.style.display = 'none';
   });
 
-  // GOOGLE SIGN IN LISTENERS
+  // GOOGLE SIGN IN LISTENERS (Triggers native GIS Account Chooser)
   document.querySelectorAll('.google-signin-btn').forEach(btn => {
     btn.addEventListener('click', handleGoogleSignIn);
-  });
-  document.getElementById('closeGoogleAuthBtn')?.addEventListener('click', closeGoogleAuthModal);
-  document.getElementById('googleAuthModal')?.addEventListener('click', (e) => {
-    if (e.target.id === 'googleAuthModal') closeGoogleAuthModal();
-  });
-  document.getElementById('googleQuickSignInForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const gName = document.getElementById('googleNameInput')?.value.trim();
-    const gEmail = document.getElementById('googleEmailInput')?.value.trim();
-
-    if (!gName) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam apna naam darj karein.');
-      return;
-    }
-    if (!isValidEmail(gEmail)) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam durust Google email address darj karein.');
-      return;
-    }
-
-    let existing = registeredUsers.find(u => u.email && u.email.toLowerCase() === gEmail.toLowerCase());
-    if (!existing) {
-      existing = {
-        id: 'usr_g_' + Date.now(),
-        name: gName,
-        email: gEmail.toLowerCase(),
-        phone: '',
-        provider: 'google'
-      };
-      registeredUsers.push(existing);
-      localStorage.setItem('dtl_registered_users', JSON.stringify(registeredUsers));
-    }
-
-    currentUser = { name: existing.name, email: existing.email, phone: existing.phone || '', provider: 'google' };
-    localStorage.setItem('dtl_user', JSON.stringify(currentUser));
-    closeGoogleAuthModal();
-    updateAuthUI();
-    showToast(`<i class="fa-brands fa-google text-red"></i> Google ke zariye login ho gaya! Khushamdeed ${currentUser.name}!`);
   });
 
   // LOGIN FORM
