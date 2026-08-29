@@ -296,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOrdersDrawer();
   initHeroTouchSlider();
   initScrollRevealObserver();
-  initGoogleAuth();
   initEventListeners();
 });
 
@@ -1060,137 +1059,7 @@ function cancelOrder(orderId) {
   showToast(`Order ${orderId} cancelled.`);
 }
 
-// 12. GOOGLE AUTH & AUTH STATE MANAGEMENT
-const GOOGLE_CLIENT_ID = '919597334771-33hbbftcqf2ks4slqf4a0a5r1v46r20i.apps.googleusercontent.com';
-let googleTokenClient = null;
-let isGoogleAuthInitialized = false;
-
-function decodeJwt(token) {
-  try {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-  } catch (err) {
-    console.error('Error decoding Google JWT:', err);
-    return null;
-  }
-}
-
-function loginGoogleUser(name, email, picture) {
-  if (!email) return;
-  const cleanEmail = email.toLowerCase().trim();
-  let existing = registeredUsers.find(u => u.email && u.email.toLowerCase() === cleanEmail);
-  if (!existing) {
-    existing = {
-      id: 'usr_g_' + Date.now(),
-      name: name || cleanEmail.split('@')[0],
-      email: cleanEmail,
-      phone: '',
-      picture: picture || '',
-      provider: 'google',
-      registeredAt: new Date().toISOString()
-    };
-    registeredUsers.push(existing);
-    localStorage.setItem('dtl_registered_users', JSON.stringify(registeredUsers));
-  }
-
-  currentUser = {
-    name: existing.name,
-    email: existing.email,
-    phone: existing.phone || '',
-    picture: existing.picture || picture || '',
-    provider: 'google'
-  };
-  localStorage.setItem('dtl_user', JSON.stringify(currentUser));
-  updateAuthUI();
-  showToast(`<i class="fa-brands fa-google text-red"></i> Google login kamiyab! Khushamdeed ${currentUser.name}!`);
-}
-
-function handleGoogleCredentialResponse(response) {
-  if (!response || !response.credential) return;
-  const payload = decodeJwt(response.credential);
-  if (payload && payload.email) {
-    loginGoogleUser(payload.name || payload.given_name || 'Google User', payload.email, payload.picture);
-  }
-}
-
-function initGoogleAuth() {
-  if (typeof google === 'undefined' || !google.accounts) {
-    setTimeout(initGoogleAuth, 400);
-    return;
-  }
-  if (isGoogleAuthInitialized) return;
-
-  try {
-    // 1. Google Identity Services ID Token (One Tap / Credential)
-    if (google.accounts.id) {
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleGoogleCredentialResponse,
-        auto_select: false,
-        cancel_on_tap_outside: true,
-        context: 'signin'
-      });
-    }
-
-    // 2. Google OAuth 2.0 Token Client with prompt='select_account'
-    // Shows all Google accounts on the user's mobile/laptop screen
-    if (google.accounts.oauth2) {
-      googleTokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: GOOGLE_CLIENT_ID,
-        scope: 'openid email profile',
-        prompt: 'select_account',
-        callback: async (tokenResponse) => {
-          if (tokenResponse && tokenResponse.access_token) {
-            try {
-              const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
-              });
-              const profile = await res.json();
-              if (profile && profile.email) {
-                loginGoogleUser(profile.name || profile.given_name || 'Google User', profile.email, profile.picture);
-              }
-            } catch (err) {
-              console.error('Error retrieving Google user info:', err);
-              showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Google account verification me masla hua.');
-            }
-          }
-        }
-      });
-    }
-
-    isGoogleAuthInitialized = true;
-  } catch (err) {
-    console.warn('Google Identity initialization notice:', err);
-  }
-}
-
-function handleGoogleSignIn() {
-  if (currentUser) {
-    showToast(`<i class="fa-solid fa-circle-info text-forest"></i> Aap pehle se "${currentUser.name}" ke naam se logged in hain.`);
-    return;
-  }
-
-  if (typeof google !== 'undefined' && google.accounts) {
-    if (googleTokenClient) {
-      // Direct native account selection popup with all device accounts
-      googleTokenClient.requestAccessToken({ prompt: 'select_account' });
-    } else if (google.accounts.id) {
-      google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          console.log('GIS One Tap status:', notification.getNotDisplayedReason());
-        }
-      });
-    }
-  } else {
-    showToast('<i class="fa-brands fa-google text-red"></i> Google service load ho rahi hai, dobara koshish karein...');
-    initGoogleAuth();
-  }
-}
-
+// 12. AUTH
 function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
@@ -1323,10 +1192,6 @@ function initEventListeners() {
     if (loginForm) loginForm.style.display = 'none';
   });
 
-  // GOOGLE SIGN IN LISTENERS (Triggers native GIS Account Chooser)
-  document.querySelectorAll('.google-signin-btn').forEach(btn => {
-    btn.addEventListener('click', handleGoogleSignIn);
-  });
 
   // LOGIN FORM
   loginForm?.addEventListener('submit', (e) => {
