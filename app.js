@@ -468,7 +468,7 @@ function initHeroTouchSlider() {
       const isHoney = slide.getAttribute('data-is-honey') === 'true';
       const prodId = slide.getAttribute('data-product');
       if (isHoney || prodId === 'prod-honey') {
-        window.location.href = 'honey.html';
+        window.location.href = 'honeycollection/';
       } else if (prodId) {
         scrollToProduct(prodId);
       }
@@ -542,7 +542,7 @@ function renderTopSellingProducts() {
             </div>
             <span>${product.rating} (${product.reviewsCount}+)</span>
           </div>
-          <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honey.html'" : `openProductSelectionModal('${targetProdId}')`}">
+          <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honeycollection/'" : `openProductSelectionModal('${targetProdId}')`}">
             <i class="fa-solid fa-bag-shopping"></i> BUY NOW
           </button>
         </div>
@@ -592,10 +592,10 @@ function renderAllProducts() {
             ${product.variants.length > 1 ? `<span style="font-size:0.78rem;color:var(--text-muted);font-weight:700;">(${product.variants.length} Sizes)</span>` : ''}
           </div>
           <div class="product-card-actions">
-            <button class="btn btn-cart-action" onclick="${product.isHoney ? "window.location.href='honey.html'" : `addProductToCartDirect('${product.id}')`}" title="Add to Cart">
+            <button class="btn btn-cart-action" onclick="${product.isHoney ? "window.location.href='honeycollection/'" : `addProductToCartDirect('${product.id}')`}" title="Add to Cart">
               <i class="fa-solid fa-cart-shopping"></i>
             </button>
-            <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honey.html'" : `openProductSelectionModal('${product.id}')`}">
+            <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honeycollection/'" : `openProductSelectionModal('${product.id}')`}">
               <i class="fa-solid fa-bag-shopping"></i> BUY NOW
             </button>
           </div>
@@ -615,7 +615,7 @@ function addProductToCartDirect(productId) {
   if (!product) return;
 
   if (product.isHoney) {
-    window.location.href = 'honey.html';
+    window.location.href = 'honeycollection/';
     return;
   }
 
@@ -1055,6 +1055,25 @@ function cancelOrder(orderId) {
   if (!order) return;
   order.status = 'Cancelled';
   localStorage.setItem('dtl_orders', JSON.stringify(myOrders));
+
+  // Send Email Notification to Owner Zaib on cancellation
+  const itemsSummary = order.items ? order.items.map(i => `${i.name} (x${i.qty})`).join(', ') : 'N/A';
+  fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: `⚠️ ORDER CANCELLED: ${order.id} - DESI TASTE LAND`,
+      Order_Reference: order.id,
+      Event_Type: 'ORDER CANCELLED BY CUSTOMER',
+      Customer_Name: order.name || 'Customer',
+      Customer_Phone: order.phone || 'N/A',
+      Shipping_Address: order.address || 'N/A',
+      Items_Cancelled: itemsSummary,
+      Total_Amount_PKR: order.total || 0,
+      Cancellation_Timestamp: new Date().toLocaleString()
+    })
+  }).catch(() => {});
+
   renderOrdersDrawer();
   showToast(`Order ${orderId} cancelled.`);
 }
@@ -1064,6 +1083,22 @@ function updateAuthUI() {
   const loginForm = document.getElementById('loginForm');
   const signupForm = document.getElementById('signupForm');
   const loggedState = document.getElementById('userLoggedInState');
+
+  // Verify customer is not disabled or deleted by admin
+  if (currentUser) {
+    const currentRegistered = JSON.parse(localStorage.getItem('dtl_registered_users')) || [];
+    const validAccount = currentRegistered.find(u => 
+      (u.phone && currentUser.phone && normalizePhone(u.phone) === normalizePhone(currentUser.phone)) ||
+      (u.email && currentUser.email && u.email.toLowerCase() === currentUser.email.toLowerCase())
+    );
+
+    if (!validAccount || validAccount.status === 'disabled') {
+      currentUser = null;
+      localStorage.removeItem('dtl_user');
+      showToast('<i class="fa-solid fa-ban text-red"></i> Aapka account deactivate kar diya gaya hai.');
+    }
+  }
+
   if (currentUser) {
     if (loginForm) loginForm.style.display = 'none';
     if (signupForm) signupForm.style.display = 'none';
@@ -1237,6 +1272,11 @@ function initEventListeners() {
           if (emailField) emailField.value = input;
         }
       }, 1500);
+      return;
+    }
+
+    if (matchedUser.status === 'disabled') {
+      showToast('<i class="fa-solid fa-ban text-red"></i> Yeh account deactivate / block kar diya gaya hai. Barahe karam support se rabta karein.');
       return;
     }
 
