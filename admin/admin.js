@@ -455,18 +455,33 @@ function handleManualOrderSubmit(e) {
 function renderCustomersMasterTable() {
   const tbody = document.getElementById('customersMasterBody');
   if (!tbody) return;
+
+  // Always refresh from localStorage first
+  storeCustomers = JSON.parse(localStorage.getItem('dtl_registered_users') || '[]');
+
+  // Auto-assign IDs to legacy accounts that don't have one
+  let needsSave = false;
+  storeCustomers.forEach((c, i) => {
+    if (!c.id) {
+      c.id = 'usr_legacy_' + i + '_' + (c.phone || c.email || i).toString().replace(/\W/g,'');
+      needsSave = true;
+    }
+  });
+  if (needsSave) localStorage.setItem('dtl_registered_users', JSON.stringify(storeCustomers));
+
   const q = (document.getElementById('customerSearchInput')?.value || '').trim().toLowerCase();
   let filtered = q ? storeCustomers.filter(c => (c.name && c.name.toLowerCase().includes(q)) || (c.email && c.email.toLowerCase().includes(q)) || (c.phone && c.phone.toLowerCase().includes(q))) : [...storeCustomers];
   if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding:32px;">No registered customers in database.</td></tr>'; return; }
   tbody.innerHTML = filtered.map(c => {
+    const safeId = escapeHtml(c.id || '');
     const regDate = c.registeredAt ? new Date(c.registeredAt).toLocaleDateString() : 'Active Buyer';
     const customerOrders = storeOrders.filter(o => (c.phone && o.phone && o.phone.replace(/\s+/g,'') === c.phone.replace(/\s+/g,'')) || (c.email && o.email && o.email.toLowerCase() === c.email.toLowerCase()));
     const totalUserOrders = customerOrders.length;
     const isDisabled = c.status === 'disabled';
     const orderBtnLabel = totalUserOrders > 0
-      ? `<button class="btn btn-outline-gold btn-xs" onclick="viewCustomerOrders('${escapeHtml(c.id)}')" title="View ${totalUserOrders} order(s)"><i class="fa-solid fa-box"></i> ${totalUserOrders} Orders</button>`
+      ? `<button class="btn btn-outline-gold btn-xs" onclick="viewCustomerOrders('${safeId}')" title="View ${totalUserOrders} order(s)"><i class="fa-solid fa-box"></i> ${totalUserOrders} Orders</button>`
       : `<span style="color:var(--text-muted);font-size:0.8rem;">No orders</span>`;
-    return '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-primary);">' + (c.name || 'U').charAt(0).toUpperCase() + '</div><strong>' + escapeHtml(c.name || 'Unknown') + '</strong></div></td><td>' + escapeHtml(c.phone || 'N/A') + '</td><td>' + escapeHtml(c.email || 'N/A') + '</td><td><small>' + regDate + '</small></td><td>' + orderBtnLabel + '</td><td><span class="status-badge ' + (isDisabled ? 'disabled-user' : 'active-user') + '">' + (isDisabled ? 'Disabled' : 'Active') + '</span></td><td><div style="display:flex;gap:6px;"><button class="btn ' + (isDisabled ? 'btn-outline-forest' : 'btn-outline-gold') + ' btn-xs" onclick="toggleCustomerStatus(\'' + escapeHtml(c.id) + '\')">' + (isDisabled ? 'Enable' : 'Disable') + '</button><button class="btn btn-outline-red btn-xs" onclick="deleteCustomerAccount(\'' + escapeHtml(c.id) + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></td></tr>';
+    return '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-primary);">' + (c.name || 'U').charAt(0).toUpperCase() + '</div><strong>' + escapeHtml(c.name || 'Unknown') + '</strong></div></td><td>' + escapeHtml(c.phone || 'N/A') + '</td><td>' + escapeHtml(c.email || 'N/A') + '</td><td><small>' + regDate + '</small></td><td>' + orderBtnLabel + '</td><td><span class="status-badge ' + (isDisabled ? 'disabled-user' : 'active-user') + '">' + (isDisabled ? 'Disabled' : 'Active') + '</span></td><td><div style="display:flex;gap:6px;"><button class="btn ' + (isDisabled ? 'btn-outline-forest' : 'btn-outline-gold') + ' btn-xs" onclick="toggleCustomerStatus(\'' + safeId + '\')">' + (isDisabled ? 'Enable' : 'Disable') + '</button><button class="btn btn-outline-red btn-xs" onclick="deleteCustomerAccount(\'' + safeId + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></td></tr>';
   }).join('');
 }
 
@@ -557,13 +572,45 @@ function toggleCustomerStatus(userId) {
 }
 
 function deleteCustomerAccount(userId) {
-  const cust = storeCustomers.find(c => c.id === userId);
-  if (!cust) return;
-  if (!confirm(`Are you sure you want to permanently delete customer account "${cust.name}"? They will be removed from the store and logged out immediately.`)) return;
+  // Always re-read from localStorage to get latest data
+  storeCustomers = JSON.parse(localStorage.getItem('dtl_registered_users') || '[]');
 
-  storeCustomers = storeCustomers.filter(c => c.id !== userId);
+  let cust = storeCustomers.find(c => c.id === userId);
+
+  // Fallback: if id doesn't match (old accounts may not have id), match by index
+  if (!cust) {
+    // userId might be the array index stringified for legacy accounts
+    const idx = parseInt(userId, 10);
+    if (!isNaN(idx) && storeCustomers[idx]) {
+      cust = storeCustomers[idx];
+    }
+  }
+
+  if (!cust) {
+    showToast('<i class="fa-solid fa-circle-xmark text-red"></i> Customer not found. Please refresh the page and try again.');
+    refreshStoreData();
+    return;
+  }
+
+  if (!confirm('Are you sure you want to permanently delete "' + cust.name + '"?\n\nThis will remove their account from the website. They will be logged out immediately.')) return;
+
+  // Remove from array
+  storeCustomers = storeCustomers.filter(c => c !== cust);
+
+  // Also remove their active session if they are currently logged in on main site
+  try {
+    const activeUser = JSON.parse(localStorage.getItem('dtl_user') || 'null');
+    if (activeUser) {
+      const matchPhone = cust.phone && activeUser.phone && activeUser.phone.replace(/\s+/g,'') === cust.phone.replace(/\s+/g,'');
+      const matchEmail = cust.email && activeUser.email && activeUser.email.toLowerCase() === cust.email.toLowerCase();
+      if (matchPhone || matchEmail) {
+        localStorage.removeItem('dtl_user');
+      }
+    }
+  } catch(e) {}
+
   localStorage.setItem('dtl_registered_users', JSON.stringify(storeCustomers));
-  showToast('<i class="fa-solid fa-trash text-red"></i> Customer <strong>' + cust.name + '</strong> has been permanently removed.');
+  showToast('<i class="fa-solid fa-trash text-red"></i> Customer <strong>' + cust.name + '</strong> has been permanently deleted from the website.');
   refreshStoreData();
 }
 
