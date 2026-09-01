@@ -283,6 +283,19 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
 }
 
+// 4c. ASSET PATH RESOLVER (Fixes image paths on subfolder routes like /honeycollection/)
+function resolveImagePath(imgSrc) {
+  if (!imgSrc) return '';
+  if (imgSrc.startsWith('http://') || imgSrc.startsWith('https://') || imgSrc.startsWith('data:')) return imgSrc;
+  const cleanPath = imgSrc.replace(/^\.\.\//, '').replace(/^\.\//, '');
+  const pathname = window.location.pathname || '';
+  const isSubfolder = pathname.includes('/honeycollection') || 
+                      pathname.includes('/product') || 
+                      pathname.includes('/deal') || 
+                      pathname.includes('/admin');
+  return isSubfolder ? `../${cleanPath}` : cleanPath;
+}
+
 // 5. INIT
 document.addEventListener('DOMContentLoaded', () => {
   initWelcomeSplash();
@@ -527,7 +540,7 @@ function renderTopSellingProducts() {
     return `
       <div class="product-card ts-card" id="card-${product.id}">
         <div class="product-img-box ts-img-box">
-          <img src="${product.image}" alt="${product.name}" loading="lazy">
+          <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy">
         </div>
         <div class="product-content ts-content">
           <h3 class="product-title">
@@ -572,7 +585,7 @@ function renderAllProducts() {
           <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
             <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
-          <img src="${product.image}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
+          <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
         </div>
         <div class="product-content">
           <h3 class="product-title">
@@ -656,7 +669,7 @@ function renderDedicatedHoneyPage() {
           <button class="fav-btn ${isFavorite(category.id) ? 'active' : ''}" onclick="toggleFavorite('${category.id}', event)" title="Add to Favorites">
             <i class="${isFavorite(category.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
-          <img src="${category.image}" alt="${category.name}" loading="lazy">
+          <img src="${resolveImagePath(category.image)}" alt="${category.name}" loading="lazy">
         </div>
         <div class="honey-page-body">
           <h3 class="honey-page-title">
@@ -755,14 +768,14 @@ function renderWishlistDrawer() {
 
     return `
       <div class="wishlist-item">
-        <img src="${item.image}" alt="${item.name}" class="wishlist-item-img">
+        <img src="${resolveImagePath(item.image)}" alt="${item.name}" class="wishlist-item-img">
         <div class="wishlist-item-info">
           <div>
             <h4 class="wishlist-item-title">${item.name}</h4>
             <div class="wishlist-item-price">${priceText}</div>
           </div>
           <div class="wishlist-item-actions">
-            <button class="btn btn-red btn-sm wishlist-buy-btn" onclick="${isHoney ? "window.location.href='honey.html'" : `closeWishlistDrawer(); openProductSelectionModal('${item.id}')`}">
+            <button class="btn btn-red btn-sm wishlist-buy-btn" onclick="${isHoney ? "window.location.href='honeycollection/'" : `closeWishlistDrawer(); openProductSelectionModal('${item.id}')`}">
               <i class="fa-solid fa-bag-shopping"></i> BUY NOW
             </button>
             <button class="wishlist-remove-btn" onclick="toggleFavorite('${item.id}', event)" title="Remove">
@@ -830,7 +843,7 @@ function renderProductSelectionModal() {
   container.innerHTML = `
     <div class="prod-modal-card-content">
       <div class="prod-modal-header">
-        <img src="${product.image}" alt="${product.name}" class="prod-modal-img">
+        <img src="${resolveImagePath(product.image)}" alt="${product.name}" class="prod-modal-img">
         <div class="prod-modal-info">
           ${product.tag ? `<span class="prod-modal-tag">${product.tag}</span>` : `<span class="prod-modal-tag">100% Pure & Authentic</span>`}
           <h3 class="prod-modal-title">
@@ -1002,7 +1015,7 @@ function updateCartUI() {
   } else {
     container.innerHTML = cart.map(item => `
       <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+        <img src="${resolveImagePath(item.image)}" alt="${item.name}" class="cart-item-img">
         <div class="cart-item-info">
           <div class="cart-item-title">${item.name}</div>
           <div class="cart-item-price">Rs. ${(item.price * item.qty).toLocaleString()}</div>
@@ -1149,7 +1162,7 @@ function openProductQuickView(productId) {
         </h3>
       </div>
       <div class="qv-modal-image-box">
-        <img src="${product.image}" alt="${product.name}" class="qv-modal-main-img">
+        <img src="${resolveImagePath(product.image)}" alt="${product.name}" class="qv-modal-main-img">
       </div>
       ${product.variants && product.variants.length > 0 ? `
         <div class="qv-variants-wrap">
