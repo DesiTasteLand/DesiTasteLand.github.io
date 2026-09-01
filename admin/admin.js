@@ -383,6 +383,8 @@ function openOrderDetailModal(orderId) {
   document.getElementById('modalOrderRefTitle').textContent = 'Order ' + o.id;
   document.getElementById('modalOrderTimestampText').textContent = 'Placed on: ' + (o.timestamp ? new Date(o.timestamp).toLocaleString() : 'N/A');
   document.getElementById('modalStatusSelect').value = o.status || 'Processing';
+  const statusRow = document.querySelector('.modal-status-row');
+  if (statusRow) statusRow.style.display = '';
   const items = o.items || [];
   const subtotal = items.reduce((s, i) => s + ((i.price || 0) * (i.qty || 1)), 0);
   const shipping = o.total > subtotal ? o.total - subtotal : (subtotal >= 5000 ? 0 : 250);
@@ -458,10 +460,91 @@ function renderCustomersMasterTable() {
   if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted" style="padding:32px;">No registered customers in database.</td></tr>'; return; }
   tbody.innerHTML = filtered.map(c => {
     const regDate = c.registeredAt ? new Date(c.registeredAt).toLocaleDateString() : 'Active Buyer';
-    const totalUserOrders = storeOrders.filter(o => (c.phone && o.phone && o.phone.replace(/\s+/g,'') === c.phone.replace(/\s+/g,'')) || (c.email && o.email && o.email.toLowerCase() === c.email.toLowerCase())).length;
+    const customerOrders = storeOrders.filter(o => (c.phone && o.phone && o.phone.replace(/\s+/g,'') === c.phone.replace(/\s+/g,'')) || (c.email && o.email && o.email.toLowerCase() === c.email.toLowerCase()));
+    const totalUserOrders = customerOrders.length;
     const isDisabled = c.status === 'disabled';
-    return '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-primary);">' + (c.name || 'U').charAt(0).toUpperCase() + '</div><strong>' + escapeHtml(c.name || 'Unknown') + '</strong></div></td><td>' + escapeHtml(c.phone || 'N/A') + '</td><td>' + escapeHtml(c.email || 'N/A') + '</td><td><small>' + regDate + '</small></td><td><strong class="text-gold">' + totalUserOrders + ' Orders</strong></td><td><span class="status-badge ' + (isDisabled ? 'disabled-user' : 'active-user') + '">' + (isDisabled ? 'Disabled' : 'Active') + '</span></td><td><div style="display:flex;gap:6px;"><button class="btn ' + (isDisabled ? 'btn-outline-forest' : 'btn-outline-gold') + ' btn-xs" onclick="toggleCustomerStatus(\'' + escapeHtml(c.id) + '\')">' + (isDisabled ? 'Enable' : 'Disable') + '</button><button class="btn btn-outline-red btn-xs" onclick="deleteCustomerAccount(\'' + escapeHtml(c.id) + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></td></tr>';
+    const orderBtnLabel = totalUserOrders > 0
+      ? `<button class="btn btn-outline-gold btn-xs" onclick="viewCustomerOrders('${escapeHtml(c.id)}')" title="View ${totalUserOrders} order(s)"><i class="fa-solid fa-box"></i> ${totalUserOrders} Orders</button>`
+      : `<span style="color:var(--text-muted);font-size:0.8rem;">No orders</span>`;
+    return '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-primary);">' + (c.name || 'U').charAt(0).toUpperCase() + '</div><strong>' + escapeHtml(c.name || 'Unknown') + '</strong></div></td><td>' + escapeHtml(c.phone || 'N/A') + '</td><td>' + escapeHtml(c.email || 'N/A') + '</td><td><small>' + regDate + '</small></td><td>' + orderBtnLabel + '</td><td><span class="status-badge ' + (isDisabled ? 'disabled-user' : 'active-user') + '">' + (isDisabled ? 'Disabled' : 'Active') + '</span></td><td><div style="display:flex;gap:6px;"><button class="btn ' + (isDisabled ? 'btn-outline-forest' : 'btn-outline-gold') + ' btn-xs" onclick="toggleCustomerStatus(\'' + escapeHtml(c.id) + '\')">' + (isDisabled ? 'Enable' : 'Disable') + '</button><button class="btn btn-outline-red btn-xs" onclick="deleteCustomerAccount(\'' + escapeHtml(c.id) + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></td></tr>';
   }).join('');
+}
+
+function viewCustomerOrders(userId) {
+  const cust = storeCustomers.find(c => c.id === userId);
+  if (!cust) return;
+  const customerOrders = storeOrders.filter(o =>
+    (cust.phone && o.phone && o.phone.replace(/\s+/g,'') === cust.phone.replace(/\s+/g,'')) ||
+    (cust.email && o.email && o.email.toLowerCase() === cust.email.toLowerCase())
+  );
+
+  const modal = document.getElementById('orderDetailModal');
+  const titleEl = document.getElementById('modalOrderRefTitle');
+  const tsEl = document.getElementById('modalOrderTimestampText');
+  const bodyEl = document.getElementById('orderModalBodyContent');
+  const statusRow = document.querySelector('.modal-status-row');
+  if (!modal || !bodyEl) return;
+
+  if (titleEl) titleEl.textContent = `Orders — ${cust.name}`;
+  if (tsEl) tsEl.textContent = `Phone: ${cust.phone || 'N/A'} | Email: ${cust.email || 'N/A'}`;
+  if (statusRow) statusRow.style.display = 'none';
+
+  if (customerOrders.length === 0) {
+    bodyEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:32px;">This customer has no orders yet.</p>';
+  } else {
+    bodyEl.innerHTML = `
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead>
+            <tr style="background:var(--bg-input);border-bottom:1px solid var(--border-gold);">
+              <th style="padding:8px 10px;text-align:left;color:var(--gold-primary);">Order ID</th>
+              <th style="padding:8px 10px;text-align:left;">Date</th>
+              <th style="padding:8px 10px;text-align:left;">Items</th>
+              <th style="padding:8px 10px;text-align:right;">Total</th>
+              <th style="padding:8px 10px;text-align:center;">Status</th>
+              <th style="padding:8px 10px;text-align:center;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${customerOrders.map(o => {
+              const d = o.timestamp ? new Date(o.timestamp).toLocaleDateString() : 'N/A';
+              const it = o.items ? o.items.map(i => i.name + ' x' + i.qty).join(', ') : 'Order';
+              const isCancelled = o.status === 'Cancelled';
+              const statusColor = isCancelled ? 'var(--red-primary)' : o.status === 'Delivered' ? 'var(--forest-primary)' : 'var(--gold-primary)';
+              return `<tr style="border-bottom:1px solid var(--border-color);">
+                <td style="padding:8px 10px;"><strong style="color:var(--gold-primary);">${escapeHtml(o.id)}</strong></td>
+                <td style="padding:8px 10px;"><small>${d}</small></td>
+                <td style="padding:8px 10px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHtml(it)}">${escapeHtml(it)}</td>
+                <td style="padding:8px 10px;text-align:right;"><strong class="text-forest">Rs. ${(o.total||0).toLocaleString()}</strong></td>
+                <td style="padding:8px 10px;text-align:center;"><span style="color:${statusColor};font-weight:700;">${o.status || 'Processing'}</span></td>
+                <td style="padding:8px 10px;text-align:center;">
+                  ${!isCancelled ? `<button class="btn btn-outline-red btn-xs" onclick="adminCancelOrder('${escapeHtml(o.id)}', '${escapeHtml(userId)}')"><i class="fa-solid fa-ban"></i> Cancel</button>` : '<span style="color:var(--text-muted);font-size:0.8rem;">Cancelled</span>'}
+                </td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  activeOrderForModal = null;
+  modal.classList.add('active');
+}
+
+function adminCancelOrder(orderId, fromCustomerId) {
+  const order = storeOrders.find(o => o.id === orderId);
+  if (!order) return;
+  if (order.status === 'Cancelled') { showToast('This order is already cancelled.'); return; }
+  if (!confirm(`Cancel Order ${orderId} for ${order.name || 'customer'}? This cannot be undone.`)) return;
+  order.status = 'Cancelled';
+  localStorage.setItem('dtl_orders', JSON.stringify(storeOrders));
+  showToast(`<i class="fa-solid fa-ban text-red"></i> Order <strong>${orderId}</strong> has been cancelled.`);
+  refreshStoreData();
+  if (fromCustomerId) {
+    viewCustomerOrders(fromCustomerId);
+  } else {
+    closeOrderDetailModal();
+  }
 }
 
 function toggleCustomerStatus(userId) {
