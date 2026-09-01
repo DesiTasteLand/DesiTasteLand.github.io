@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pure Honey Collection | DESI TASTE LAND</title>
+  <meta name="description" content="Explore 100% Pure, Raw & Organic Sidr Honey collection by DESI TASTE LAND. Wild Big Bee, Wild Small Bee, Farmy Big Bee & Farmy Small Bee Pure Honey. Cash on Delivery across Pakistan.">
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="author" content="DESI TASTE LAND">
+  <meta name="keywords" content="Pure Honey Pakistan, Sidr Honey, Wild Big Bee Honey, Small Bee Honey, Farmy Honey, Raw Organic Honey, Desi Taste Land Honey">
+  <link rel="canonical" href="https://desitasteland.github.io/honeycollection">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://desitasteland.github.io/honeycollection">
+  <meta property="og:title" content="Pure Honey Collection | DESI TASTE LAND">
+  <meta property="og:description" content="100% Pure, Raw & Organic Sidr Honey collection by DESI TASTE LAND. Wild & Farmy Varieties with Cash On Delivery.">
+  <meta property="og:image" content="https://desitasteland.github.io/assets/images/brand_logo.jpg">
+
+  <!-- Site Identity & Google Search Site Name -->
+  <meta name="application-name" content="DESI TASTE LAND">
+  <meta name="apple-mobile-web-app-title" content="DESI TASTE LAND">
+  <meta property="og:site_name" content="DESI TASTE LAND">
+
+  <!-- Favicons for Google Search & All Browsers -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../favicon-512x512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+
+  <!-- Google Fonts: Roboto & Urdu -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="../styles.css?v=4.1">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="header" id="mainHeader">
+    <div class="container header-inner">
+      <a href="../" class="nav-left-btn nav-back-btn" title="Store">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span class="nav-btn-label">STORE</span>
+      </a>
+
+      <a href="../" class="brand-logo logo-mid" title="DESI TASTE LAND">
+        <img src="../assets/images/brand_logo.jpg" alt="DESI TasteLand Logo" class="brand-logo-img">
+      </a>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="myOrdersDrawerBtn" title="My Orders">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        <button class="icon-btn" id="wishlistToggleBtn" title="Favorites">
+          <i class="fa-solid fa-heart"></i>
+          <span class="cart-badge" id="favCountBadge">0</span>
+        </button>
+        <button class="icon-btn cart-btn-trigger" id="cartToggleBtn" title="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-badge" id="cartCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MY ORDERS DRAWER -->
+  <div class="orders-drawer-overlay" id="ordersOverlay"></div>
+  <aside class="orders-drawer" id="ordersDrawer">
+    <div class="orders-header">
+      <h3><i class="fa-solid fa-clock-rotate-left text-red"></i> My Orders & History</h3>
+      <button class="close-btn" id="closeOrdersBtn">&times;</button>
+    </div>
+    <div class="orders-notice">
+      <small><i class="fa-solid fa-circle-info"></i> You can cancel any order within <strong>24 hours</strong> of placing it.</small>
+    </div>
+    <div class="orders-body" id="ordersListContainer"></div>
+  </aside>
+
+  <!-- WISHLIST DRAWER -->
+  <div class="wishlist-drawer-overlay" id="wishlistOverlay"></div>
+  <aside class="wishlist-drawer" id="wishlistDrawer">
+    <div class="wishlist-header">
+      <h3><i class="fa-solid fa-heart text-red"></i> My Favorites (<span id="wishlistCountTitle">0</span>)</h3>
+      <button class="close-btn" id="closeWishlistBtn">&times;</button>
+    </div>
+    <div class="wishlist-items-body" id="wishlistItemsContainer"></div>
+  </aside>
+
+  <!-- HONEY COLLECTION BANNER & GRID -->
+  <section class="section-padding honey-collection-section">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-subtitle"><i class="fa-solid fa-jar-wheat text-red"></i> 100% Pure, Raw & Certified Organic</span>
+        <h1 class="section-title">PURE HONEY COLLECTION</h1>
+        <p class="section-desc">Choose from our 4 signature natural honey varieties. Select your preferred weight variant and enjoy instant checkout with nationwide Cash On Delivery.</p>
+      </div>
+
+      <!-- HONEY 4 VARIETIES GRID -->
+      <div class="honey-page-grid" id="honeyPageGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- HONEY PURITY GUARANTEE -->
+  <section class="section-padding why-us-section reveal-section" id="whyUs" style="padding-top: 20px;">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-subtitle"><i class="fa-solid fa-gem text-red"></i> UNCOMPROMISED PURITY</span>
+        <h2 class="section-title">The Desi Taste Purity Guarantee</h2>
+        <p class="section-desc">Every jar of our honey is 100% raw, unpasteurized, cold-extracted, and tested for supreme organic nutrition.</p>
+      </div>
+      <div class="why-us-grid">
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-flask-vial"></i></div>
+          <h3>Zero Sugar Feeding</h3>
+          <p>Harvested strictly from natural floral blossom nectar. 100% free from sugar syrup, artificial feeding, and chemical additives.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-temperature-arrow-down"></i></div>
+          <h3>Raw & Cold Extracted</h3>
+          <p>Never heat-treated or ultra-filtered. Preserves living active bee enzymes, natural propolis, and medicinal pollen.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-box-open"></i></div>
+          <h3>Food-Grade Glass Packaging</h3>
+          <p>Airtight, sealed food-grade packaging that keeps natural therapeutic properties and rich forest aroma intact.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <h3>100% Money-Back Guarantee</h3>
+          <p>Complete peace of mind. If you find any artificial imperfection, claim an immediate full refund with no hassle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col brand-col">
+        <a href="../" class="brand-logo footer-logo">
+          <img src="../assets/images/brand_logo.jpg" alt="DESI TasteLand Logo" class="brand-logo-img">
+          <div class="logo-text">
+            <span class="brand-title">DESI TASTE LAND</span>
+            <span class="brand-subtitle">PURE | ORGANIC | LUXURY</span>
+          </div>
+        </a>
+        <p class="footer-about">DESI TASTE LAND brings authentic, farm-fresh, 100% natural organic delicacies straight from pristine farms to your home with unmatched purity.</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=61584915339912" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/desitasteland" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/923070016113" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#hero">Home</a></li>
+          <li><a href="index.html#topSelling">Top Selling</a></li>
+          <li><a href="index.html#allProductsSection">All Products</a></li>
+          <li><a href="honey.html">Pure Honey Collection</a></li>
+          <li><a href="index.html#specialDeal">Today's Deal</a></li>
+          <li><a href="index.html#whyUs">Why Choose Us</a></li>
+          <li><a href="index.html#reviewsSection">Customer Reviews</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Our Guarantee</h4>
+        <ul>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> 100% Raw & Chemical Free</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> Certified Purity Standard</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> Cash On Delivery Available</a></li>
+          <li><a href="#"><i class="fa-solid fa-check text-red"></i> Safe & Pure Packaging</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact & Orders</h4>
+        <p><i class="fa-solid fa-location-dot text-red"></i> Aqua Market Phool Nagar, Bhai Pheru, Pakistan 55260</p>
+        <p><i class="fa-solid fa-phone text-red"></i> +92 307 0016113</p>
+        <p><i class="fa-solid fa-envelope text-red"></i> desitasteland@gmail.com</p>
+        <p><i class="fa-solid fa-clock text-red"></i> Mon - Sat: 9:00 AM - 9:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p>&copy; 2026 DESI TASTE LAND. All Rights Reserved.</p>
+        <div class="payment-badges">
+          <span><i class="fa-solid fa-money-bill-wave"></i> Cash On Delivery</span>
+          <span><i class="fa-solid fa-building-columns"></i> Bank Transfer</span>
+          <span><i class="fa-solid fa-mobile-screen-button"></i> JazzCash / EasyPaisa</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/923070016113?text=Hello%20Desi%20Taste%20Land,%20I%20want%20to%20order%20Honey!" target="_blank" class="floating-whatsapp" title="Order on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span class="whatsapp-text">Quick Order</span>
+  </a>
+
+  <!-- CART DRAWER -->
+  <div class="cart-drawer-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-bag-shopping text-red"></i> Shopping Cart (<span id="cartCountTitle">0</span>)</h3>
+      <button class="close-btn" id="closeCartBtn">&times;</button>
+    </div>
+    <div class="free-shipping-box">
+      <p id="shippingText">Add <strong>Rs. 5,000</strong> more to get FREE Delivery!</p>
+      <div class="shipping-progress-bg">
+        <div class="shipping-progress-fill" id="shippingProgressFill" style="width:0%;"></div>
+      </div>
+    </div>
+    <div class="cart-items-body" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+      <div class="cart-subtotal-row"><span>Subtotal:</span><strong id="cartSubtotal">Rs. 0</strong></div>
+      <div class="cart-subtotal-row"><span>Delivery Charges:</span><span id="deliveryChargeText">Rs. 250</span></div>
+      <div class="cart-total-row"><span>Total Amount:</span><strong class="text-red" id="cartGrandTotal">Rs. 0</strong></div>
+      <button class="btn btn-red btn-block shadow-red" id="checkoutBtn">
+        <span>Proceed to Checkout</span><i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- PRODUCT QUANTITY & VARIANT SELECTION MODAL -->
+  <div class="modal-overlay" id="productSelectionModal">
+    <div class="modal-card modal-card-md">
+      <button class="modal-close" id="closeProductModalBtn">&times;</button>
+      <div class="product-selection-modal-body" id="productModalContent">
+        <!-- Dynamically rendered by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-card modal-card-md">
+      <button class="modal-close" id="closeCheckoutBtn">&times;</button>
+      <div class="checkout-modal-body">
+        <div class="modal-header-block">
+          <span class="gold-badge"><i class="fa-solid fa-shield-halved"></i> Fast & Secure Checkout</span>
+          <h2>Complete Your Order</h2>
+          <p>Cash on Delivery across Pakistan</p>
+        </div>
+        <form id="checkoutForm" class="checkout-form">
+          <div class="form-group">
+            <label for="custName">Full Name *</label>
+            <input type="text" id="custName" placeholder="e.g. Ali Ahmed" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="custPhone">Phone / WhatsApp *</label>
+              <input type="tel" id="custPhone" placeholder="03070016113" required>
+            </div>
+            <div class="form-group">
+              <label for="custCity">City *</label>
+              <input type="text" id="custCity" placeholder="Lahore, Karachi..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="custAddress">Full Address *</label>
+            <textarea id="custAddress" rows="3" placeholder="House No, Street, Area..." required></textarea>
+          </div>
+          <div class="order-summary-box">
+            <h4>Order Summary</h4>
+            <div class="summary-line"><span>Items Total:</span><span id="checkoutItemsTotal">Rs. 0</span></div>
+            <div class="summary-line"><span>Shipping Fee:</span><span id="checkoutShippingFee">Rs. 250</span></div>
+            <div class="summary-line total-line"><span>Payable (COD):</span><strong id="checkoutFinalTotal" class="text-red">Rs. 0</strong></div>
+          </div>
+          <button type="submit" class="btn btn-red btn-block btn-lg shadow-red" id="submitOrderBtn">
+            <i class="fa-solid fa-circle-check"></i> Submit Order
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS MODAL -->
+  <div class="modal-overlay" id="orderSuccessModal">
+    <div class="modal-card text-center modal-card-sm">
+      <div class="success-icon-box"><i class="fa-solid fa-circle-check"></i></div>
+      <h2>ORDER SUBMITTED SUCCESSFULLY!</h2>
+      <p class="order-ref-text">Order Reference: <strong id="orderRefId" class="text-red">#DTL-89421</strong></p>
+      <p>Shukriya! Your order has been received. You can view or cancel your order within 24 hours in the <strong>My Orders</strong> drawer.</p>
+      <button class="btn btn-red btn-block" id="closeSuccessBtn">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="../app.js?v=4.1"></script>
+</body>
+</html>
