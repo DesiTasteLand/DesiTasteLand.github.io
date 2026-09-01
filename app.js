@@ -300,6 +300,7 @@ function resolveImagePath(imgSrc) {
 document.addEventListener('DOMContentLoaded', () => {
   initWelcomeSplash();
   initNavbarScrollBehavior();
+  initScrollUrlSpy();
   renderTopSellingProducts();
   renderAllProducts();
   renderDedicatedHoneyPage();
@@ -368,6 +369,70 @@ function initNavbarScrollBehavior() {
       ticking = true;
     }
   }, { passive: true });
+}
+
+// 5d. DYNAMIC SCROLL URL SPY (Updates URL as user scrolls through sections)
+function initScrollUrlSpy() {
+  if (document.getElementById('honeyPageGrid')) return;
+
+  const sections = [
+    { id: 'hero', path: '/' },
+    { id: 'topSelling', path: '/topselling' },
+    { id: 'allProductsSection', path: '/allproduct' },
+    { id: 'specialDeal', path: '/deal' },
+    { id: 'aboutSection', path: '/about' },
+    { id: 'reviewsSection', path: '/reviews' },
+    { id: 'contactSection', path: '/contact' }
+  ];
+
+  let currentActivePath = window.location.pathname || '/';
+  let isTicking = false;
+
+  function onScrollSpy() {
+    if (isTicking) return;
+    isTicking = true;
+    window.requestAnimationFrame(() => {
+      isTicking = false;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const viewportMid = scrollY + (window.innerHeight * 0.35);
+
+      let activeSection = sections[0];
+
+      for (let i = 0; i < sections.length; i++) {
+        const el = document.getElementById(sections[i].id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (viewportMid >= top && viewportMid < (top + height)) {
+            activeSection = sections[i];
+            break;
+          } else if (viewportMid >= top) {
+            activeSection = sections[i];
+          }
+        }
+      }
+
+      if (scrollY <= 90) {
+        activeSection = sections[0];
+      }
+
+      if (currentActivePath !== activeSection.path) {
+        currentActivePath = activeSection.path;
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', activeSection.path);
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScrollSpy, { passive: true });
+
+  if (window.location.hash) {
+    setTimeout(() => {
+      const target = document.querySelector(window.location.hash);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }, 350);
+  }
 }
 
 // 5d. SCROLL TO PRODUCT (Used by Hero Slider Banners)
