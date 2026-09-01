@@ -460,7 +460,7 @@ function renderCustomersMasterTable() {
     const regDate = c.registeredAt ? new Date(c.registeredAt).toLocaleDateString() : 'Active Buyer';
     const totalUserOrders = storeOrders.filter(o => (c.phone && o.phone && o.phone.replace(/\s+/g,'') === c.phone.replace(/\s+/g,'')) || (c.email && o.email && o.email.toLowerCase() === c.email.toLowerCase())).length;
     const isDisabled = c.status === 'disabled';
-    return '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-primary);">' + (c.name || 'U').charAt(0).toUpperCase() + '</div><strong>' + escapeHtml(c.name || 'Unknown') + '</strong></div></td><td>' + escapeHtml(c.phone || 'N/A') + '</td><td>' + escapeHtml(c.email || 'N/A') + '</td><td><small>' + regDate + '</small></td><td><strong class="text-gold">' + totalUserOrders + ' Orders</strong></td><td><span class="status-badge ' + (isDisabled ? 'disabled-user' : 'active-user') + '">' + (isDisabled ? 'Disabled' : 'Active') + '</span></td><td><button class="btn ' + (isDisabled ? 'btn-outline-forest' : 'btn-outline-red') + ' btn-xs" onclick="toggleCustomerStatus(\'' + escapeHtml(c.id) + '\')">' + (isDisabled ? 'Enable' : 'Disable') + '</button></td></tr>';
+    return '<tr><td><div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-primary);">' + (c.name || 'U').charAt(0).toUpperCase() + '</div><strong>' + escapeHtml(c.name || 'Unknown') + '</strong></div></td><td>' + escapeHtml(c.phone || 'N/A') + '</td><td>' + escapeHtml(c.email || 'N/A') + '</td><td><small>' + regDate + '</small></td><td><strong class="text-gold">' + totalUserOrders + ' Orders</strong></td><td><span class="status-badge ' + (isDisabled ? 'disabled-user' : 'active-user') + '">' + (isDisabled ? 'Disabled' : 'Active') + '</span></td><td><div style="display:flex;gap:6px;"><button class="btn ' + (isDisabled ? 'btn-outline-forest' : 'btn-outline-gold') + ' btn-xs" onclick="toggleCustomerStatus(\'' + escapeHtml(c.id) + '\')">' + (isDisabled ? 'Enable' : 'Disable') + '</button><button class="btn btn-outline-red btn-xs" onclick="deleteCustomerAccount(\'' + escapeHtml(c.id) + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></td></tr>';
   }).join('');
 }
 
@@ -469,8 +469,19 @@ function toggleCustomerStatus(userId) {
   if (!cust) return;
   cust.status = cust.status === 'disabled' ? 'active' : 'disabled';
   localStorage.setItem('dtl_registered_users', JSON.stringify(storeCustomers));
-  showToast('Customer <strong>' + cust.name + '</strong> is now <strong>' + cust.status.toUpperCase() + '</strong>');
+  showToast('Customer <strong>' + cust.name + '</strong> is now <strong>' + cust.status.toUpperCase() + '</strong> (Updated on main website)');
   renderCustomersMasterTable();
+}
+
+function deleteCustomerAccount(userId) {
+  const cust = storeCustomers.find(c => c.id === userId);
+  if (!cust) return;
+  if (!confirm(`Are you sure you want to permanently delete customer account "${cust.name}"? They will be removed from the store and logged out immediately.`)) return;
+
+  storeCustomers = storeCustomers.filter(c => c.id !== userId);
+  localStorage.setItem('dtl_registered_users', JSON.stringify(storeCustomers));
+  showToast('<i class="fa-solid fa-trash text-red"></i> Customer <strong>' + cust.name + '</strong> has been permanently removed.');
+  refreshStoreData();
 }
 
 // ========== PRODUCTS ==========
