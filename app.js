@@ -1313,11 +1313,11 @@ function initEventListeners() {
     const password = document.getElementById('loginPassword')?.value;
 
     if (!input) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Phone number ya email darj karein.');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Please enter your phone number or email.');
       return;
     }
     if (!password) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Password darj karein.');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Please enter your password.');
       return;
     }
 
@@ -1325,7 +1325,7 @@ function initEventListeners() {
     const isEmail = isValidEmail(input);
 
     if (!isPhone && !isEmail) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Durust Pakistani phone (03070016113) ya email darj karein.');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Please enter a valid Pakistani phone number (e.g. 03070016113) or email.');
       return;
     }
 
@@ -1339,7 +1339,7 @@ function initEventListeners() {
     });
 
     if (!matchedUser) {
-      showToast('<i class="fa-solid fa-circle-xmark text-red"></i> Account nahi mila! Pehle "Create New Account" karein.');
+      showToast('<i class="fa-solid fa-circle-xmark text-red"></i> Account not found! Please create a new account first.');
       setTimeout(() => {
         signupTabBtn?.click();
         if (isPhone) {
@@ -1354,12 +1354,12 @@ function initEventListeners() {
     }
 
     if (matchedUser.status === 'disabled') {
-      showToast('<i class="fa-solid fa-ban text-red"></i> Yeh account deactivate / block kar diya gaya hai. Barahe karam support se rabta karein.');
+      showToast('<i class="fa-solid fa-ban text-red"></i> This account has been deactivated. Please contact support.');
       return;
     }
 
     if (matchedUser.password && matchedUser.password !== password) {
-      showToast('<i class="fa-solid fa-triangle-exclamation text-red"></i> Ghalat password! Barahe karam sahi password darj karein.');
+      showToast('<i class="fa-solid fa-triangle-exclamation text-red"></i> Incorrect password! Please try again.');
       return;
     }
 
@@ -1378,39 +1378,38 @@ function initEventListeners() {
     const password = document.getElementById('signupPassword')?.value;
 
     if (!name || name.length < 2) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam apna pura naam darj karein.');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Please enter your full name.');
       return;
     }
 
     if (!isValidPakistaniPhone(phone)) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Ghalat number! Sahi Pakistani mobile number darj karein (e.g. 03070016113).');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Invalid phone number! Please enter a valid Pakistani mobile number (e.g. 03070016113).');
       return;
     }
 
     if (!isValidEmail(email)) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Barahe karam durust email address darj karein.');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Please enter a valid email address.');
       return;
     }
 
     if (!password || password.length < 6) {
-      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Password kam az kam 6 characters ka hona chahiye.');
+      showToast('<i class="fa-solid fa-circle-exclamation text-red"></i> Password must be at least 6 characters long.');
       return;
     }
 
     const normPhone = normalizePhone(phone);
     const normEmail = email.toLowerCase();
 
-    const alreadyRegistered = registeredUsers.find(u => 
-      (u.phone && normalizePhone(u.phone) === normPhone) ||
-      (u.email && u.email.toLowerCase() === normEmail)
-    );
+    const alreadyByPhone = registeredUsers.find(u => u.phone && normalizePhone(u.phone) === normPhone);
+    const alreadyByEmail = registeredUsers.find(u => u.email && u.email.toLowerCase() === normEmail);
 
-    if (alreadyRegistered) {
-      showToast('<i class="fa-solid fa-circle-info text-gold"></i> Yeh number/email pehle se registered hai! Barahe karam Login karein.');
+    if (alreadyByPhone || alreadyByEmail) {
+      const conflictField = alreadyByPhone ? 'phone number' : 'email address';
+      showToast(`<i class="fa-solid fa-circle-info text-gold"></i> This ${conflictField} is already registered! Please Login instead.`);
       setTimeout(() => {
         loginTabBtn?.click();
         const loginField = document.getElementById('loginEmail');
-        if (loginField) loginField.value = phone;
+        if (loginField) loginField.value = alreadyByPhone ? phone : email;
       }, 1500);
       return;
     }
@@ -1429,7 +1428,7 @@ function initEventListeners() {
     currentUser = { name: newUser.name, phone: newUser.phone, email: newUser.email };
     localStorage.setItem('dtl_user', JSON.stringify(currentUser));
     updateAuthUI();
-    showToast(`<i class="fa-solid fa-circle-check text-forest"></i> Account kamyabi se ban gaya! Khushamdeed ${newUser.name}!`);
+    showToast(`<i class="fa-solid fa-circle-check text-forest"></i> Account created successfully! Welcome, ${newUser.name}!`);
   });
 
   document.getElementById('logoutBtn')?.addEventListener('click', () => {
