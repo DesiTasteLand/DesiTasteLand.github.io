@@ -1,0 +1,101 @@
+{
+  "lastUpdated": 1788500000000,
+  "store": "DESI TASTE LAND",
+  "orders": [],
+  "customers": [],
+  "products": [],
+  "inventory": {
+    "prod-honey": { "stock": 50, "threshold": 8, "lastUpdated": 1788500000000 },
+    "prod-ghee": { "stock": 45, "threshold": 8, "lastUpdated": 1788500000000 },
+    "prod-buffalo-ghee": { "stock": 40, "threshold": 8, "lastUpdated": 1788500000000 },
+    "prod-olive": { "stock": 60, "threshold": 8, "lastUpdated": 1788500000000 },
+    "prod-imli": { "stock": 55, "threshold": 8, "lastUpdated": 1788500000000 },
+    "prod-talbina": { "stock": 35, "threshold": 8, "lastUpdated": 1788500000000 },
+    "prod-shilajit": { "stock": 25, "threshold": 5, "lastUpdated": 1788500000000 },
+    "prod-pickle": { "stock": 70, "threshold": 10, "lastUpdated": 1788500000000 },
+    "prod-tea": { "stock": 80, "threshold": 10, "lastUpdated": 1788500000000 },
+    "prod-saffron": { "stock": 30, "threshold": 5, "lastUpdated": 1788500000000 }
+  },
+  "coupons": [
+    {
+      "id": "cpn_welcome10",
+      "code": "WELCOME10",
+      "type": "percentage",
+      "value": 10,
+      "minOrder": 2000,
+      "usageLimit": 500,
+      "usedCount": 0,
+      "expiryDate": "2026-12-31",
+      "status": "active",
+      "createdAt": 1788500000000
+    },
+    {
+      "id": "cpn_desi500",
+      "code": "DESI500",
+      "type": "fixed",
+      "value": 500,
+      "minOrder": 5000,
+      "usageLimit": 200,
+      "usedCount": 0,
+      "expiryDate": "2026-12-31",
+      "status": "active",
+      "createdAt": 1788500000000
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev_seed_1",
+      "name": "Mian Tariq",
+      "city": "Lahore",
+      "comment": "Alhamdulillah 100% pure Bilona Cow Desi Ghee! Khushboo bilkul gaanv jaisi hai. Zabardast quality!",
+      "rating": 5,
+      "product": "COW DESI GHEE",
+      "date": "2026-08-20",
+      "status": "approved",
+      "featured": true
+    },
+    {
+      "id": "rev_seed_2",
+      "name": "Dr. Ayesha Malik",
+      "city": "Islamabad",
+      "comment": "Wild Sidr Honey is completely raw and genuine. Packing and delivery standard is unmatched.",
+      "rating": 5,
+      "product": "PURE HONEY (Sidr)",
+      "date": "2026-08-22",
+      "status": "approved",
+      "featured": true
+    },
+    {
+      "id": "rev_seed_3",
+      "name": "Kamran Siddiqui",
+      "city": "Karachi",
+      "comment": "Kashmiri Mongra Saffron color and aroma is 100% royal. Very satisfied with Desi Taste Land!",
+      "rating": 5,
+      "product": "KASHMIRI SAFFRON",
+      "date": "2026-08-25",
+      "status": "approved",
+      "featured": false
+    }
+  ],
+  "siteContent": {
+    "noticeText": "Free Nationwide Delivery on all orders above Rs. 5,000 via Cash on Delivery!",
+    "heroHeadline": "100% PURE & ORGANIC DELICACIES",
+    "heroSubtitle": "Sourced directly from pristine floral fields and traditional churns across Pakistan.",
+    "phone": "+92 307 0016113",
+    "email": "desitasteland@gmail.com",
+    "address": "Aqua Market Phool Nagar, Bhai Pheru, Pakistan 55260",
+    "hours": "Mon - Sat: 9:00 AM - 9:00 PM",
+    "whatsapp": "https://wa.me/923070016113",
+    "facebook": "https://www.facebook.com/profile.php?id=61584915339912",
+    "instagram": "https://www.instagram.com/desitasteland"
+  },
+  "settings": {
+    "storeName": "DESI TASTE LAND",
+    "storePhone": "+92 307 0016113",
+    "storeEmail": "desitasteland@gmail.com",
+    "notifyEmail": "zaibbabar54@gmail.com",
+    "storeAddress": "Aqua Market Phool Nagar, Bhai Pheru, Pakistan 55260",
+    "shippingFee": 250,
+    "freeShippingThreshold": 5000
+  }
+}
