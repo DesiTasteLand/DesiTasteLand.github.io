@@ -1444,6 +1444,36 @@ function initEventListeners() {
     const city = document.getElementById('revCity').value;
     const comment = document.getElementById('revComment').value;
     fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ Type: 'REVIEW', Customer_Name: name, City: city, Review_Text: comment }) }).catch(() => {});
+    
+    // Sync review to admin management
+    try {
+      const revs = JSON.parse(localStorage.getItem('dtl_reviews') || '[]');
+      revs.unshift({
+        id: 'rev_' + Date.now(),
+        name: name,
+        city: city,
+        comment: comment,
+        rating: 5,
+        product: 'Customer Review',
+        date: new Date().toISOString().slice(0, 10),
+        status: 'pending',
+        featured: false
+      });
+      localStorage.setItem('dtl_reviews', JSON.stringify(revs));
+
+      const notifs = JSON.parse(localStorage.getItem('dtl_notifications') || '[]');
+      notifs.unshift({
+        id: 'ntf_' + Date.now(),
+        timestamp: Date.now(),
+        type: 'REVIEW',
+        title: 'New Customer Review',
+        message: `${name} from ${city} submitted a review awaiting approval.`,
+        linkView: 'reviews',
+        read: false
+      });
+      localStorage.setItem('dtl_notifications', JSON.stringify(notifs));
+    } catch(err) {}
+
     const grid = document.getElementById('reviewsGrid');
     if (grid) {
       const card = document.createElement('div');
@@ -1484,9 +1514,47 @@ function initEventListeners() {
     const grandTotal = subtotal + shipping;
     const itemsSummary = cart.map(i => `${i.name} (${i.qty}x) = Rs.${i.price * i.qty}`).join(', ');
     fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ _subject: `New Order ${refId} - DESI TASTE LAND`, Order_Reference: refId, Customer_Name: name, Customer_Phone: phone, Customer_City: city, Shipping_Address: address, Items_Ordered: itemsSummary, Total_Amount_PKR: grandTotal }) }).catch(() => {});
-    const newOrder = { id: refId, timestamp: Date.now(), name, phone, address: `${address}, ${city}`, items: [...cart], total: grandTotal, status: 'Processing' };
+    const newOrder = {
+      id: refId,
+      timestamp: Date.now(),
+      name,
+      phone,
+      address: `${address}, ${city}`,
+      items: [...cart],
+      total: grandTotal,
+      status: 'Pending',
+      statusHistory: [{ status: 'Pending', timestamp: Date.now(), by: 'Customer Checkout', note: 'Order placed online' }]
+    };
     myOrders.unshift(newOrder);
     localStorage.setItem('dtl_orders', JSON.stringify(myOrders));
+
+    // Admin notifications & activity log sync
+    try {
+      const notifs = JSON.parse(localStorage.getItem('dtl_notifications') || '[]');
+      notifs.unshift({
+        id: 'ntf_' + Date.now(),
+        timestamp: Date.now(),
+        type: 'ORDER',
+        title: `New Online Order: ${refId}`,
+        message: `${name} placed an order for Rs. ${grandTotal.toLocaleString()}`,
+        linkView: 'orders',
+        read: false
+      });
+      localStorage.setItem('dtl_notifications', JSON.stringify(notifs));
+
+      const acts = JSON.parse(localStorage.getItem('dtl_activity_logs') || '[]');
+      acts.unshift({
+        id: 'act_' + Date.now(),
+        timestamp: Date.now(),
+        adminName: 'Online Customer',
+        adminRole: 'Customer',
+        category: 'ORDERS',
+        action: 'Order Placed',
+        details: `Order ${refId} submitted by ${name} (Rs. ${grandTotal.toLocaleString()})`
+      });
+      localStorage.setItem('dtl_activity_logs', JSON.stringify(acts));
+    } catch(err) {}
+
     document.getElementById('orderRefId').textContent = refId;
     closeCheckoutModal();
     cart = []; saveCart(); updateCartUI();
