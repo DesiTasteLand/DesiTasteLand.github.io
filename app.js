@@ -301,6 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWelcomeSplash();
   initNavbarScrollBehavior();
   initScrollUrlSpy();
+  syncStoreDataFromCloud();
   renderTopSellingProducts();
   renderAllProducts();
   renderDedicatedHoneyPage();
@@ -629,21 +630,111 @@ function renderTopSellingProducts() {
   }).join('');
 }
 
-// 9. ALL PRODUCTS - Top-left view icon, Cart icon next to BUY NOW
+// 8b. DYNAMIC STORE PRODUCTS (Merges Admin edits, custom products, and stock status)
+function getLiveProducts() {
+  const custom = JSON.parse(localStorage.getItem('dtl_custom_products') || '[]');
+  const inventory = JSON.parse(localStorage.getItem('dtl_inventory') || '{}');
+
+  const products = ALL_PRODUCTS.map(orig => {
+    const p = { ...orig, variants: orig.variants ? orig.variants.map(v => ({ ...v })) : [] };
+    const edited = custom.find(c => c.id === p.id);
+    if (edited) {
+      if (edited.name) p.name = edited.name;
+      if (edited.urduName) p.urduName = edited.urduName;
+      if (edited.image) p.image = edited.image;
+      if (edited.price && p.variants && p.variants.length > 0) {
+        p.variants[0].price = edited.price;
+      }
+      if (edited.weight && p.variants && p.variants.length > 0) {
+        p.variants[0].weight = edited.weight;
+      }
+      if (edited.stock) p.stock = edited.stock;
+    }
+    if (inventory[p.id] && inventory[p.id].stock === 0) {
+      p.stock = 'out_of_stock';
+    }
+    return p;
+  });
+
+  // Append new custom products created from Admin
+  custom.forEach(c => {
+    if (!products.some(p => p.id === c.id)) {
+      const invStock = inventory[c.id] ? inventory[c.id].stock : 50;
+      products.push({
+        id: c.id,
+        name: c.name,
+        urduName: c.urduName || '',
+        image: c.image || 'assets/images/prod_honey_new.png',
+        rating: 5.0,
+        reviewsCount: 25,
+        stock: (invStock === 0 || c.stock === 'out_of_stock') ? 'out_of_stock' : 'in_stock',
+        variants: [{ weight: c.weight || '500g', price: c.price || 1000, isDefault: true }],
+        selectedWeightIndex: 0
+      });
+    }
+  });
+
+  return products;
+}
+
+// Cloud Synchronization: Loads master store data on any device
+async function syncStoreDataFromCloud() {
+  try {
+    const isSub = window.location.pathname.includes('/allproduct') || window.location.pathname.includes('/honeycollection') || window.location.pathname.includes('/topselling') || window.location.pathname.includes('/deal') || window.location.pathname.includes('/about') || window.location.pathname.includes('/contact') || window.location.pathname.includes('/reviews') || window.location.pathname.includes('/product');
+    const path = isSub ? '../data/store_data.json?v=' + Date.now() : 'data/store_data.json?v=' + Date.now();
+    const res = await fetch(path);
+    if (!res.ok) return;
+    const cloud = await res.json();
+    if (!cloud || !cloud.lastUpdated) return;
+
+    const localLast = parseInt(localStorage.getItem('dtl_last_cloud_sync') || '0', 10);
+    const hasLocalProducts = localStorage.getItem('dtl_custom_products');
+
+    if (!hasLocalProducts || cloud.lastUpdated > localLast) {
+      if (cloud.products && Array.isArray(cloud.products)) {
+        localStorage.setItem('dtl_custom_products', JSON.stringify(cloud.products));
+      }
+      if (cloud.inventory) {
+        localStorage.setItem('dtl_inventory', JSON.stringify(cloud.inventory));
+      }
+      if (cloud.coupons) {
+        localStorage.setItem('dtl_coupons', JSON.stringify(cloud.coupons));
+      }
+      if (cloud.reviews) {
+        localStorage.setItem('dtl_reviews', JSON.stringify(cloud.reviews));
+      }
+      if (cloud.siteContent) {
+        localStorage.setItem('dtl_site_content', JSON.stringify(cloud.siteContent));
+      }
+      if (cloud.settings) {
+        localStorage.setItem('dtl_store_settings', JSON.stringify(cloud.settings));
+      }
+      localStorage.setItem('dtl_last_cloud_sync', cloud.lastUpdated.toString());
+
+      // Re-render UI with new product data
+      renderTopSellingProducts();
+      renderAllProducts();
+    }
+  } catch(e) {}
+}
+
+// 9. ALL PRODUCTS - Top-left view icon, Cart icon next to BUY NOW (Synchronized with Admin)
 function renderAllProducts() {
   const container = document.getElementById('allProductsGrid');
   if (!container) return;
 
+  const liveList = getLiveProducts();
   let html = '';
-  ALL_PRODUCTS.forEach((product) => {
-    const activeVar = product.variants[product.selectedWeightIndex || 0];
-    const priceDisplay = product.variants.length > 1 
+  liveList.forEach((product) => {
+    const activeVar = (product.variants && product.variants[product.selectedWeightIndex || 0]) || (product.variants && product.variants[0]) || { weight: '500g', price: 1000 };
+    const isOut = product.stock === 'out_of_stock';
+    const priceDisplay = (product.variants && product.variants.length > 1)
       ? `Rs. ${product.variants[0].price.toLocaleString()}`
       : `Rs. ${activeVar.price.toLocaleString()}`;
 
     html += `
       <div class="product-card" id="allcard-${product.id}">
-        <div class="product-img-box">
+        <div class="product-img-box" style="position:relative;">
           <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Product Image">
             <i class="fa-solid fa-eye"></i>
           </button>
@@ -651,6 +742,7 @@ function renderAllProducts() {
             <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
           <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
+          ${isOut ? '<span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#D32F2F;color:#fff;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:800;letter-spacing:0.5px;box-shadow:0 4px 10px rgba(0,0,0,0.5);">OUT OF STOCK</span>' : ''}
         </div>
         <div class="product-content">
           <h3 class="product-title">
@@ -667,14 +759,14 @@ function renderAllProducts() {
           </div>
           <div class="price-row">
             <span class="price-current" id="allprice-${product.id}">${priceDisplay}</span>
-            ${product.variants.length > 1 ? `<span style="font-size:0.78rem;color:var(--text-muted);font-weight:700;">(${product.variants.length} Sizes)</span>` : ''}
+            ${(product.variants && product.variants.length > 1) ? `<span style="font-size:0.78rem;color:var(--text-muted);font-weight:700;">(${product.variants.length} Sizes)</span>` : ''}
           </div>
           <div class="product-card-actions">
-            <button class="btn btn-cart-action" onclick="${product.isHoney ? "window.location.href='honeycollection/'" : `addProductToCartDirect('${product.id}')`}" title="Add to Cart">
+            <button class="btn btn-cart-action" onclick="${isOut ? "showToast('Item is currently out of stock')" : (product.isHoney ? "window.location.href='honeycollection/'" : `addProductToCartDirect('${product.id}')`)}" title="${isOut ? 'Out of Stock' : 'Add to Cart'}" ${isOut ? 'style="opacity:0.5;cursor:not-allowed;"' : ''}>
               <i class="fa-solid fa-cart-shopping"></i>
             </button>
-            <button class="btn btn-red buy-now-btn" onclick="${product.isHoney ? "window.location.href='honeycollection/'" : `openProductSelectionModal('${product.id}')`}">
-              <i class="fa-solid fa-bag-shopping"></i> BUY NOW
+            <button class="btn btn-red buy-now-btn" onclick="${isOut ? "showToast('Item is currently out of stock')" : (product.isHoney ? "window.location.href='honeycollection/'" : `openProductSelectionModal('${product.id}')`)}" ${isOut ? 'style="opacity:0.5;cursor:not-allowed;"' : ''}>
+              <i class="fa-solid fa-bag-shopping"></i> ${isOut ? 'OUT OF STOCK' : 'BUY NOW'}
             </button>
           </div>
         </div>
@@ -686,7 +778,7 @@ function renderAllProducts() {
 }
 
 function addProductToCartDirect(productId) {
-  let product = ALL_PRODUCTS.find(p => p.id === productId);
+  let product = getLiveProducts().find(p => p.id === productId);
   if (!product) {
     product = HONEY_CATEGORIES.find(c => c.id === productId);
   }
@@ -866,7 +958,7 @@ function closeWishlistDrawer() {
 
 // 10. PRODUCT VARIANT & QUANTITY SELECTION MODAL
 function openProductSelectionModal(productId) {
-  let product = ALL_PRODUCTS.find(p => p.id === productId);
+  let product = getLiveProducts().find(p => p.id === productId);
   if (!product) {
     product = HONEY_CATEGORIES.find(c => c.id === productId);
   }
