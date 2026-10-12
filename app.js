@@ -312,6 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroTouchSlider();
   initScrollRevealObserver();
   initEventListeners();
+  initProductDetailPage();
 });
 
 // 5b. WELCOME SPLASH SCREEN (Shows only once per visit)
@@ -605,8 +606,11 @@ function renderTopSellingProducts() {
     const targetProdId = product.id === 'top-ghee' ? 'prod-ghee' : product.id === 'top-olive' ? 'prod-olive' : product.id === 'top-honey' ? 'prod-honey' : product.id;
     return `
       <div class="product-card ts-card" id="card-${product.id}">
-        <div class="product-img-box ts-img-box">
-          <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy">
+        <div class="product-img-box ts-img-box" style="position:relative;">
+          <button class="card-view-btn" onclick="openProductQuickView('${targetProdId}')" title="Quick View Product Details">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy" style="cursor:pointer;" onclick="openProductQuickView('${targetProdId}')">
         </div>
         <div class="product-content ts-content">
           <h3 class="product-title">
@@ -823,13 +827,18 @@ function renderDedicatedHoneyPage() {
       <div class="honey-page-card" id="hpcard-${category.id}">
         <span class="honey-page-badge">${category.tag}</span>
         <div class="honey-page-img-box">
+          <button class="card-view-btn" onclick="openProductQuickView('${category.id}')" title="Quick View Product Details">
+            <i class="fa-solid fa-eye"></i>
+          </button>
           <button class="fav-btn ${isFavorite(category.id) ? 'active' : ''}" onclick="toggleFavorite('${category.id}', event)" title="Add to Favorites">
             <i class="${isFavorite(category.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
-          <img src="${resolveImagePath(category.image)}" alt="${category.name}" loading="lazy">
+          <a href="../product/?id=${category.id}" style="display:block;height:100%;text-decoration:none;">
+            <img src="${resolveImagePath(category.image)}" alt="${category.name}" loading="lazy">
+          </a>
         </div>
         <div class="honey-page-body">
-          <h3 class="honey-page-title">
+          <h3 class="honey-page-title" style="cursor:pointer;" onclick="openProductQuickView('${category.id}')">
             <span class="product-title-en">${category.name}</span>
             <span class="product-title-ur">${category.urduName || ''}</span>
           </h3>
@@ -1298,46 +1307,21 @@ function closeOrdersDrawer() { document.getElementById('ordersDrawer')?.classLis
 function closeQuickView() { document.getElementById('quickViewModal')?.classList.remove('active'); }
 
 function openProductQuickView(productId) {
-  let product = ALL_PRODUCTS.find(p => p.id === productId);
-  if (!product) product = HONEY_CATEGORIES.find(c => c.id === productId);
-  if (!product) {
-    if (productId === 'top-honey') product = ALL_PRODUCTS.find(p => p.id === 'prod-honey');
-    if (productId === 'top-ghee') product = ALL_PRODUCTS.find(p => p.id === 'prod-ghee');
-    if (productId === 'top-olive') product = ALL_PRODUCTS.find(p => p.id === 'prod-olive');
+  let targetId = productId;
+  if (productId === 'prod-honey' || productId === 'top-honey') {
+    targetId = 'honey-wild-big';
   }
-  if (!product) return;
-
-  const content = document.getElementById('quickViewContent');
-  if (!content) return;
-
-  content.innerHTML = `
-    <div class="qv-modal-compact">
-      <div class="qv-modal-header text-center">
-        <h3 class="qv-title">
-          <span class="qv-title-en">${product.name}</span>
-          ${product.urduName ? `<span class="qv-title-ur">${product.urduName}</span>` : ''}
-        </h3>
-      </div>
-      <div class="qv-modal-image-box">
-        <img src="${resolveImagePath(product.image)}" alt="${product.name}" class="qv-modal-main-img">
-      </div>
-      ${product.variants && product.variants.length > 0 ? `
-        <div class="qv-variants-wrap">
-          <label class="qv-variants-label"><i class="fa-solid fa-weight-scale text-red"></i> Available Sizes:</label>
-          <div class="qv-variants-chips">
-            ${product.variants.map(v => `
-              <div class="qv-variant-chip">
-                <span class="qv-v-weight">${v.weight}</span>
-                <span class="qv-v-price">Rs. ${v.price.toLocaleString()}</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      ` : ''}
-    </div>
-  `;
-
-  document.getElementById('quickViewModal')?.classList.add('active');
+  const pathname = window.location.pathname || '';
+  const isSub = pathname.includes('/honeycollection') || 
+                pathname.includes('/allproduct') || 
+                pathname.includes('/topselling') || 
+                pathname.includes('/deal') || 
+                pathname.includes('/about') || 
+                pathname.includes('/contact') || 
+                pathname.includes('/reviews') || 
+                pathname.includes('/product');
+  const targetUrl = isSub ? `../product/?id=${targetId}` : `product/?id=${targetId}`;
+  window.location.href = targetUrl;
 }
 
 function openCheckoutModal() {
@@ -1665,4 +1649,593 @@ function showToast(message) {
   toast.innerHTML = message;
   container.appendChild(toast);
   setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(20px)'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+// ==========================================================================
+// 16. DEDICATED PRODUCT DETAIL PAGE (PDP) SYSTEM
+// ==========================================================================
+
+const PRODUCT_DETAILS_DATA = {
+  'honey-wild-big': {
+    id: 'honey-wild-big',
+    name: 'Wild Honey Big Bee – 100% Pure & Lab-Tested',
+    urduName: 'جنگلی شہد بڑی مکھی',
+    brand: 'Thal Natural',
+    image: 'assets/images/honey_wild_big.jpg',
+    rating: 4.84,
+    reviewsCount: 179,
+    starsCount: { 5: 158, 4: 17, 3: 2, 2: 0, 1: 2 },
+    variants: [
+      { weight: '250g', price: 700, originalPrice: 900 },
+      { weight: '500g', price: 1400, originalPrice: 1700, isDefault: true },
+      { weight: '1kg', price: 2800, originalPrice: 3300 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Wild Honey Big Bee – 100% Pure & Lab-Tested (جنگلی شہد بڑی مکھی)</h2>
+      <p>Experience the rich taste and natural goodness of <strong>100% Pure Wild Honey Big Bee by Thal Natural</strong>. Sourced from wild beehives and lab-tested for quality, this honey offers distinctive flavor, a rich aroma, and natural sweetness in every spoonful.</p>
+      
+      <h2>Benefits of Wild Honey Big Bee</h2>
+      <ul>
+        <li><strong>100% Pure Honey:</strong> Natural sweetness without added refined sugar.</li>
+        <li><strong>Lab-Tested Quality:</strong> Tested to help ensure quality and purity.</li>
+        <li><strong>Natural Energy:</strong> Contains naturally occurring sugars that provide energy.</li>
+        <li><strong>Rich Taste & Aroma:</strong> Enjoy its distinctive flavor in your daily routine.</li>
+        <li><strong>Versatile Use:</strong> Perfect for milk, tea, breakfast, desserts, and everyday recipes.</li>
+      </ul>
+      
+      <h2>How to Use Wild Honey?</h2>
+      <p>Enjoy a spoonful on its own, mix it into warm milk or tea, or drizzle it over yogurt, toast, and breakfast meals. Store in a cool, dry place and keep the lid tightly closed.</p>
+      
+      <h2>Why Choose Thal Natural?</h2>
+      <p>At <strong>Thal Natural</strong>, we bring you 100% pure, lab-tested Wild Honey Big Bee with a focus on quality, authenticity, and natural taste. Add the goodness of wild honey to your daily routine and enjoy its distinctive flavor with confidence.</p>
+      
+      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
+    `,
+    reviews: [
+      { name: "Muhammad Rashid", city: "Lahore", date: "2026-09-18", rating: 5, comment: "MashAllah bohot lazeez aur khalis honey hai. Taste aur aroma se hi pata chal jata hai k jungle ki baddi makhi ka khalis shahad hai. Highly recommended!" },
+      { name: "Hafiz Usman", city: "Faisalabad", date: "2026-09-14", rating: 5, comment: "100% pure and lab-tested quality. Packing bohot zabardast thi. Subah neem garam doodh mein rozana use kar raha hoon, energy level behtar rehta hai." },
+      { name: "Dr. Bilal Aslam", city: "Islamabad", date: "2026-09-10", rating: 5, comment: "Thal Natural ki quality per poora aetamad hai. Original wild big bee honey in Pakistan. Delivery bhi 2 din mein mil gayi." },
+      { name: "Zubair Ahmed", city: "Rawalpindi", date: "2026-09-02", rating: 5, comment: "Pure organic taste, bilkul natural ghana shahad. Bachon ko bhi pasand aya. Zaroor dobara order karunga." },
+      { name: "Tariq Mehmood", city: "Multan", date: "2026-08-28", rating: 5, comment: "Thal Natural ki packaging aur quality standard unmatchable hai. Asal jungli shahad." }
+    ]
+  },
+  'honey-wild-small': {
+    id: 'honey-wild-small',
+    name: 'Wild Honey Small Bee – 100% Pure & Lab-Tested',
+    urduName: 'جنگلی شہد چھوٹی مکھی',
+    brand: 'Thal Natural',
+    image: 'assets/images/honey_wild_small.jpg',
+    rating: 4.92,
+    reviewsCount: 215,
+    starsCount: { 5: 198, 4: 14, 3: 2, 2: 0, 1: 1 },
+    variants: [
+      { weight: '250g', price: 1400, originalPrice: 1750 },
+      { weight: '500g', price: 2700, originalPrice: 3300, isDefault: true },
+      { weight: '1kg', price: 5400, originalPrice: 6200 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Wild Honey Small Bee – 100% Pure & Lab-Tested (جنگلی شہد چھوٹی مکھی)</h2>
+      <p>Discover the natural taste of <strong>100% Pure Wild Honey Small Bee by Thal Natural</strong>. Sourced from wild beehives and lab-tested for quality and purity, this honey offers a distinctive flavor, natural sweetness, and a unique taste of wild honey.</p>
+      
+      <h2>Benefits of Wild Honey Small Bee</h2>
+      <ul>
+        <li><strong>100% Pure Honey:</strong> Enjoy natural sweetness without added refined sugar.</li>
+        <li><strong>Lab-Tested Quality:</strong> Quality and purity tested for greater confidence.</li>
+        <li><strong>Natural Energy:</strong> Contains naturally occurring sugars to help fuel your day.</li>
+        <li><strong>Distinctive Flavor:</strong> Experience the unique taste and aroma of wild honey.</li>
+        <li><strong>Everyday Versatility:</strong> Perfect for milk, tea, yogurt, breakfast, and your favorite recipes.</li>
+      </ul>
+      
+      <h2>How to Use Wild Honey?</h2>
+      <p>Enjoy a spoonful on its own, mix it into warm milk or tea, or drizzle it over breakfast and desserts. Store in a cool, dry place and keep the lid tightly closed.</p>
+      
+      <h2>Why Choose Thal Natural?</h2>
+      <p>At <strong>Thal Natural</strong>, we are committed to offering 100% pure, lab-tested wild honey with a focus on quality, authenticity, and natural taste. Bring home Wild Honey Small Bee and enjoy the distinctive sweetness of nature in your daily routine.</p>
+      
+      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
+    `,
+    reviews: [
+      { name: "Sikandar Hayat", city: "Islamabad", date: "2026-09-20", rating: 5, comment: "Chhoti makhi ka jungli shahad bohot naayab hota hai aur Thal Natural ne bilkul shafaf aur genuine cheez di hai. Shandar zaaiqa!" },
+      { name: "Shahid Nadeem", city: "Lahore", date: "2026-09-17", rating: 5, comment: "Outstanding purity! Khansi aur immunity k liye best medicine hai. Purity lab tested waqai 100% feel hoti hai." },
+      { name: "Abdul Wahab", city: "Peshawar", date: "2026-09-12", rating: 5, comment: "Top class honey. Bottle packing bhi food-grade glass jar hai. Bohat maza aya, shukriya Thal Natural." },
+      { name: "Qasim Ali", city: "Karachi", date: "2026-09-05", rating: 5, comment: "Rare wild small bee honey at very genuine price. Will order 1kg next time inshAllah." }
+    ]
+  },
+  'honey-farmy-big': {
+    id: 'honey-farmy-big',
+    name: 'Farmy Honey Big Bee – 100% Pure & Lab-Tested',
+    urduName: 'فارمی شہد بڑی مکھی',
+    brand: 'Thal Natural',
+    image: 'assets/images/honey_farmy_big.jpg',
+    rating: 4.86,
+    reviewsCount: 145,
+    starsCount: { 5: 128, 4: 14, 3: 2, 2: 0, 1: 1 },
+    variants: [
+      { weight: '250g', price: 500, originalPrice: 650 },
+      { weight: '500g', price: 1000, originalPrice: 1250, isDefault: true },
+      { weight: '1kg', price: 1800, originalPrice: 2200 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Farmy Honey Big Bee – 100% Pure & Lab-Tested (فارمی شہد بڑی مکھی)</h2>
+      <p>Experience the natural sweetness of <strong>100% Pure Farmy Honey Big Bee by Thal Natural</strong>. Produced by farm-raised honeybees that collect nectar from flowering plants, this honey offers a naturally sweet taste and rich flavor. Lab-tested for quality and purity, it is a delightful addition to your everyday routine.</p>
+      
+      <h2>Benefits of Farmy Honey Big Bee</h2>
+      <ul>
+        <li><strong>100% Pure Honey:</strong> Enjoy its natural sweetness without added refined sugar.</li>
+        <li><strong>Lab-Tested Quality:</strong> Tested for quality and purity for greater confidence.</li>
+        <li><strong>Natural Energy:</strong> Contains naturally occurring sugars to help fuel your day.</li>
+        <li><strong>Rich Natural Flavor:</strong> A delicious sweetener for everyday enjoyment.</li>
+        <li><strong>Versatile Use:</strong> Perfect for tea, milk, yogurt, breakfast, desserts, and recipes.</li>
+      </ul>
+      
+      <h2>How to Use Farmy Honey?</h2>
+      <p>Enjoy a spoonful on its own, stir it into your favorite warm drink, drizzle it over toast or yogurt, or use it as a natural sweetener in your recipes. Store in a cool, dry place with the lid tightly closed.</p>
+      
+      <h2>Why Choose Thal Natural?</h2>
+      <p>At <strong>Thal Natural</strong>, we focus on quality, purity, and authentic taste. Our Farmy Honey Big Bee is lab-tested for quality and purity, bringing natural sweetness to your table for everyday enjoyment.</p>
+      
+      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
+    `,
+    reviews: [
+      { name: "Noman Farooq", city: "Gujranwala", date: "2026-09-19", rating: 5, comment: "Daily use chai aur toast k liye behtareen honey hai. Price bhi bohot munasib hai aur purity bilkul clear hai." },
+      { name: "Farhan Saeed", city: "Lahore", date: "2026-09-15", rating: 5, comment: "Zero sugar adulteration guarantee 100% sach hai. Bohat saaf suthra aur fresh shahad hai." },
+      { name: "Mrs. Rehan", city: "Sialkot", date: "2026-09-08", rating: 5, comment: "Kids love it on pancakes and warm milk. Safe, pure and sweet. Excellent service by Thal Natural." }
+    ]
+  },
+  'honey-farmy-small': {
+    id: 'honey-farmy-small',
+    name: 'Farmy Honey Small Bee – 100% Pure & Lab-Tested',
+    urduName: 'فارمی شہد چھوٹی مکھی',
+    brand: 'Thal Natural',
+    image: 'assets/images/honey_farmy_small.jpg',
+    rating: 4.89,
+    reviewsCount: 162,
+    starsCount: { 5: 146, 4: 13, 3: 2, 2: 0, 1: 1 },
+    variants: [
+      { weight: '250g', price: 1000, originalPrice: 1250 },
+      { weight: '500g', price: 2000, originalPrice: 2450, isDefault: true },
+      { weight: '1kg', price: 4000, originalPrice: 4800 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Farmy Honey Small Bee – 100% Pure & Lab-Tested (فارمی شہد چھوٹی مکھی)</h2>
+      <p>Discover the natural sweetness of <strong>100% Pure Farmy Honey Small Bee by Thal Natural</strong>. Produced by farm-raised small honeybees, this honey offers a distinctive natural flavor and sweetness. Lab-tested for quality and purity, it is a delicious addition to your daily routine.</p>
+      
+      <h2>Benefits of Farmy Honey Small Bee</h2>
+      <ul>
+        <li><strong>100% Pure Honey:</strong> Enjoy natural sweetness without added refined sugar.</li>
+        <li><strong>Lab-Tested Quality:</strong> Tested for quality and purity.</li>
+        <li><strong>Natural Energy:</strong> Contains naturally occurring sugars to help fuel your day.</li>
+        <li><strong>Distinctive Taste:</strong> Enjoy the unique flavor of farm-produced honey.</li>
+        <li><strong>Versatile Use:</strong> Perfect for tea, milk, yogurt, breakfast, desserts, and everyday recipes.</li>
+      </ul>
+      
+      <h2>How to Use Farmy Honey?</h2>
+      <p>Add a spoonful to your favorite drink, drizzle it over toast or yogurt, or use it as a natural sweetener in your recipes. Store in a cool, dry place and keep the lid tightly closed.</p>
+      
+      <h2>Why Choose Thal Natural?</h2>
+      <p>At <strong>Thal Natural</strong>, we value quality, purity, and customer trust. Our Farmy Honey Small Bee is lab-tested for quality and purity, offering natural sweetness for your everyday enjoyment.</p>
+      
+      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
+    `,
+    reviews: [
+      { name: "Dr. Hamza Tariq", city: "Karachi", date: "2026-09-22", rating: 5, comment: "Farmy small bee honey has such a light amber color and delicate floral taste. Truly impressed by Thal Natural's authenticity!" },
+      { name: "Imran Khan", city: "Rawalpindi", date: "2026-09-16", rating: 5, comment: "Shandar product. Original honey with nice packing. Quick delivery via COD." },
+      { name: "Waqas Butt", city: "Gujrat", date: "2026-09-11", rating: 5, comment: "Purity guaranteed. Meri family ko bohot pasand aya. Regular customer ban chuka hoon." }
+    ]
+  }
+};
+
+let pdpCurrentProduct = null;
+let pdpSelectedVariantIdx = 0;
+let pdpCurrentQty = 1;
+let pdpSelectedReviewStars = 5;
+
+function initProductDetailPage() {
+  const heroContainer = document.getElementById('pdpHeroSection');
+  if (!heroContainer) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  let prodId = urlParams.get('id');
+  if (!prodId || prodId === 'prod-honey' || prodId === 'top-honey') {
+    prodId = 'honey-wild-big';
+  }
+
+  let prodData = PRODUCT_DETAILS_DATA[prodId];
+  if (!prodData) {
+    let found = HONEY_CATEGORIES.find(c => c.id === prodId) || getLiveProducts().find(p => p.id === prodId);
+    if (found) {
+      prodData = {
+        id: found.id,
+        name: found.name,
+        urduName: found.urduName || '',
+        brand: 'DESI TASTE LAND',
+        image: found.image,
+        rating: found.rating || 5.0,
+        reviewsCount: found.reviewsCount || 150,
+        starsCount: { 5: 130, 4: 15, 3: 3, 2: 1, 1: 1 },
+        variants: found.variants ? found.variants.map((v, i) => ({
+          weight: v.weight,
+          price: v.price,
+          originalPrice: Math.round(v.price * 1.25),
+          isDefault: i === 0
+        })) : [{ weight: 'Standard', price: 1000, originalPrice: 1250, isDefault: true }],
+        selectedVariantIndex: 0,
+        aboutHtml: `
+          <h2>${found.name} – 100% Pure & Authentic ${found.urduName ? `(${found.urduName})` : ''}</h2>
+          <p>${found.description || '100% pure organic desi goodness crafted with utmost care and quality standards.'}</p>
+          <h2>Key Benefits</h2>
+          <ul>
+            <li><strong>100% Pure & Natural:</strong> Prepared with traditional organic authenticity.</li>
+            <li><strong>Premium Quality:</strong> Thoroughly tested to preserve natural aroma and nutrients.</li>
+            <li><strong>Rich Goodness:</strong> Perfect for healthy daily nutrition.</li>
+          </ul>
+        `,
+        reviews: [
+          { name: "Mian Tariq", city: "Lahore", date: "2026-09-10", rating: 5, comment: "Zabardast quality, packaging aur delivery time bilkul perfect. Highly recommended!" },
+          { name: "Dr. Ayesha Malik", city: "Islamabad", date: "2026-09-05", rating: 5, comment: "100% genuine and authentic. Bohot pasand aya!" }
+        ]
+      };
+    } else {
+      prodData = PRODUCT_DETAILS_DATA['honey-wild-big'];
+    }
+  }
+
+  pdpCurrentProduct = prodData;
+  pdpSelectedVariantIdx = prodData.selectedVariantIndex !== undefined ? prodData.selectedVariantIndex : 0;
+  pdpCurrentQty = 1;
+
+  document.title = `${prodData.name} | DESI TASTE LAND`;
+  const metaTitle = document.getElementById('pdpMetaTitle');
+  if (metaTitle) metaTitle.textContent = `${prodData.name} | DESI TASTE LAND`;
+  const bcTitle = document.getElementById('pdpBreadcrumbTitle');
+  if (bcTitle) bcTitle.textContent = prodData.name;
+
+  const storedCustomReviews = JSON.parse(localStorage.getItem(`dtl_custom_reviews_${prodData.id}`) || '[]');
+  const allReviews = [...storedCustomReviews, ...prodData.reviews];
+
+  renderPdpHero(prodData);
+
+  const descContainer = document.getElementById('pdpDescSection');
+  if (descContainer) {
+    descContainer.innerHTML = `
+      <div class="pdp-desc-card">
+        ${prodData.aboutHtml}
+      </div>
+    `;
+  }
+
+  renderPdpReviews(prodData, allReviews);
+}
+
+function renderPdpHero(product) {
+  const container = document.getElementById('pdpHeroSection');
+  if (!container) return;
+
+  const currentVar = product.variants[pdpSelectedVariantIdx] || product.variants[0];
+
+  container.innerHTML = `
+    <div class="pdp-hero-grid">
+      <div class="pdp-gallery-panel">
+        <span class="pdp-sale-badge">Sale</span>
+        <div class="pdp-main-img-box">
+          <img src="${resolveImagePath(product.image)}" alt="${product.name}" class="pdp-main-img" id="pdpMainImg">
+        </div>
+      </div>
+
+      <div class="pdp-details-panel">
+        <h1 class="pdp-product-title">
+          ${product.name}
+          ${product.urduName ? `<span class="pdp-urdu-part">${product.urduName}</span>` : ''}
+        </h1>
+
+        <div class="pdp-rating-summary">
+          <div class="pdp-stars-green">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <span class="pdp-reviews-count-text">${product.reviewsCount} reviews</span>
+        </div>
+
+        <div class="pdp-price-row">
+          <span class="pdp-original-price" id="pdpOriginalPrice">${currentVar.originalPrice ? 'Rs.' + currentVar.originalPrice.toLocaleString() + '.00' : ''}</span>
+          <span class="pdp-sale-price" id="pdpSalePrice">Rs.${currentVar.price.toLocaleString()}.00</span>
+        </div>
+
+        <div class="pdp-size-picker">
+          <span class="pdp-size-label">Size: <strong id="pdpSelectedSizeLabel">${currentVar.weight}</strong></span>
+          <div class="pdp-size-buttons">
+            ${product.variants.map((v, idx) => `
+              <button type="button" class="pdp-size-btn ${idx === pdpSelectedVariantIdx ? 'active' : ''}" onclick="changePdpVariant(${idx})">
+                ${v.weight}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="pdp-qty-section">
+          <span class="pdp-qty-label">Quantity:</span>
+          <div class="pdp-actions-row">
+            <div class="pdp-qty-selector">
+              <button type="button" class="pdp-qty-btn" onclick="updatePdpQty(-1)"><i class="fa-solid fa-minus"></i></button>
+              <input type="text" class="pdp-qty-val" id="pdpQtyInput" value="${pdpCurrentQty}" readonly>
+              <button type="button" class="pdp-qty-btn" onclick="updatePdpQty(1)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <button type="button" class="pdp-btn-add-cart" onclick="addPdpToCart()">
+              <i class="fa-solid fa-cart-shopping"></i> ADD TO CART
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="pdp-btn-buy-now" onclick="buyPdpNow()">
+          Buy it now
+        </button>
+
+        <a href="#" id="pdpWhatsAppBtn" class="pdp-btn-whatsapp" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Order on WhatsApp
+        </a>
+
+        <div class="pdp-cert-panel">
+          <img src="${resolveImagePath('assets/images/certifications_badge.png')}" alt="Food Authority Certifications" class="pdp-cert-image">
+        </div>
+
+        <div class="pdp-return-card">
+          <div class="pdp-return-icon-box">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+          </div>
+          <div class="pdp-return-text">
+            <h4>7 Days Easy Return</h4>
+            <p>Don't like the product? You can return it within 7 days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  updatePdpWhatsAppLink();
+}
+
+function changePdpVariant(idx) {
+  pdpSelectedVariantIdx = idx;
+  const currentVar = pdpCurrentProduct.variants[idx];
+  const sizeLabel = document.getElementById('pdpSelectedSizeLabel');
+  if (sizeLabel) sizeLabel.textContent = currentVar.weight;
+  const origPriceEl = document.getElementById('pdpOriginalPrice');
+  if (origPriceEl) origPriceEl.textContent = currentVar.originalPrice ? `Rs.${currentVar.originalPrice.toLocaleString()}.00` : '';
+  const salePriceEl = document.getElementById('pdpSalePrice');
+  if (salePriceEl) salePriceEl.textContent = `Rs.${currentVar.price.toLocaleString()}.00`;
+
+  const buttons = document.querySelectorAll('.pdp-size-btn');
+  buttons.forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+
+  updatePdpWhatsAppLink();
+}
+
+function updatePdpQty(change) {
+  pdpCurrentQty = Math.max(1, pdpCurrentQty + change);
+  const input = document.getElementById('pdpQtyInput');
+  if (input) input.value = pdpCurrentQty;
+  updatePdpWhatsAppLink();
+}
+
+function updatePdpWhatsAppLink() {
+  const btn = document.getElementById('pdpWhatsAppBtn');
+  if (!btn || !pdpCurrentProduct) return;
+  const currentVar = pdpCurrentProduct.variants[pdpSelectedVariantIdx] || pdpCurrentProduct.variants[0];
+  const total = currentVar.price * pdpCurrentQty;
+  const msg = `Hello Desi Taste Land, I want to order ${pdpCurrentProduct.name} (${currentVar.weight}) - Qty: ${pdpCurrentQty} - Total: Rs.${total.toLocaleString()}`;
+  btn.href = `https://wa.me/923070016113?text=${encodeURIComponent(msg)}`;
+}
+
+function addPdpToCart() {
+  if (!pdpCurrentProduct) return;
+  const currentVar = pdpCurrentProduct.variants[pdpSelectedVariantIdx] || pdpCurrentProduct.variants[0];
+  const itemId = `${pdpCurrentProduct.id}-${currentVar.weight.replace(/\s+/g, '')}`;
+  const existing = cart.find(i => i.id === itemId);
+  if (existing) {
+    existing.qty += pdpCurrentQty;
+  } else {
+    cart.push({
+      id: itemId,
+      name: `${pdpCurrentProduct.name} (${currentVar.weight})`,
+      price: currentVar.price,
+      image: pdpCurrentProduct.image,
+      qty: pdpCurrentQty
+    });
+  }
+  saveCart();
+  updateCartUI();
+  showToast(`<i class="fa-solid fa-circle-check text-forest"></i> <strong>${pdpCurrentProduct.name} (${currentVar.weight})</strong> x ${pdpCurrentQty} added to cart!`);
+  openCartDrawer();
+}
+
+function buyPdpNow() {
+  addPdpToCart();
+  closeCartDrawer();
+  openCheckoutModal();
+}
+
+function renderPdpReviews(product, reviewsList) {
+  const container = document.getElementById('pdpReviewsSection');
+  if (!container) return;
+
+  const totalReviews = product.reviewsCount || reviewsList.length;
+  const ratingScore = product.rating || 4.84;
+  const starsCount = product.starsCount || { 5: 158, 4: 17, 3: 2, 2: 0, 1: 2 };
+
+  container.innerHTML = `
+    <div class="pdp-reviews-card">
+      <h2 class="pdp-reviews-title">Customer Reviews</h2>
+
+      <div class="pdp-reviews-summary-grid">
+        <div class="pdp-summary-score-col">
+          <div class="pdp-score-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <div class="pdp-score-num">${ratingScore} out of 5</div>
+          <div class="pdp-score-based">Based on ${totalReviews} reviews <i class="fa-solid fa-circle-check pdp-check-icon"></i></div>
+        </div>
+
+        <div class="pdp-bars-col">
+          ${[5, 4, 3, 2, 1].map(stars => {
+            const count = starsCount[stars] || 0;
+            const pct = totalReviews > 0 ? Math.round((count / totalReviews) * 100) : 0;
+            return `
+              <div class="pdp-bar-item">
+                <div class="pdp-bar-stars-label">
+                  ${Array(stars).fill('<i class="fa-solid fa-star"></i>').join('')}
+                  ${Array(5 - stars).fill('<i class="fa-regular fa-star"></i>').join('')}
+                </div>
+                <div class="pdp-bar-track">
+                  <div class="pdp-bar-fill" style="width: ${pct}%;"></div>
+                </div>
+                <div class="pdp-bar-count-label">${count}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <div class="pdp-write-btn-col">
+          <button type="button" class="pdp-btn-write-review" onclick="togglePdpReviewForm()">
+            Write a review
+          </button>
+        </div>
+      </div>
+
+      <div class="pdp-review-form-wrap" id="pdpReviewFormWrap">
+        <h3 class="pdp-review-form-title">Write Your Review</h3>
+        <form id="pdpReviewForm" onsubmit="handlePdpReviewSubmit(event)">
+          <div style="margin-bottom: 12px;">
+            <label style="font-weight: 700; font-size: 0.9rem; color: #374151; display: block; margin-bottom: 6px;">Your Rating *</label>
+            <div class="pdp-star-input-group" id="pdpStarInputGroup">
+              <i class="fa-solid fa-star active" data-rating="1" onclick="setPdpReviewStars(1)"></i>
+              <i class="fa-solid fa-star active" data-rating="2" onclick="setPdpReviewStars(2)"></i>
+              <i class="fa-solid fa-star active" data-rating="3" onclick="setPdpReviewStars(3)"></i>
+              <i class="fa-solid fa-star active" data-rating="4" onclick="setPdpReviewStars(4)"></i>
+              <i class="fa-solid fa-star active" data-rating="5" onclick="setPdpReviewStars(5)"></i>
+            </div>
+          </div>
+          <div class="pdp-review-form-grid">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" id="pdpRevName" placeholder="e.g. Asad Mehmood" required>
+            </div>
+            <div class="form-group">
+              <label>City / Location *</label>
+              <input type="text" id="pdpRevCity" placeholder="e.g. Lahore" required>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label>Review Comment *</label>
+            <textarea id="pdpRevComment" rows="3" placeholder="Share your experience with this honey (taste, aroma, purity, delivery)..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-red" style="font-weight: 800; padding: 12px 28px;">
+            <i class="fa-solid fa-paper-plane"></i> Submit Review
+          </button>
+        </form>
+      </div>
+
+      <div class="pdp-reviews-list" id="pdpReviewsList">
+        ${reviewsList.map(r => `
+          <div class="pdp-review-card">
+            <div class="pdp-rc-top">
+              <span class="pdp-rc-author">
+                ${r.name} <span style="font-weight: normal; color: #6B7280; font-size: 0.82rem;">(${r.city || 'Verified Customer'})</span>
+                <span class="pdp-rc-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+              </span>
+              <span class="pdp-rc-date">${r.date || 'Recent'}</span>
+            </div>
+            <div class="pdp-rc-stars">
+              ${Array(r.rating || 5).fill('<i class="fa-solid fa-star"></i>').join('')}
+              ${Array(5 - (r.rating || 5)).fill('<i class="fa-regular fa-star"></i>').join('')}
+            </div>
+            <p class="pdp-rc-comment">${r.comment}</p>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function togglePdpReviewForm() {
+  const formWrap = document.getElementById('pdpReviewFormWrap');
+  if (formWrap) {
+    formWrap.classList.toggle('active');
+    if (formWrap.classList.contains('active')) {
+      formWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+}
+
+function setPdpReviewStars(stars) {
+  pdpSelectedReviewStars = stars;
+  const starIcons = document.querySelectorAll('#pdpStarInputGroup i');
+  starIcons.forEach(icon => {
+    const r = parseInt(icon.getAttribute('data-rating'), 10);
+    icon.classList.toggle('active', r <= stars);
+  });
+}
+
+function handlePdpReviewSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('pdpRevName')?.value.trim();
+  const city = document.getElementById('pdpRevCity')?.value.trim();
+  const comment = document.getElementById('pdpRevComment')?.value.trim();
+
+  if (!name || !comment) return;
+
+  const newRev = {
+    id: 'rev_' + Date.now(),
+    name: name,
+    city: city || 'Pakistan',
+    rating: pdpSelectedReviewStars,
+    comment: comment,
+    date: new Date().toISOString().slice(0, 10)
+  };
+
+  const stored = JSON.parse(localStorage.getItem(`dtl_custom_reviews_${pdpCurrentProduct.id}`) || '[]');
+  stored.unshift(newRev);
+  localStorage.setItem(`dtl_custom_reviews_${pdpCurrentProduct.id}`, JSON.stringify(stored));
+
+  const list = document.getElementById('pdpReviewsList');
+  if (list) {
+    const card = document.createElement('div');
+    card.className = 'pdp-review-card';
+    card.innerHTML = `
+      <div class="pdp-rc-top">
+        <span class="pdp-rc-author">
+          ${newRev.name} <span style="font-weight: normal; color: #6B7280; font-size: 0.82rem;">(${newRev.city})</span>
+          <span class="pdp-rc-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
+        </span>
+        <span class="pdp-rc-date">${newRev.date}</span>
+      </div>
+      <div class="pdp-rc-stars">
+        ${Array(newRev.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
+        ${Array(5 - newRev.rating).fill('<i class="fa-regular fa-star"></i>').join('')}
+      </div>
+      <p class="pdp-rc-comment">${newRev.comment}</p>
+    `;
+    list.prepend(card);
+  }
+
+  fetch('https://formsubmit.co/ajax/zaibbabar54@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      Type: 'PRODUCT_REVIEW',
+      Product: pdpCurrentProduct.name,
+      Customer_Name: name,
+      City: city,
+      Rating: pdpSelectedReviewStars,
+      Review_Text: comment
+    })
+  }).catch(() => {});
+
+  document.getElementById('pdpReviewForm')?.reset();
+  togglePdpReviewForm();
+  showToast('<i class="fa-solid fa-circle-check text-forest"></i> Shukriya! Aapka review kamyabi se submit ho gaya hai.');
 }
