@@ -120,7 +120,7 @@ const ALL_PRODUCTS = [
     urduName: 'گائے کا دیسی گھی',
     rating: 5.0,
     reviewsCount: 610,
-    image: 'assets/images/prod_buffalo_ghee.jpg',
+    image: 'assets/images/prod_ghee_new.jpg',
     description: 'Traditional Bilona Cow Desi Ghee prepared from pure grass-fed cow milk.',
     variants: [
       { weight: '500g', price: 1600 },
@@ -135,7 +135,7 @@ const ALL_PRODUCTS = [
     urduName: 'بھینس کا دیسی گھی',
     rating: 5.0,
     reviewsCount: 320,
-    image: 'assets/images/prod_ghee_new.jpg',
+    image: 'assets/images/prod_buffalo_ghee.jpg',
     description: '100% pure authentic traditional Bilona Buffalo Desi Ghee with rich natural aroma and granular texture.',
     variants: [
       { weight: '500g', price: 1800, isDefault: true },
@@ -739,17 +739,17 @@ function renderAllProducts() {
     html += `
       <div class="product-card" id="allcard-${product.id}">
         <div class="product-img-box" style="position:relative;">
-          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Product Image">
+          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Product Details">
             <i class="fa-solid fa-eye"></i>
           </button>
           <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
             <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
           </button>
-          <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy" id="allimg-${product.id}">
+          <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy" id="allimg-${product.id}" style="cursor:pointer;" onclick="openProductQuickView('${product.id}')">
           ${isOut ? '<span style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#D32F2F;color:#fff;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:800;letter-spacing:0.5px;box-shadow:0 4px 10px rgba(0,0,0,0.5);">OUT OF STOCK</span>' : ''}
         </div>
         <div class="product-content">
-          <h3 class="product-title">
+          <h3 class="product-title" style="cursor:pointer;" onclick="openProductQuickView('${product.id}')">
             <span class="product-title-en">${product.name}</span>
             <span class="product-title-ur">${product.urduName || ''}</span>
           </h3>
@@ -1660,7 +1660,7 @@ const PRODUCT_DETAILS_DATA = {
     id: 'honey-wild-big',
     name: 'Wild Honey Big Bee – 100% Pure & Lab-Tested',
     urduName: 'جنگلی شہد بڑی مکھی',
-    brand: 'Thal Natural',
+    brand: 'DESI TASTE LAND',
     image: 'assets/images/honey_wild_big.jpg',
     rating: 4.84,
     reviewsCount: 179,
@@ -1673,7 +1673,7 @@ const PRODUCT_DETAILS_DATA = {
     selectedVariantIndex: 1,
     aboutHtml: `
       <h2>Wild Honey Big Bee – 100% Pure & Lab-Tested (جنگلی شہد بڑی مکھی)</h2>
-      <p>Experience the rich taste and natural goodness of <strong>100% Pure Wild Honey Big Bee by Thal Natural</strong>. Sourced from wild beehives and lab-tested for quality, this honey offers distinctive flavor, a rich aroma, and natural sweetness in every spoonful.</p>
+      <p>Experience the rich taste and natural goodness of <strong>100% Pure Wild Honey Big Bee by DESI TASTE LAND</strong>. Sourced from wild beehives and lab-tested for quality, this honey offers distinctive flavor, a rich aroma, and natural sweetness in every spoonful.</p>
       
       <h2>Benefits of Wild Honey Big Bee</h2>
       <ul>
@@ -1687,24 +1687,24 @@ const PRODUCT_DETAILS_DATA = {
       <h2>How to Use Wild Honey?</h2>
       <p>Enjoy a spoonful on its own, mix it into warm milk or tea, or drizzle it over yogurt, toast, and breakfast meals. Store in a cool, dry place and keep the lid tightly closed.</p>
       
-      <h2>Why Choose Thal Natural?</h2>
-      <p>At <strong>Thal Natural</strong>, we bring you 100% pure, lab-tested Wild Honey Big Bee with a focus on quality, authenticity, and natural taste. Add the goodness of wild honey to your daily routine and enjoy its distinctive flavor with confidence.</p>
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we bring you 100% pure, lab-tested Wild Honey Big Bee with a focus on quality, authenticity, and natural taste. Add the goodness of wild honey to your daily routine and enjoy its distinctive flavor with confidence.</p>
       
       <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
       { name: "Muhammad Rashid", city: "Lahore", date: "2026-09-18", rating: 5, comment: "MashAllah bohot lazeez aur khalis honey hai. Taste aur aroma se hi pata chal jata hai k jungle ki baddi makhi ka khalis shahad hai. Highly recommended!" },
       { name: "Hafiz Usman", city: "Faisalabad", date: "2026-09-14", rating: 5, comment: "100% pure and lab-tested quality. Packing bohot zabardast thi. Subah neem garam doodh mein rozana use kar raha hoon, energy level behtar rehta hai." },
-      { name: "Dr. Bilal Aslam", city: "Islamabad", date: "2026-09-10", rating: 5, comment: "Thal Natural ki quality per poora aetamad hai. Original wild big bee honey in Pakistan. Delivery bhi 2 din mein mil gayi." },
+      { name: "Dr. Bilal Aslam", city: "Islamabad", date: "2026-09-10", rating: 5, comment: "DESI TASTE LAND ki quality per poora aetamad hai. Original wild big bee honey in Pakistan. Delivery bhi 2 din mein mil gayi." },
       { name: "Zubair Ahmed", city: "Rawalpindi", date: "2026-09-02", rating: 5, comment: "Pure organic taste, bilkul natural ghana shahad. Bachon ko bhi pasand aya. Zaroor dobara order karunga." },
-      { name: "Tariq Mehmood", city: "Multan", date: "2026-08-28", rating: 5, comment: "Thal Natural ki packaging aur quality standard unmatchable hai. Asal jungli shahad." }
+      { name: "Tariq Mehmood", city: "Multan", date: "2026-08-28", rating: 5, comment: "DESI TASTE LAND ki packaging aur quality standard unmatchable hai. Asal jungli shahad." }
     ]
   },
   'honey-wild-small': {
     id: 'honey-wild-small',
     name: 'Wild Honey Small Bee – 100% Pure & Lab-Tested',
     urduName: 'جنگلی شہد چھوٹی مکھی',
-    brand: 'Thal Natural',
+    brand: 'DESI TASTE LAND',
     image: 'assets/images/honey_wild_small.jpg',
     rating: 4.92,
     reviewsCount: 215,
@@ -1717,7 +1717,7 @@ const PRODUCT_DETAILS_DATA = {
     selectedVariantIndex: 1,
     aboutHtml: `
       <h2>Wild Honey Small Bee – 100% Pure & Lab-Tested (جنگلی شہد چھوٹی مکھی)</h2>
-      <p>Discover the natural taste of <strong>100% Pure Wild Honey Small Bee by Thal Natural</strong>. Sourced from wild beehives and lab-tested for quality and purity, this honey offers a distinctive flavor, natural sweetness, and a unique taste of wild honey.</p>
+      <p>Discover the natural taste of <strong>100% Pure Wild Honey Small Bee by DESI TASTE LAND</strong>. Sourced from wild beehives and lab-tested for quality and purity, this honey offers a distinctive flavor, natural sweetness, and a unique taste of wild honey.</p>
       
       <h2>Benefits of Wild Honey Small Bee</h2>
       <ul>
@@ -1731,15 +1731,15 @@ const PRODUCT_DETAILS_DATA = {
       <h2>How to Use Wild Honey?</h2>
       <p>Enjoy a spoonful on its own, mix it into warm milk or tea, or drizzle it over breakfast and desserts. Store in a cool, dry place and keep the lid tightly closed.</p>
       
-      <h2>Why Choose Thal Natural?</h2>
-      <p>At <strong>Thal Natural</strong>, we are committed to offering 100% pure, lab-tested wild honey with a focus on quality, authenticity, and natural taste. Bring home Wild Honey Small Bee and enjoy the distinctive sweetness of nature in your daily routine.</p>
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we are committed to offering 100% pure, lab-tested wild honey with a focus on quality, authenticity, and natural taste. Bring home Wild Honey Small Bee and enjoy the distinctive sweetness of nature in your daily routine.</p>
       
       <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
-      { name: "Sikandar Hayat", city: "Islamabad", date: "2026-09-20", rating: 5, comment: "Chhoti makhi ka jungli shahad bohot naayab hota hai aur Thal Natural ne bilkul shafaf aur genuine cheez di hai. Shandar zaaiqa!" },
+      { name: "Sikandar Hayat", city: "Islamabad", date: "2026-09-20", rating: 5, comment: "Chhoti makhi ka jungli shahad bohot naayab hota hai aur DESI TASTE LAND ne bilkul shafaf aur genuine cheez di hai. Shandar zaaiqa!" },
       { name: "Shahid Nadeem", city: "Lahore", date: "2026-09-17", rating: 5, comment: "Outstanding purity! Khansi aur immunity k liye best medicine hai. Purity lab tested waqai 100% feel hoti hai." },
-      { name: "Abdul Wahab", city: "Peshawar", date: "2026-09-12", rating: 5, comment: "Top class honey. Bottle packing bhi food-grade glass jar hai. Bohat maza aya, shukriya Thal Natural." },
+      { name: "Abdul Wahab", city: "Peshawar", date: "2026-09-12", rating: 5, comment: "Top class honey. Bottle packing bhi food-grade glass jar hai. Bohat maza aya, shukriya DESI TASTE LAND." },
       { name: "Qasim Ali", city: "Karachi", date: "2026-09-05", rating: 5, comment: "Rare wild small bee honey at very genuine price. Will order 1kg next time inshAllah." }
     ]
   },
@@ -1747,7 +1747,7 @@ const PRODUCT_DETAILS_DATA = {
     id: 'honey-farmy-big',
     name: 'Farmy Honey Big Bee – 100% Pure & Lab-Tested',
     urduName: 'فارمی شہد بڑی مکھی',
-    brand: 'Thal Natural',
+    brand: 'DESI TASTE LAND',
     image: 'assets/images/honey_farmy_big.jpg',
     rating: 4.86,
     reviewsCount: 145,
@@ -1760,7 +1760,7 @@ const PRODUCT_DETAILS_DATA = {
     selectedVariantIndex: 1,
     aboutHtml: `
       <h2>Farmy Honey Big Bee – 100% Pure & Lab-Tested (فارمی شہد بڑی مکھی)</h2>
-      <p>Experience the natural sweetness of <strong>100% Pure Farmy Honey Big Bee by Thal Natural</strong>. Produced by farm-raised honeybees that collect nectar from flowering plants, this honey offers a naturally sweet taste and rich flavor. Lab-tested for quality and purity, it is a delightful addition to your everyday routine.</p>
+      <p>Experience the natural sweetness of <strong>100% Pure Farmy Honey Big Bee by DESI TASTE LAND</strong>. Produced by farm-raised honeybees that collect nectar from flowering plants, this honey offers a naturally sweet taste and rich flavor. Lab-tested for quality and purity, it is a delightful addition to your everyday routine.</p>
       
       <h2>Benefits of Farmy Honey Big Bee</h2>
       <ul>
@@ -1774,22 +1774,22 @@ const PRODUCT_DETAILS_DATA = {
       <h2>How to Use Farmy Honey?</h2>
       <p>Enjoy a spoonful on its own, stir it into your favorite warm drink, drizzle it over toast or yogurt, or use it as a natural sweetener in your recipes. Store in a cool, dry place with the lid tightly closed.</p>
       
-      <h2>Why Choose Thal Natural?</h2>
-      <p>At <strong>Thal Natural</strong>, we focus on quality, purity, and authentic taste. Our Farmy Honey Big Bee is lab-tested for quality and purity, bringing natural sweetness to your table for everyday enjoyment.</p>
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we focus on quality, purity, and authentic taste. Our Farmy Honey Big Bee is lab-tested for quality and purity, bringing natural sweetness to your table for everyday enjoyment.</p>
       
       <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
       { name: "Noman Farooq", city: "Gujranwala", date: "2026-09-19", rating: 5, comment: "Daily use chai aur toast k liye behtareen honey hai. Price bhi bohot munasib hai aur purity bilkul clear hai." },
       { name: "Farhan Saeed", city: "Lahore", date: "2026-09-15", rating: 5, comment: "Zero sugar adulteration guarantee 100% sach hai. Bohat saaf suthra aur fresh shahad hai." },
-      { name: "Mrs. Rehan", city: "Sialkot", date: "2026-09-08", rating: 5, comment: "Kids love it on pancakes and warm milk. Safe, pure and sweet. Excellent service by Thal Natural." }
+      { name: "Mrs. Rehan", city: "Sialkot", date: "2026-09-08", rating: 5, comment: "Kids love it on pancakes and warm milk. Safe, pure and sweet. Excellent service by DESI TASTE LAND." }
     ]
   },
   'honey-farmy-small': {
     id: 'honey-farmy-small',
     name: 'Farmy Honey Small Bee – 100% Pure & Lab-Tested',
     urduName: 'فارمی شہد چھوٹی مکھی',
-    brand: 'Thal Natural',
+    brand: 'DESI TASTE LAND',
     image: 'assets/images/honey_farmy_small.jpg',
     rating: 4.89,
     reviewsCount: 162,
@@ -1802,7 +1802,7 @@ const PRODUCT_DETAILS_DATA = {
     selectedVariantIndex: 1,
     aboutHtml: `
       <h2>Farmy Honey Small Bee – 100% Pure & Lab-Tested (فارمی شہد چھوٹی مکھی)</h2>
-      <p>Discover the natural sweetness of <strong>100% Pure Farmy Honey Small Bee by Thal Natural</strong>. Produced by farm-raised small honeybees, this honey offers a distinctive natural flavor and sweetness. Lab-tested for quality and purity, it is a delicious addition to your daily routine.</p>
+      <p>Discover the natural sweetness of <strong>100% Pure Farmy Honey Small Bee by DESI TASTE LAND</strong>. Produced by farm-raised small honeybees, this honey offers a distinctive natural flavor and sweetness. Lab-tested for quality and purity, it is a delicious addition to your daily routine.</p>
       
       <h2>Benefits of Farmy Honey Small Bee</h2>
       <ul>
@@ -1816,18 +1816,416 @@ const PRODUCT_DETAILS_DATA = {
       <h2>How to Use Farmy Honey?</h2>
       <p>Add a spoonful to your favorite drink, drizzle it over toast or yogurt, or use it as a natural sweetener in your recipes. Store in a cool, dry place and keep the lid tightly closed.</p>
       
-      <h2>Why Choose Thal Natural?</h2>
-      <p>At <strong>Thal Natural</strong>, we value quality, purity, and customer trust. Our Farmy Honey Small Bee is lab-tested for quality and purity, offering natural sweetness for your everyday enjoyment.</p>
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value quality, purity, and customer trust. Our Farmy Honey Small Bee is lab-tested for quality and purity, offering natural sweetness for your everyday enjoyment.</p>
       
       <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
-      { name: "Dr. Hamza Tariq", city: "Karachi", date: "2026-09-22", rating: 5, comment: "Farmy small bee honey has such a light amber color and delicate floral taste. Truly impressed by Thal Natural's authenticity!" },
+      { name: "Dr. Hamza Tariq", city: "Karachi", date: "2026-09-22", rating: 5, comment: "Farmy small bee honey has such a light amber color and delicate floral taste. Truly impressed by DESI TASTE LAND's authenticity!" },
       { name: "Imran Khan", city: "Rawalpindi", date: "2026-09-16", rating: 5, comment: "Shandar product. Original honey with nice packing. Quick delivery via COD." },
       { name: "Waqas Butt", city: "Gujrat", date: "2026-09-11", rating: 5, comment: "Purity guaranteed. Meri family ko bohot pasand aya. Regular customer ban chuka hoon." }
     ]
+  },
+
+  // 2. COW DESI GHEE
+  'prod-ghee': {
+    id: 'prod-ghee',
+    name: 'Cow Desi Ghee – Traditional Taste & Rich Aroma',
+    urduName: 'گائے کا دیسی گھی',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_ghee_new.jpg',
+    rating: 5.0,
+    reviewsCount: 610,
+    starsCount: { 5: 580, 4: 25, 3: 3, 2: 1, 1: 1 },
+    variants: [
+      { weight: '500g', price: 1600, originalPrice: 1950 },
+      { weight: '1kg', price: 3200, originalPrice: 3800, isDefault: true }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Cow Desi Ghee – Traditional Taste & Rich Aroma (گائے کا دیسی گھی)</h2>
+      <p>Experience the rich aroma and authentic taste of <strong>Cow Desi Ghee by DESI TASTE LAND</strong>. Made from cow's milk, this traditional ghee brings rich flavor and a delightful aroma to your everyday meals. Perfect for those who appreciate the taste of authentic Pakistani cuisine, it adds a special touch to both simple dishes and festive favorites.</p>
+
+      <h2>Benefits of Cow Desi Ghee</h2>
+      <ul>
+        <li><strong>Rich Traditional Flavor:</strong> Enhances the taste of your favorite meals.</li>
+        <li><strong>Source of Energy:</strong> Contains fats that provide energy for daily activities.</li>
+        <li><strong>Naturally Occurring Vitamins:</strong> Milk fat can contain fat-soluble vitamins, including vitamins A, D, E, and K.</li>
+        <li><strong>Versatile Cooking:</strong> Ideal for parathas, daal, karahi, halwa, and traditional desserts.</li>
+        <li><strong>Everyday Essential:</strong> A flavorful addition to your kitchen.</li>
+      </ul>
+
+      <h2>How to Use Cow Desi Ghee?</h2>
+      <p>Use it for cooking, preparing traditional dishes, frying, or adding extra flavor to roti and daal. Store in a clean, dry, tightly sealed container, away from direct sunlight and moisture.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value authentic taste, quality, and customer satisfaction. Our Cow Desi Ghee brings the warmth of traditional cooking to your kitchen, helping you make everyday meals more flavorful and memorable.</p>
+
+      <p><strong>Bring home Cow Desi Ghee by DESI TASTE LAND and enjoy the timeless taste of tradition.</strong></p>
+    `,
+    reviews: [
+      { name: "Chaudhry Akram", city: "Lahore", date: "2026-09-24", rating: 5, comment: "Bohot hi aala khushboo aur danedar texture hai. Bilkul gaon ka asli bilona cow ghee yaad dila diya. Parathas per zabardast swaad aata hai." },
+      { name: "Mrs. Shahid", city: "Karachi", date: "2026-09-19", rating: 5, comment: "Pehli dafa order kiya tha aur bilkul satisfied hoon. Light golden color aur original ghee ka zaaiqa. DESI TASTE LAND ka shukriya!" },
+      { name: "Hassan Raza", city: "Islamabad", date: "2026-09-12", rating: 5, comment: "Top quality cow ghee. Halwa aur daal tarka mein use kiya, ghar walon ko bohot pasand aya. Highly recommended!" },
+      { name: "Kamran Bashir", city: "Faisalabad", date: "2026-08-30", rating: 5, comment: "100% pure cow ghee. Packaging leak-proof thi aur delivery time per mil gayi. Bar bar order karunga." }
+    ]
+  },
+
+  // 3. BUFFALO DESI GHEE
+  'prod-buffalo-ghee': {
+    id: 'prod-buffalo-ghee',
+    name: 'Buffalo Desi Ghee – Rich Taste & Traditional Goodness',
+    urduName: 'بھینس کا دیسی گھی',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_buffalo_ghee.jpg',
+    rating: 5.0,
+    reviewsCount: 320,
+    starsCount: { 5: 300, 4: 16, 3: 3, 2: 0, 1: 1 },
+    variants: [
+      { weight: '500g', price: 1800, originalPrice: 2200, isDefault: true },
+      { weight: '1kg', price: 3500, originalPrice: 4200 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Buffalo Desi Ghee – Rich Taste & Traditional Goodness (بھینس کا دیسی گھی)</h2>
+      <p>Experience the rich taste and distinctive aroma of <strong>Buffalo Desi Ghee by DESI TASTE LAND</strong>. Made from buffalo milk, this traditional ghee is known for its rich flavor and creamy character. It brings authentic desi taste to everyday meals and traditional Pakistani cuisine, making every dish more enjoyable.</p>
+
+      <h2>Benefits of Buffalo Desi Ghee</h2>
+      <ul>
+        <li><strong>Rich Flavor:</strong> Adds a delicious, traditional taste to your favorite dishes.</li>
+        <li><strong>Source of Energy:</strong> Contains fats that provide energy for daily activities.</li>
+        <li><strong>Naturally Occurring Nutrients:</strong> Milk fat can contain fat-soluble vitamins.</li>
+        <li><strong>Perfect for Desi Cooking:</strong> Ideal for parathas, daal, karahi, halwa, and traditional desserts.</li>
+        <li><strong>Versatile Kitchen Essential:</strong> Suitable for a variety of everyday cooking needs.</li>
+      </ul>
+
+      <h2>How to Use Buffalo Desi Ghee?</h2>
+      <p>Use it to prepare traditional Pakistani dishes, cook vegetables, fry foods, or add a rich touch to roti, daal, and homemade desserts. Store in a clean, dry container with the lid tightly closed, away from direct sunlight and moisture.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value traditional taste, quality, and customer satisfaction. Our Buffalo Desi Ghee brings the richness of buffalo milk to your kitchen, helping you enjoy the authentic flavor of desi cooking.</p>
+
+      <p><strong>Bring home Buffalo Desi Ghee by DESI TASTE LAND and add rich, traditional flavor to your everyday meals.</strong></p>
+    `,
+    reviews: [
+      { name: "Malik Naveed", city: "Rawalpindi", date: "2026-09-21", rating: 5, comment: "Asli bhains ka bilona desi ghee! Khushboo pore kitchen mein phail jati hai. Roti per lagao to maza aa jata hai." },
+      { name: "Imran Sadiq", city: "Gujranwala", date: "2026-09-15", rating: 5, comment: "Rich and thick creamy consistency. Perfect for karahi and halwa. 1kg jar was very well packaged." },
+      { name: "Zia Ur Rehman", city: "Peshawar", date: "2026-09-08", rating: 5, comment: "No adulteration, pure natural ghee. Fast delivery and cooperative seller. 5 stars from me." }
+    ]
+  },
+
+  // 4. IMLI CHUTNEY
+  'prod-imli': {
+    id: 'prod-imli',
+    name: 'Imli Aloo Bukhara Chutney – Sweet, Tangy & Delicious',
+    urduName: 'املی آلو بخارا چٹنی',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_imli_new.jpg',
+    rating: 4.9,
+    reviewsCount: 310,
+    starsCount: { 5: 285, 4: 20, 3: 3, 2: 1, 1: 1 },
+    variants: [
+      { weight: '500g', price: 700, originalPrice: 900, isDefault: true },
+      { weight: '1kg', price: 1400, originalPrice: 1750 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Imli Aloo Bukhara Chutney – Sweet, Tangy & Delicious</h2>
+      <p>Add a burst of sweet and tangy flavor to your meals with <strong>Imli Aloo Bukhara Chutney by DESI TASTE LAND</strong>. Made with the delightful taste of tamarind and plum, this chutney brings the perfect balance of fruity sweetness and tangy goodness to your favorite snacks and traditional Pakistani dishes.</p>
+
+      <h2>What Makes Our Chutney Special?</h2>
+      <ul>
+        <li><strong>Sweet & Tangy Taste:</strong> A delicious combination of tamarind and plum flavors.</li>
+        <li><strong>Traditional Flavor:</strong> Inspired by the classic taste of desi chutneys.</li>
+        <li><strong>Versatile Pairing:</strong> Complements a variety of snacks and meals.</li>
+        <li><strong>Delicious Addition:</strong> Adds extra flavor to every bite.</li>
+      </ul>
+
+      <h2>How to Enjoy Imli Aloo Bukhara Chutney?</h2>
+      <p>Serve it with samosas, pakoras, rolls, chaat, and kebabs, or enjoy it alongside your favorite homemade meals. It also makes a delicious dip for snacks and appetizers.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we bring traditional flavors to your table with products made for everyday enjoyment. Our Imli Aloo Bukhara Chutney adds a delicious sweet-and-tangy touch to family meals, gatherings, and special occasions.</p>
+
+      <p><strong>Bring home DESI TASTE LAND Imli Aloo Bukhara Chutney and make every bite more flavorful!</strong></p>
+    `,
+    reviews: [
+      { name: "Fatima Noor", city: "Lahore", date: "2026-09-22", rating: 5, comment: "Khatay meethey taste ka zabardast combination! Samosay aur chaat k sath maza dobala ho gya. Maghaz aur aloo bukhara ka taste bilkul authentic hai." },
+      { name: "Saad Sheikh", city: "Karachi", date: "2026-09-17", rating: 5, comment: "Homemade taste jaisa koi chemical ka feeling nahi. Very fresh and tasty chutney by DESI TASTE LAND." },
+      { name: "Amina Tariq", city: "Multan", date: "2026-09-09", rating: 5, comment: "Ramadan or daily snack time dono k liye best. Jar quality is also solid glass. Loved it!" }
+    ]
+  },
+
+  // 5. TALBINA
+  'prod-talbina': {
+    id: 'prod-talbina',
+    name: 'Talbina – A Traditional Sunnah-Inspired Food',
+    urduName: 'تلبینہ',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_talbina_new.jpg',
+    rating: 4.9,
+    reviewsCount: 340,
+    starsCount: { 5: 310, 4: 25, 3: 3, 2: 1, 1: 1 },
+    variants: [
+      { weight: '170g', price: 500, originalPrice: 650, isDefault: true },
+      { weight: '450g', price: 1300, originalPrice: 1600 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Talbina – A Traditional Sunnah-Inspired Food (تلبینہ)</h2>
+      <p>Discover the comfort of <strong>Talbina by DESI TASTE LAND</strong>, a traditional barley-based food known in Islamic tradition and associated with the Sunnah. Made with nourishing barley, Talbina is a simple and comforting addition to your daily food routine, bringing together traditional taste and wholesome ingredients.</p>
+
+      <h2>What Makes Talbina Special?</h2>
+      <ul>
+        <li><strong>Sunnah-Inspired Tradition:</strong> A food with a special place in Islamic tradition.</li>
+        <li><strong>Barley Goodness:</strong> Barley naturally provides dietary fiber and other nutrients.</li>
+        <li><strong>Comforting & Nourishing:</strong> A warm, soothing meal to enjoy as part of your daily diet.</li>
+        <li><strong>Simple & Versatile:</strong> Easy to prepare and customize according to your taste.</li>
+      </ul>
+
+      <h2>How to Prepare Talbina?</h2>
+      <p>Mix Talbina with milk or water and cook gently until it reaches your preferred consistency. You can add honey, dates, or other toppings for extra sweetness and flavor. Follow the product packaging for specific preparation instructions.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value traditional foods and authentic flavors. Our Talbina brings a meaningful part of Islamic food tradition into your home, making it easy to enjoy this classic barley-based dish with your family.</p>
+
+      <p><strong>Bring home DESI TASTE LAND Talbina and enjoy a traditional food inspired by the Sunnah.</strong></p>
+
+      <div class="pdp-warning-box"><strong>Note:</strong> Talbina is a food, not a medicine, and should be enjoyed as part of a balanced diet.</div>
+    `,
+    reviews: [
+      { name: "Maulana Abdul Qadir", city: "Faisalabad", date: "2026-09-23", rating: 5, comment: "SubhanAllah Sunnah food hai aur preparation bohot asaan hai. Doodh aur honey k sath subah nashte mein behtareen ghiza hai." },
+      { name: "Zainab Bibi", city: "Islamabad", date: "2026-09-18", rating: 5, comment: "Stomach k liye bohot light aur sukoon dene wali cheez hai. Fresh barley flour with high quality packaging." },
+      { name: "Usman Ghani", city: "Sialkot", date: "2026-09-10", rating: 5, comment: "Nutritious and comforting meal. Whole family drinks it daily now. Shukriya DESI TASTE LAND." }
+    ]
+  },
+
+  // 6. OLIVE OIL
+  'prod-olive': {
+    id: 'prod-olive',
+    name: 'Olive Oil – Natural Goodness & Everyday Quality',
+    urduName: 'زیتون کا تیل',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_olive_new.png',
+    rating: 5.0,
+    reviewsCount: 290,
+    starsCount: { 5: 275, 4: 12, 3: 2, 2: 0, 1: 1 },
+    variants: [
+      { weight: '112ml', price: 600, originalPrice: 750, isDefault: true }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Olive Oil – Natural Goodness & Everyday Quality (زیتون کا تیل)</h2>
+      <p>Discover the distinctive taste of <strong>Olive Oil by DESI TASTE LAND</strong>. Known for its rich flavor and versatility, olive oil is a popular choice for everyday cooking, salad dressings, and a variety of delicious recipes. Bring the goodness of olives to your kitchen and enjoy a flavorful addition to your daily meals.</p>
+
+      <h2>Benefits of Olive Oil</h2>
+      <ul>
+        <li><strong>Rich in Healthy Fats:</strong> Olive oil contains monounsaturated fats as part of a balanced diet.</li>
+        <li><strong>Antioxidant Compounds:</strong> Depending on its type, olive oil can contain naturally occurring antioxidant compounds.</li>
+        <li><strong>Versatile Cooking:</strong> Suitable for salads, dressings, sautéing, and many recipes.</li>
+        <li><strong>Distinctive Flavor:</strong> Adds a delicious touch to vegetables, dips, and other dishes.</li>
+        <li><strong>Everyday Kitchen Essential:</strong> A convenient ingredient for a variety of meals.</li>
+      </ul>
+
+      <h2>How to Use Olive Oil?</h2>
+      <p>Drizzle it over salads, use it in dressings, add it to vegetables, or use it for cooking according to the oil's variety and label instructions. Store in a tightly sealed bottle away from direct sunlight and heat.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value quality, taste, and customer satisfaction. Our Olive Oil is a versatile choice for your kitchen, helping you prepare delicious meals with the distinctive flavor of olives.</p>
+
+      <p><strong>Bring home Olive Oil by DESI TASTE LAND and add a flavorful touch to your everyday cooking!</strong></p>
+    `,
+    reviews: [
+      { name: "Dr. Farooq", city: "Lahore", date: "2026-09-20", rating: 5, comment: "Extra virgin cold pressed olive oil. Very pure aroma and gentle grassy taste. Salads per perfect result deta hai." },
+      { name: "Salma Begum", city: "Karachi", date: "2026-09-14", rating: 5, comment: "Bottle packing secure thi aur oil bilkul authentic hai. Daily health routine k liye recommended." }
+    ]
+  },
+
+  // 7. SHILAJIT
+  'prod-shilajit': {
+    id: 'prod-shilajit',
+    name: 'Shilajit – Nature’s Mineral-Rich Treasure',
+    urduName: 'سلاجیت',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_shilajit_new.png',
+    rating: 5.0,
+    reviewsCount: 190,
+    starsCount: { 5: 180, 4: 8, 3: 1, 2: 0, 1: 1 },
+    variants: [
+      { weight: '1 Tola', price: 1000, originalPrice: 1300, isDefault: true },
+      { weight: '2 Tola', price: 2000, originalPrice: 2500 },
+      { weight: '3 Tola', price: 3000, originalPrice: 3800 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Shilajit – Nature’s Mineral-Rich Treasure (سلاجیت)</h2>
+      <p>Discover <strong>Shilajit by DESI TASTE LAND</strong>, a naturally occurring substance traditionally found in mountainous regions. Known for its long history in traditional wellness practices, Shilajit is valued for its distinctive composition and natural origin.</p>
+
+      <h2>What Makes Shilajit Special?</h2>
+      <ul>
+        <li><strong>Mountain-Origin Substance:</strong> Naturally develops in mountainous environments over long periods.</li>
+        <li><strong>Traditional Wellness Heritage:</strong> Has a long history of use in traditional wellness practices.</li>
+        <li><strong>Distinctive Composition:</strong> Contains organic compounds and minerals, with composition varying by source and processing.</li>
+        <li><strong>Quality Matters:</strong> Proper testing is important to check purity and screen for contaminants such as heavy metals.</li>
+      </ul>
+
+      <h2>How to Choose Shilajit?</h2>
+      <p>Choose a product with clear ingredient information and reliable laboratory testing. Follow the product label and consult a qualified healthcare professional before using it, especially if you take medication or have an existing health condition.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value product quality, transparency, and customer trust. We aim to provide clear product information so customers can make informed choices.</p>
+
+      <p><strong>Explore Shilajit by DESI TASTE LAND and learn more about this traditional mountain-origin substance.</strong></p>
+
+      <div class="pdp-warning-box"><strong>Important Note:</strong> Shilajit is not a proven cure for diseases. Product quality and safety depend on sourcing, processing, and appropriate laboratory testing.</div>
+    `,
+    reviews: [
+      { name: "Junaid Akhtar", city: "Gilgit", date: "2026-09-22", rating: 5, comment: "Original resin form shilajit. Dissolves completely in warm water and milk without any grit. Pure mountain quality!" },
+      { name: "Muhammad Asif", city: "Rawalpindi", date: "2026-09-16", rating: 5, comment: "Feel the difference in stamina and energy after one week. Authentic packaging and purity." },
+      { name: "Rizwan Shah", city: "Islamabad", date: "2026-09-07", rating: 5, comment: "100% genuine Himalayan shilajit. Very satisfied with DESI TASTE LAND products." }
+    ]
+  },
+
+  // 8. MIX PICKLE
+  'prod-pickle': {
+    id: 'prod-pickle',
+    name: 'Mix Pickle – Traditional Desi Flavor',
+    urduName: 'مکس اچار',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_mix_pickle_new.jpg',
+    rating: 4.9,
+    reviewsCount: 280,
+    starsCount: { 5: 255, 4: 20, 3: 3, 2: 1, 1: 1 },
+    variants: [
+      { weight: '500g', price: 350, originalPrice: 450, isDefault: true },
+      { weight: '1kg', price: 700, originalPrice: 900 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Mix Pickle – Traditional Desi Flavor (مکس اچار)</h2>
+      <p>Bring home the authentic taste of Pakistani cuisine with <strong>Mix Pickle by DESI TASTE LAND</strong>. Packed with a delicious blend of mixed vegetables, fruits, and traditional spices, this pickle adds a tangy, spicy, and flavorful touch to your everyday meals. Enjoy the classic desi taste that makes every meal more exciting.</p>
+
+      <h2>What Makes Our Mix Pickle Special?</h2>
+      <ul>
+        <li><strong>Rich Desi Flavor:</strong> A delightful balance of tanginess and spice.</li>
+        <li><strong>Traditional Taste:</strong> Inspired by the classic flavors of homemade Pakistani achar.</li>
+        <li><strong>Flavorful Ingredients:</strong> A combination of ingredients and spices for a distinctive taste.</li>
+        <li><strong>Perfect Meal Companion:</strong> Adds extra flavor to everyday dishes.</li>
+      </ul>
+
+      <h2>How to Enjoy Mix Pickle?</h2>
+      <p>Serve it with parathas, daal, rice, roti, biryani, or your favorite traditional meals. A small serving adds a delicious tangy and spicy kick to your plate.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we celebrate traditional desi flavors and the joy of sharing delicious food with family. Our Mix Pickle is a flavorful addition to your dining table, perfect for everyday meals and special occasions.</p>
+
+      <p><strong>Bring home DESI TASTE LAND Mix Pickle and enjoy the taste of tradition with every bite!</strong></p>
+    `,
+    reviews: [
+      { name: "Babar Azam", city: "Lahore", date: "2026-09-24", rating: 5, comment: "Karelay, aam, lassan aur mirch ka asli desi achar! Sarson k tail ki zabardast khushboo hai. Daal chawal k sath la jawab lagta hai." },
+      { name: "Nasreen Akhtar", city: "Faisalabad", date: "2026-09-17", rating: 5, comment: "Bilkul nani dadi k hath ka bana achar jaisa zaaiqa. Spices bilkul balanced hain." },
+      { name: "Waqas Butt", city: "Gujrat", date: "2026-09-11", rating: 5, comment: "Achar lover hoon aur ye achar best nikla. Jar leak nahi tha, packaging bohot solid thi." }
+    ]
+  },
+
+  // 9. TEA (PATTI)
+  'prod-tea': {
+    id: 'prod-tea',
+    name: 'Tea Patti – Rich Aroma & Refreshing Taste',
+    urduName: 'چائے کی پتی',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/all_tea.jpg',
+    rating: 4.9,
+    reviewsCount: 380,
+    starsCount: { 5: 350, 4: 24, 3: 4, 2: 1, 1: 1 },
+    variants: [
+      { weight: '200g', price: 400, originalPrice: 500, isDefault: true },
+      { weight: '900g', price: 1800, originalPrice: 2200 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Tea Patti – Rich Aroma & Refreshing Taste (چائے کی پتی)</h2>
+      <p>Enjoy the comforting tradition of tea with <strong>Tea Patti by DESI TASTE LAND</strong>. With its inviting aroma, rich color, and satisfying taste, our tea patti is perfect for preparing a refreshing cup of chai. Whether you're starting your morning or enjoying an evening break with family, make every cup a special moment.</p>
+
+      <h2>What Makes Our Tea Patti Special?</h2>
+      <ul>
+        <li><strong>Rich Aroma:</strong> Fills your cup with the familiar fragrance of traditional chai.</li>
+        <li><strong>Full-Bodied Taste:</strong> Delivers a satisfying tea flavor for everyday enjoyment.</li>
+        <li><strong>Perfect Daily Companion:</strong> Ideal for morning tea, afternoon breaks, and evening gatherings.</li>
+        <li><strong>Traditional Chai Experience:</strong> Enjoy it with milk, sugar, or your preferred tea recipe.</li>
+      </ul>
+
+      <h2>How to Prepare Tea?</h2>
+      <p>Boil water with tea patti, add milk and sugar according to your preference, and simmer until the tea reaches your desired strength. Strain into a cup and enjoy it hot.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we bring everyday essentials to your home with a focus on taste and customer satisfaction. Our Tea Patti is a wonderful choice for enjoying the warmth and comfort of traditional chai with family and friends.</p>
+
+      <p><strong>Bring home DESI TASTE LAND Tea Patti and make every cup of chai a delightful experience!</strong></p>
+    `,
+    reviews: [
+      { name: "Sheikh Haroon", city: "Karachi", date: "2026-09-21", rating: 5, comment: "Karak kadak dhoodh patti banti hai! Rang bhi rich red amber aata hai aur aroma bohot taza hai. Daily tea lovers k liye must-try." },
+      { name: "Hamid Mir", city: "Rawalpindi", date: "2026-09-15", rating: 5, comment: "Top quality blend. Kam patti mein bhi acha strong cup banta hai. Very economical and tasty." },
+      { name: "Ayesha Siddiqua", city: "Lahore", date: "2026-09-08", rating: 5, comment: "Subah ki chai DESI TASTE LAND ki patti k baghair ab adhuri lagti hai. Shandar quality!" }
+    ]
+  },
+
+  // 10. SAFFRON
+  'prod-saffron': {
+    id: 'prod-saffron',
+    name: 'Saffron – The Golden Spice of Luxury',
+    urduName: 'زعفران',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_saffron_new.jpg',
+    rating: 5.0,
+    reviewsCount: 240,
+    starsCount: { 5: 230, 4: 8, 3: 1, 2: 0, 1: 1 },
+    variants: [
+      { weight: '1g', price: 1200, originalPrice: 1500, isDefault: true },
+      { weight: '2g', price: 2400, originalPrice: 3000 },
+      { weight: '3g', price: 3600, originalPrice: 4500 }
+    ],
+    selectedVariantIndex: 0,
+    aboutHtml: `
+      <h2>Saffron – The Golden Spice of Luxury (زعفران)</h2>
+      <p>Experience the exquisite aroma, vibrant golden color, and distinctive flavor of <strong>Saffron by DESI TASTE LAND</strong>. Known as one of the world's most precious spices, saffron adds elegance and a unique fragrance to traditional dishes, desserts, and beverages. A small amount is enough to bring beautiful color and a delicate flavor to your favorite recipes.</p>
+
+      <h2>What Makes Saffron Special?</h2>
+      <ul>
+        <li><strong>Distinctive Aroma:</strong> Adds a delicate, luxurious fragrance to food.</li>
+        <li><strong>Beautiful Golden Color:</strong> Enhances the appearance of rice dishes and desserts.</li>
+        <li><strong>Unique Flavor:</strong> Brings a subtle, memorable taste to your recipes.</li>
+        <li><strong>Versatile Culinary Use:</strong> Perfect for biryani, zarda, kheer, desserts, and saffron milk.</li>
+        <li><strong>A Timeless Spice:</strong> Valued in culinary traditions around the world.</li>
+      </ul>
+
+      <h2>How to Use Saffron?</h2>
+      <p>Soak a few saffron strands in a little warm water or milk for several minutes to release their color and aroma. Add the infused liquid to biryani, rice, kheer, desserts, or your favorite beverage.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, we value authentic flavors and quality ingredients. Our Saffron brings a touch of elegance to your kitchen, helping you create memorable meals and special treats for family and guests.</p>
+
+      <p><strong>Bring home DESI TASTE LAND Saffron and add a golden touch of flavor and fragrance to every special occasion!</strong></p>
+    `,
+    reviews: [
+      { name: "Syed Mohsin Ali", city: "Islamabad", date: "2026-09-22", rating: 5, comment: "Asli Kashmiri Mongra Zafran hai! Sirf 4 se 5 strands garam doodh mein daale to deep golden color aur sweet floral aroma aa gaya. Pure luxury quality." },
+      { name: "Dr. Samina", city: "Lahore", date: "2026-09-18", rating: 5, comment: "Biryani aur kheer mein use kiya, royal restaurant wala look aur khushboo ayi. Sealed glass vial packing is perfect." },
+      { name: "Fawad Chaudhry", city: "Karachi", date: "2026-09-12", rating: 5, comment: "100% authentic saffron. Color release test bhi pass ho gya, natural slow saffron release. Highly satisfied." }
+    ]
   }
 };
+
+// Aliases for user-friendly routes / IDs
+PRODUCT_DETAILS_DATA['cow-desi-ghee'] = PRODUCT_DETAILS_DATA['prod-ghee'];
+PRODUCT_DETAILS_DATA['buffalo-desi-ghee'] = PRODUCT_DETAILS_DATA['prod-buffalo-ghee'];
+PRODUCT_DETAILS_DATA['imli-chutney'] = PRODUCT_DETAILS_DATA['prod-imli'];
+PRODUCT_DETAILS_DATA['talbina'] = PRODUCT_DETAILS_DATA['prod-talbina'];
+PRODUCT_DETAILS_DATA['olive-oil'] = PRODUCT_DETAILS_DATA['prod-olive'];
+PRODUCT_DETAILS_DATA['shilajit'] = PRODUCT_DETAILS_DATA['prod-shilajit'];
+PRODUCT_DETAILS_DATA['mix-pickle'] = PRODUCT_DETAILS_DATA['prod-pickle'];
+PRODUCT_DETAILS_DATA['tea-patti'] = PRODUCT_DETAILS_DATA['prod-tea'];
+PRODUCT_DETAILS_DATA['saffron'] = PRODUCT_DETAILS_DATA['prod-saffron'];
 
 let pdpCurrentProduct = null;
 let pdpSelectedVariantIdx = 0;
@@ -1842,6 +2240,10 @@ function initProductDetailPage() {
   let prodId = urlParams.get('id');
   if (!prodId || prodId === 'prod-honey' || prodId === 'top-honey') {
     prodId = 'honey-wild-big';
+  } else if (prodId === 'top-ghee') {
+    prodId = 'prod-ghee';
+  } else if (prodId === 'top-olive') {
+    prodId = 'prod-olive';
   }
 
   let prodData = PRODUCT_DETAILS_DATA[prodId];
