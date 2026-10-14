@@ -1977,19 +1977,7 @@ function renderPdpHero(product) {
           <i class="fa-brands fa-whatsapp"></i> Order on WhatsApp
         </a>
 
-        <div class="pdp-cert-panel">
-          <img src="${resolveImagePath('assets/images/certifications_badge.png')}" alt="Food Authority Certifications" class="pdp-cert-image">
-        </div>
 
-        <div class="pdp-return-card">
-          <div class="pdp-return-icon-box">
-            <i class="fa-solid fa-arrow-rotate-left"></i>
-          </div>
-          <div class="pdp-return-text">
-            <h4>7 Days Easy Return</h4>
-            <p>Don't like the product? You can return it within 7 days.</p>
-          </div>
-        </div>
       </div>
     </div>
   `;
