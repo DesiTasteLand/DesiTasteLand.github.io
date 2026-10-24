@@ -1961,6 +1961,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .pdp-qty-selector {
   display: inline-flex;
@@ -1969,6 +1970,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   border-radius: 4px;
   background: #FFF;
   height: 48px;
+  box-sizing: border-box;
 }
 .pdp-qty-btn {
   width: 44px;
@@ -1998,7 +2000,8 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 }
 
 .pdp-btn-add-cart {
-  flex: 1;
+  flex: 1 1 180px;
+  min-width: 160px;
   height: 48px;
   background: #111827;
   color: #FFF;
@@ -2008,6 +2011,8 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   font-size: 0.95rem;
   letter-spacing: 0.6px;
   cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
   transition: background 0.2s ease;
   display: flex;
   align-items: center;
@@ -2112,11 +2117,11 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   margin-top: 35px;
 }
 .pdp-desc-card {
-  background: #FFF;
-  border: 1.5px solid var(--border-gold);
-  border-radius: var(--radius-lg);
-  padding: 38px 36px;
-  box-shadow: var(--shadow-sm);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 10px 0 20px 0;
+  box-shadow: none;
 }
 .pdp-desc-card h2 {
   font-family: var(--font-heading) !important;
@@ -2125,7 +2130,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   color: var(--text-dark);
   margin-top: 26px;
   margin-bottom: 12px;
-  border-bottom: 2px solid #F3F4F6;
+  border-bottom: 2px solid #E5E7EB;
   padding-bottom: 8px;
 }
 .pdp-desc-card h2:first-child {
@@ -2354,8 +2359,7 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   gap: 4px;
 }
 .pdp-rc-date {
-  font-size: 0.82rem;
-  color: #9CA3AF;
+  display: none !important;
 }
 .pdp-rc-stars {
   color: #74a32e;
@@ -2390,25 +2394,148 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   }
 }
 
-@media (max-width: 640px) {
-  .pdp-hero-grid,
-  .pdp-desc-card,
-  .pdp-reviews-card {
-    padding: 20px 16px;
-    border-radius: var(--radius-md);
+@media (max-width: 768px) {
+  .pdp-page-wrapper {
+    padding: 8px 0 35px 0;
+  }
+  .pdp-breadcrumb {
+    padding: 0 12px 10px 12px;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+  }
+
+  /* 1. Mobile Product Image - No Box Border (matches Thal Naturals reference) */
+  .pdp-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0 0 16px 0;
+  }
+  .pdp-gallery-panel {
+    background: #FFF;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 10px 0;
+    min-height: auto;
+    width: 100%;
+  }
+  .pdp-main-img-box {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .pdp-main-img {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-height: 350px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .pdp-sale-badge {
+    top: 12px;
+    left: 12px;
+  }
+
+  .pdp-details-panel {
+    padding: 4px 12px;
+    gap: 14px;
   }
   .pdp-product-title {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
+    line-height: 1.3;
   }
+
+  /* 2. Action Buttons - 100% Full Width Stack so ADD TO CART never cuts off */
   .pdp-actions-row {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
+    width: 100%;
   }
   .pdp-qty-selector {
     width: 100%;
+    height: 48px;
+    display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .pdp-qty-btn {
+    width: 60px;
+    flex: 0 0 60px;
+  }
+  .pdp-qty-val {
+    flex: 1;
+    width: auto;
+  }
+  .pdp-btn-add-cart {
+    width: 100%;
+    min-width: 100%;
+    height: 50px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: visible;
+  }
+  .pdp-btn-buy-now {
+    width: 100%;
+    height: 50px;
+    font-size: 1.05rem;
+    box-sizing: border-box;
+  }
+  .pdp-btn-whatsapp {
+    width: 100%;
+    height: 50px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* 3. Description Section - Clean line sequence with no box border */
+  .pdp-description-section {
+    margin-top: 20px;
+    padding: 0 12px;
+  }
+  .pdp-desc-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 6px 0;
+  }
+
+  /* 4. Reviews Section on Mobile */
+  .pdp-reviews-section {
+    margin-top: 20px;
+    padding: 0 12px;
+  }
+  .pdp-reviews-card {
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-md);
+    padding: 18px 14px;
   }
   .pdp-review-form-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Floating WhatsApp - compact circular button so it doesn't cover content */
+  .floating-whatsapp {
+    padding: 12px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    bottom: 16px;
+    right: 16px;
+  }
+  .floating-whatsapp .whatsapp-text {
+    display: none;
   }
 }

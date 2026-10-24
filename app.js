@@ -1689,8 +1689,6 @@ const PRODUCT_DETAILS_DATA = {
       
       <h2>Why Choose DESI TASTE LAND?</h2>
       <p>At <strong>DESI TASTE LAND</strong>, we bring you 100% pure, lab-tested Wild Honey Big Bee with a focus on quality, authenticity, and natural taste. Add the goodness of wild honey to your daily routine and enjoy its distinctive flavor with confidence.</p>
-      
-      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
       { name: "Muhammad Rashid", city: "Lahore", date: "2026-09-18", rating: 5, comment: "MashAllah bohot lazeez aur khalis honey hai. Taste aur aroma se hi pata chal jata hai k jungle ki baddi makhi ka khalis shahad hai. Highly recommended!" },
@@ -1733,8 +1731,6 @@ const PRODUCT_DETAILS_DATA = {
       
       <h2>Why Choose DESI TASTE LAND?</h2>
       <p>At <strong>DESI TASTE LAND</strong>, we are committed to offering 100% pure, lab-tested wild honey with a focus on quality, authenticity, and natural taste. Bring home Wild Honey Small Bee and enjoy the distinctive sweetness of nature in your daily routine.</p>
-      
-      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
       { name: "Sikandar Hayat", city: "Islamabad", date: "2026-09-20", rating: 5, comment: "Chhoti makhi ka jungli shahad bohot naayab hota hai aur DESI TASTE LAND ne bilkul shafaf aur genuine cheez di hai. Shandar zaaiqa!" },
@@ -1776,8 +1772,6 @@ const PRODUCT_DETAILS_DATA = {
       
       <h2>Why Choose DESI TASTE LAND?</h2>
       <p>At <strong>DESI TASTE LAND</strong>, we focus on quality, purity, and authentic taste. Our Farmy Honey Big Bee is lab-tested for quality and purity, bringing natural sweetness to your table for everyday enjoyment.</p>
-      
-      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
       { name: "Noman Farooq", city: "Gujranwala", date: "2026-09-19", rating: 5, comment: "Daily use chai aur toast k liye behtareen honey hai. Price bhi bohot munasib hai aur purity bilkul clear hai." },
@@ -1818,8 +1812,6 @@ const PRODUCT_DETAILS_DATA = {
       
       <h2>Why Choose DESI TASTE LAND?</h2>
       <p>At <strong>DESI TASTE LAND</strong>, we value quality, purity, and customer trust. Our Farmy Honey Small Bee is lab-tested for quality and purity, offering natural sweetness for your everyday enjoyment.</p>
-      
-      <div class="pdp-warning-box"><strong>Note:</strong> Honey should not be given to children under 12 months of age.</div>
     `,
     reviews: [
       { name: "Dr. Hamza Tariq", city: "Karachi", date: "2026-09-22", rating: 5, comment: "Farmy small bee honey has such a light amber color and delicate floral taste. Truly impressed by DESI TASTE LAND's authenticity!" },
@@ -1991,8 +1983,6 @@ const PRODUCT_DETAILS_DATA = {
       <p>At <strong>DESI TASTE LAND</strong>, we value traditional foods and authentic flavors. Our Talbina brings a meaningful part of Islamic food tradition into your home, making it easy to enjoy this classic barley-based dish with your family.</p>
 
       <p><strong>Bring home DESI TASTE LAND Talbina and enjoy a traditional food inspired by the Sunnah.</strong></p>
-
-      <div class="pdp-warning-box"><strong>Note:</strong> Talbina is a food, not a medicine, and should be enjoyed as part of a balanced diet.</div>
     `,
     reviews: [
       { name: "Maulana Abdul Qadir", city: "Faisalabad", date: "2026-09-23", rating: 5, comment: "SubhanAllah Sunnah food hai aur preparation bohot asaan hai. Doodh aur honey k sath subah nashte mein behtareen ghiza hai." },
@@ -2077,8 +2067,6 @@ const PRODUCT_DETAILS_DATA = {
       <p>At <strong>DESI TASTE LAND</strong>, we value product quality, transparency, and customer trust. We aim to provide clear product information so customers can make informed choices.</p>
 
       <p><strong>Explore Shilajit by DESI TASTE LAND and learn more about this traditional mountain-origin substance.</strong></p>
-
-      <div class="pdp-warning-box"><strong>Important Note:</strong> Shilajit is not a proven cure for diseases. Product quality and safety depend on sourcing, processing, and appropriate laboratory testing.</div>
     `,
     reviews: [
       { name: "Junaid Akhtar", city: "Gilgit", date: "2026-09-22", rating: 5, comment: "Original resin form shilajit. Dissolves completely in warm water and milk without any grit. Pure mountain quality!" },
@@ -2537,7 +2525,6 @@ function renderPdpReviews(product, reviewsList) {
                 ${r.name} <span style="font-weight: normal; color: #6B7280; font-size: 0.82rem;">(${r.city || 'Verified Customer'})</span>
                 <span class="pdp-rc-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
               </span>
-              <span class="pdp-rc-date">${r.date || 'Recent'}</span>
             </div>
             <div class="pdp-rc-stars">
               ${Array(r.rating || 5).fill('<i class="fa-solid fa-star"></i>').join('')}
@@ -2601,7 +2588,6 @@ function handlePdpReviewSubmit(e) {
           ${newRev.name} <span style="font-weight: normal; color: #6B7280; font-size: 0.82rem;">(${newRev.city})</span>
           <span class="pdp-rc-badge"><i class="fa-solid fa-circle-check"></i> Verified Buyer</span>
         </span>
-        <span class="pdp-rc-date">${newRev.date}</span>
       </div>
       <div class="pdp-rc-stars">
         ${Array(newRev.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
