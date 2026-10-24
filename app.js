@@ -1572,6 +1572,11 @@ function initEventListeners() {
     openCartDrawer();
   });
 
+function handleDryFruitsClick(e) {
+  if (e) e.preventDefault();
+  showToast('<i class="fa-solid fa-leaf text-gold"></i> <strong>Royal Dry Fruits Collection</strong> coming soon!');
+}
+
   document.getElementById('checkoutForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('custName').value.trim();
