@@ -2580,3 +2580,183 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
     display: none;
   }
 }
+
+/* ==========================================================================
+   ROYAL DRY FRUITS BANNER & COLLECTION STYLES
+   ========================================================================== */
+.royal-dry-fruits-section {
+  padding: 40px 0 20px 0;
+}
+
+.dry-fruits-banner-card {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  cursor: pointer;
+  background: #1c130d;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s ease;
+}
+
+.dry-fruits-banner-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  border-color: #D4AF37;
+}
+
+.dry-fruits-banner-bg-img {
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  max-height: 380px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.dry-fruits-banner-card:hover .dry-fruits-banner-bg-img {
+  transform: scale(1.02);
+}
+
+.dry-fruits-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 20px;
+  background: radial-gradient(ellipse at center, rgba(16, 10, 6, 0.15) 0%, rgba(12, 8, 4, 0.45) 100%);
+  z-index: 2;
+}
+
+.dry-fruits-banner-title {
+  font-family: 'Cinzel', 'Georgia', 'Playfair Display', serif !important;
+  font-size: clamp(1.6rem, 3.8vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #F8DE7E;
+  background: linear-gradient(135deg, #FFF1C5 0%, #E5B842 50%, #B8860B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 4px 18px rgba(0, 0, 0, 0.7);
+  margin-bottom: 18px;
+  line-height: 1.15;
+  user-select: none;
+}
+
+/* Highlighted CTA Button */
+.dry-fruits-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(180deg, #10483c 0%, #082922 100%);
+  color: #FFF2B2 !important;
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 13px 34px;
+  border-radius: 999px;
+  border: 2px solid #E5B842;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 0 16px rgba(229, 184, 66, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  text-decoration: none !important;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  animation: dryFruitsPulseGlow 3s infinite alternate ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dry-fruits-cta-btn:hover {
+  background: linear-gradient(180deg, #165b4c 0%, #0d3b32 100%);
+  color: #FFFFFF !important;
+  border-color: #FFF4C2;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 26px rgba(229, 184, 66, 0.85);
+}
+
+.dry-fruits-cta-btn i {
+  font-size: 0.9em;
+  transition: transform 0.3s ease;
+}
+
+.dry-fruits-cta-btn:hover i {
+  transform: translateX(4px);
+}
+
+@keyframes dryFruitsPulseGlow {
+  0% {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 12px rgba(229, 184, 66, 0.35);
+  }
+  100% {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 24px rgba(229, 184, 66, 0.7);
+  }
+}
+
+/* Dedicated Dry Fruits Collection Grid */
+.dry-fruits-collection-section {
+  padding-top: 30px;
+}
+
+.dry-fruits-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 26px;
+  margin-top: 30px;
+}
+
+@media (min-width: 1200px) {
+  .dry-fruits-page-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .royal-dry-fruits-section {
+    padding: 24px 0 12px 0;
+  }
+  .dry-fruits-banner-card {
+    border-radius: 12px;
+  }
+  .dry-fruits-banner-bg-img {
+    min-height: 160px;
+  }
+  .dry-fruits-banner-overlay {
+    padding: 16px 12px;
+  }
+  .dry-fruits-banner-title {
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .dry-fruits-cta-btn {
+    padding: 10px 22px;
+    letter-spacing: 1.2px;
+    gap: 8px;
+  }
+  .dry-fruits-page-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .dry-fruits-page-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    max-width: 360px;
+    margin: 20px auto 0 auto;
+  }
+  .dry-fruits-banner-title {
+    font-size: 1.35rem;
+    margin-bottom: 8px;
+  }
+  .dry-fruits-cta-btn {
+    padding: 8px 18px;
+    font-size: 0.8rem;
+  }
+}

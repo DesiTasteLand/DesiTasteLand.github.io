@@ -64,6 +64,90 @@ const HONEY_CATEGORIES = [
   }
 ];
 
+// 1b. ROYAL DRY FRUITS COLLECTION (5 Products - Exact Order)
+const DRY_FRUITS_PRODUCTS = [
+  {
+    id: 'prod-almond',
+    name: 'ALMOND',
+    urduName: 'بادام',
+    tag: 'Royal Selection',
+    image: 'assets/images/prod_almond.jpg',
+    description: '100% naturally sourced, crisp, and nutrient-rich premium sweet almonds.',
+    variants: [
+      { weight: '250g', price: 750, originalPrice: 950 },
+      { weight: '500g', price: 1450, originalPrice: 1800, isDefault: true },
+      { weight: '1000g', price: 2800, originalPrice: 3500 }
+    ],
+    selectedWeightIndex: 1,
+    rating: 4.95,
+    reviewsCount: 184
+  },
+  {
+    id: 'prod-cashew',
+    name: 'CASHEW',
+    urduName: 'کاجو',
+    tag: 'King of Nuts',
+    image: 'assets/images/prod_cashew.jpg',
+    description: 'Large whole crunchy cashews with buttery texture and natural sweetness.',
+    variants: [
+      { weight: '250g', price: 1100, originalPrice: 1350 },
+      { weight: '500g', price: 2150, originalPrice: 2600, isDefault: true },
+      { weight: '1000g', price: 4200, originalPrice: 5100 }
+    ],
+    selectedWeightIndex: 1,
+    rating: 4.98,
+    reviewsCount: 142
+  },
+  {
+    id: 'prod-walnut',
+    name: 'WALNUT',
+    urduName: 'اخروٹ',
+    tag: 'Brain Food',
+    image: 'assets/images/prod_walnut.jpg',
+    description: 'Fresh, light-colored Kashmiri walnut kernels packed with omega-3 and vital antioxidants.',
+    variants: [
+      { weight: '250g', price: 850, originalPrice: 1050 },
+      { weight: '500g', price: 1650, originalPrice: 2000, isDefault: true },
+      { weight: '1000g', price: 3200, originalPrice: 3900 }
+    ],
+    selectedWeightIndex: 1,
+    rating: 4.92,
+    reviewsCount: 196
+  },
+  {
+    id: 'prod-fig',
+    name: 'FIG',
+    urduName: 'انجیر',
+    tag: 'Sun Dried Organic',
+    image: 'assets/images/prod_fig.jpg',
+    description: 'Juicy, naturally dried premium sweet figs packed with fiber and natural vitality.',
+    variants: [
+      { weight: '250g', price: 950, originalPrice: 1200 },
+      { weight: '500g', price: 1850, originalPrice: 2300, isDefault: true },
+      { weight: '1000g', price: 3600, originalPrice: 4400 }
+    ],
+    selectedWeightIndex: 1,
+    rating: 4.88,
+    reviewsCount: 165
+  },
+  {
+    id: 'prod-pistachio',
+    name: 'PISTACHIO',
+    urduName: 'پستہ',
+    tag: 'Premium Roasted',
+    image: 'assets/images/prod_pistachio.jpg',
+    description: 'Crisp, green premium pistachio kernels with delectable crunch and natural rich flavor.',
+    variants: [
+      { weight: '250g', price: 1200, originalPrice: 1500 },
+      { weight: '500g', price: 2350, originalPrice: 2850, isDefault: true },
+      { weight: '1000g', price: 4600, originalPrice: 5600 }
+    ],
+    selectedWeightIndex: 1,
+    rating: 4.96,
+    reviewsCount: 210
+  }
+];
+
 // 2. TOP SELLING PRODUCTS - Only name, image, simple BUY NOW (no price/qty display)
 const TOP_SELLING_PRODUCTS = [
   {
@@ -283,13 +367,14 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
 }
 
-// 4c. ASSET PATH RESOLVER (Fixes image paths on subfolder routes like /honeycollection/)
+// 4c. ASSET PATH RESOLVER (Fixes image paths on subfolder routes like /honeycollection/, /dryfruits/)
 function resolveImagePath(imgSrc) {
   if (!imgSrc) return '';
   if (imgSrc.startsWith('http://') || imgSrc.startsWith('https://') || imgSrc.startsWith('data:')) return imgSrc;
   const cleanPath = imgSrc.replace(/^\.\.\//, '').replace(/^\.\//, '');
   const pathname = window.location.pathname || '';
   const isSubfolder = pathname.includes('/honeycollection') || 
+                      pathname.includes('/dryfruits') || 
                       pathname.includes('/product') || 
                       pathname.includes('/deal') || 
                       pathname.includes('/admin');
@@ -305,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTopSellingProducts();
   renderAllProducts();
   renderDedicatedHoneyPage();
+  renderDedicatedDryFruitsPage();
   updateCartUI();
   updateFavoritesUI();
   updateAuthUI();
@@ -375,7 +461,7 @@ function initNavbarScrollBehavior() {
 
 // 5d. DYNAMIC SCROLL URL SPY (Updates URL as user scrolls through sections)
 function initScrollUrlSpy() {
-  if (document.getElementById('honeyPageGrid')) return;
+  if (document.getElementById('honeyPageGrid') || document.getElementById('dryFruitsPageGrid')) return;
 
   const sections = [
     { id: 'hero', path: '/' },
@@ -786,6 +872,9 @@ function addProductToCartDirect(productId) {
   if (!product) {
     product = HONEY_CATEGORIES.find(c => c.id === productId);
   }
+  if (!product) {
+    product = DRY_FRUITS_PRODUCTS.find(c => c.id === productId);
+  }
   if (!product) return;
 
   if (product.isHoney) {
@@ -874,6 +963,64 @@ function selectDedicatedHoneyWeight(categoryId, weightIndex) {
   renderDedicatedHoneyPage();
 }
 
+// 9b-2. DEDICATED ROYAL DRY FRUITS PAGE (dryfruits/index.html) - 5 Products in exact order
+function renderDedicatedDryFruitsPage() {
+  const container = document.getElementById('dryFruitsPageGrid');
+  if (!container) return;
+
+  container.innerHTML = DRY_FRUITS_PRODUCTS.map(product => {
+    const activeVar = product.variants[product.selectedWeightIndex || 0];
+    return `
+      <div class="honey-page-card dry-fruit-card" id="dfcard-${product.id}">
+        <span class="honey-page-badge">${product.tag}</span>
+        <div class="honey-page-img-box">
+          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Product Details">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+          <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
+            <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+          </button>
+          <a href="../product/?id=${product.id}" style="display:block;height:100%;text-decoration:none;">
+            <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy">
+          </a>
+        </div>
+        <div class="honey-page-body">
+          <h3 class="honey-page-title" style="cursor:pointer;" onclick="openProductQuickView('${product.id}')">
+            <span class="product-title-en">${product.name}</span>
+            <span class="product-title-ur">${product.urduName || ''}</span>
+          </h3>
+          <p class="honey-page-desc">${product.description}</p>
+          <div class="weight-selector-box">
+            <span class="weight-selector-label">Select Weight:</span>
+            <div class="honey-weights-row">
+              ${product.variants.map((v, idx) => `
+                <button type="button" class="honey-w-btn ${idx === (product.selectedWeightIndex || 0) ? 'active' : ''}"
+                        onclick="selectDedicatedDryFruitWeight('${product.id}', ${idx})">
+                  ${v.weight}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+          <div class="honey-card-price-row">
+            <span class="honey-price-val" id="dfprice-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+            <span class="honey-unit-label">per ${activeVar.weight}</span>
+          </div>
+          <button class="btn btn-red btn-block buy-now-btn" onclick="openProductSelectionModal('${product.id}')">
+            <i class="fa-solid fa-bag-shopping"></i> BUY NOW
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectDedicatedDryFruitWeight(productId, weightIndex) {
+  const product = DRY_FRUITS_PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+  product.selectedWeightIndex = weightIndex;
+  renderDedicatedDryFruitsPage();
+}
+
 // 9c. FAVORITES / WISHLIST MANAGEMENT
 function isFavorite(productId) {
   return favorites.includes(productId);
@@ -897,6 +1044,7 @@ function toggleFavorite(productId, event) {
   renderTopSellingProducts();
   renderAllProducts();
   renderDedicatedHoneyPage();
+  renderDedicatedDryFruitsPage();
 }
 
 function updateFavoritesUI() {
@@ -922,7 +1070,7 @@ function renderWishlistDrawer() {
     return;
   }
 
-  const allItems = [...ALL_PRODUCTS, ...HONEY_CATEGORIES, ...TOP_SELLING_PRODUCTS];
+  const allItems = [...ALL_PRODUCTS, ...HONEY_CATEGORIES, ...DRY_FRUITS_PRODUCTS, ...TOP_SELLING_PRODUCTS];
   const uniqueFavs = [...new Set(favorites)];
 
   container.innerHTML = uniqueFavs.map(id => {
@@ -970,6 +1118,9 @@ function openProductSelectionModal(productId) {
   let product = getLiveProducts().find(p => p.id === productId);
   if (!product) {
     product = HONEY_CATEGORIES.find(c => c.id === productId);
+  }
+  if (!product) {
+    product = DRY_FRUITS_PRODUCTS.find(c => c.id === productId);
   }
   if (!product) return;
 
@@ -1313,6 +1464,7 @@ function openProductQuickView(productId) {
   }
   const pathname = window.location.pathname || '';
   const isSub = pathname.includes('/honeycollection') || 
+                pathname.includes('/dryfruits') || 
                 pathname.includes('/allproduct') || 
                 pathname.includes('/topselling') || 
                 pathname.includes('/deal') || 
@@ -2206,6 +2358,184 @@ const PRODUCT_DETAILS_DATA = {
       { name: "Dr. Samina", city: "Lahore", date: "2026-09-18", rating: 5, comment: "Biryani aur kheer mein use kiya, royal restaurant wala look aur khushboo ayi. Sealed glass vial packing is perfect." },
       { name: "Fawad Chaudhry", city: "Karachi", date: "2026-09-12", rating: 5, comment: "100% authentic saffron. Color release test bhi pass ho gya, natural slow saffron release. Highly satisfied." }
     ]
+  },
+  'prod-almond': {
+    id: 'prod-almond',
+    name: 'Almond – 100% Pure & Premium Quality (بادام)',
+    urduName: 'بادام',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_almond.jpg',
+    rating: 4.95,
+    reviewsCount: 184,
+    starsCount: { 5: 172, 4: 10, 3: 2, 2: 0, 1: 0 },
+    variants: [
+      { weight: '250g', price: 750, originalPrice: 950 },
+      { weight: '500g', price: 1450, originalPrice: 1800, isDefault: true },
+      { weight: '1000g', price: 2800, originalPrice: 3500 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Premium Sweet Almonds – 100% Natural & Nutrient-Rich (بادام)</h2>
+      <p>Savor the crisp crunch and wholesome nutrition of <strong>Premium Almonds by DESI TASTE LAND</strong>. Hand-picked from prime orchards and carefully packaged to preserve natural healthy fats, protein, and vitamin E. Ideal for morning energy, brain health, and delicious culinary recipes.</p>
+
+      <h2>Key Health Benefits of Almonds</h2>
+      <ul>
+        <li><strong>Brain & Memory Booster:</strong> Rich in riboflavin and L-carnitine to support cognitive health.</li>
+        <li><strong>Heart Health:</strong> Loaded with monounsaturated healthy fats and antioxidants.</li>
+        <li><strong>High Protein & Fiber:</strong> Helps maintain fullness and supports daily metabolic energy.</li>
+        <li><strong>Skin & Hair Vitality:</strong> Natural source of Vitamin E for radiant glow.</li>
+      </ul>
+
+      <h2>How to Enjoy Almonds?</h2>
+      <p>Soak overnight and peel in the morning for maximum nutrient absorption, eat as an on-the-go wholesome snack, or blend into milk, desserts, and traditional halwas.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>At <strong>DESI TASTE LAND</strong>, our dry fruits are 100% naturally processed with zero artificial polish or chemical preservatives. Sealed in airtight food-grade kraft pouches for ultimate freshness and crunch.</p>
+    `,
+    reviews: [
+      { name: "Dr. Farooq Shah", city: "Lahore", date: "2026-09-24", rating: 5, comment: "Bohot hi lazeez aur fresh badam hain. Bilkul kadwa dana nahi nikla, zabardast crunch aur sweet taste hai. Packaging is top notch." },
+      { name: "Mrs. Nabila Tariq", city: "Islamabad", date: "2026-09-20", rating: 5, comment: "Bachon k liye rozana raat ko bhigo kar deti hoon. Size aur quality bohot behtar hai baazar k muqable me." },
+      { name: "Hamza Siddiqui", city: "Karachi", date: "2026-09-15", rating: 5, comment: "Fast delivery with fresh aroma. Clean and moisture-free pouch. Highly satisfied!" }
+    ]
+  },
+  'prod-cashew': {
+    id: 'prod-cashew',
+    name: 'Cashew Nuts – 100% Premium & Crunchy (کاجو)',
+    urduName: 'کاجو',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_cashew.jpg',
+    rating: 4.98,
+    reviewsCount: 142,
+    starsCount: { 5: 136, 4: 5, 3: 1, 2: 0, 1: 0 },
+    variants: [
+      { weight: '250g', price: 1100, originalPrice: 1350 },
+      { weight: '500g', price: 2150, originalPrice: 2600, isDefault: true },
+      { weight: '1000g', price: 4200, originalPrice: 5100 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Royal Whole Cashew Nuts – Rich, Creamy & Crunchy (کاجو)</h2>
+      <p>Indulge in the buttery sweetness and satisfying crispness of <strong>Premium Whole Cashews by DESI TASTE LAND</strong>. Selected for large size, intact kernels, and creamy flavor without any bitter aftertaste.</p>
+
+      <h2>Key Health Benefits of Cashews</h2>
+      <ul>
+        <li><strong>Rich in Essential Minerals:</strong> High in magnesium, copper, zinc, and iron for bone and immune support.</li>
+        <li><strong>Healthy Unsaturated Fats:</strong> Nourishes cardiovascular vitality and healthy cholesterol balance.</li>
+        <li><strong>Natural Energy Fuel:</strong> Perfect wholesome snack for active lifestyles and busy workdays.</li>
+      </ul>
+
+      <h2>How to Enjoy Cashews?</h2>
+      <p>Enjoy raw or lightly roasted, toss into savory rice and korma dishes, or sprinkle over traditional sweet desserts.</p>
+
+      <h2>Why Choose DESI TASTE LAND?</h2>
+      <p>We source only whole, premium-grade cashews with strict quality sorting and zero chemical additives.</p>
+    `,
+    reviews: [
+      { name: "Kashif Mehmood", city: "Rawalpindi", date: "2026-09-22", rating: 5, comment: "Kaju ka size bohot bada hai aur crunch zabardast hai. Bilkul fresh packing. 10/10 quality!" },
+      { name: "Amina Waqas", city: "Lahore", date: "2026-09-18", rating: 5, comment: "Authentic buttery texture. Desi Taste Land dry fruits quality always exceeds expectations." }
+    ]
+  },
+  'prod-walnut': {
+    id: 'prod-walnut',
+    name: 'Walnut Kernels – 100% Pure & Fresh Giri (اخروٹ)',
+    urduName: 'اخروٹ',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_walnut.jpg',
+    rating: 4.92,
+    reviewsCount: 196,
+    starsCount: { 5: 180, 4: 12, 3: 3, 2: 1, 1: 0 },
+    variants: [
+      { weight: '250g', price: 850, originalPrice: 1050 },
+      { weight: '500g', price: 1650, originalPrice: 2000, isDefault: true },
+      { weight: '1000g', price: 3200, originalPrice: 3900 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Kashmiri Walnut Kernels (Akhrot Giri) – 100% Fresh & Oil-Rich (اخروٹ)</h2>
+      <p>Experience the exceptional freshness of <strong>Light-Amber Walnut Kernels by DESI TASTE LAND</strong>. Loaded with plant-based Omega-3 fatty acids, these tender walnuts retain their natural aromatic oils and mild nutty flavor.</p>
+
+      <h2>Key Health Benefits of Walnuts</h2>
+      <ul>
+        <li><strong>Supreme Brain Food:</strong> Highest plant-based Omega-3 (ALA) content of any nut.</li>
+        <li><strong>Cardiovascular Health:</strong> Helps maintain healthy blood vessel flexibility and blood pressure.</li>
+        <li><strong>Antioxidant Powerhouse:</strong> Contains polyphenols that protect against oxidative stress.</li>
+      </ul>
+
+      <h2>How to Enjoy Walnuts?</h2>
+      <p>Eat fresh with a spoon of Desi Taste Land Wild Honey, blend into morning oatmeal, or toss with fresh salads.</p>
+    `,
+    reviews: [
+      { name: "Chaudhry Riaz", city: "Faisalabad", date: "2026-09-25", rating: 5, comment: "Bohat hi fresh giri hai, bilkul bhi kadwahat ya smell nahi. Asli pahadi akhrot." },
+      { name: "Saima Noor", city: "Islamabad", date: "2026-09-19", rating: 5, comment: "Honey k sath mila k khane ka alag hi maza hai. Delivery fast aur packing safe thi." }
+    ]
+  },
+  'prod-fig': {
+    id: 'prod-fig',
+    name: 'Dried Figs (Anjeer) – 100% Natural & Organic (انجیر)',
+    urduName: 'انجیر',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_fig.jpg',
+    rating: 4.88,
+    reviewsCount: 165,
+    starsCount: { 5: 148, 4: 14, 3: 2, 2: 1, 1: 0 },
+    variants: [
+      { weight: '250g', price: 950, originalPrice: 1200 },
+      { weight: '500g', price: 1850, originalPrice: 2300, isDefault: true },
+      { weight: '1000g', price: 3600, originalPrice: 4400 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Sun-Dried Golden Figs (Anjeer) – 100% Pure & Sweet (انجیر)</h2>
+      <p>Naturally sun-cured, succulent dried figs from <strong>DESI TASTE LAND</strong>. Celebrated for centuries for their digestive, detoxifying, and mineral-dense benefits. Free from added sugars or chemical softening agents.</p>
+
+      <h2>Key Health Benefits of Figs (Anjeer)</h2>
+      <ul>
+        <li><strong>Digestive Harmony:</strong> Super-rich in soluble dietary fiber for gentle and healthy digestion.</li>
+        <li><strong>Bone Strength:</strong> High natural calcium, potassium, and magnesium content.</li>
+        <li><strong>Iron & Blood Vitality:</strong> Assists healthy hemoglobin levels and stamina.</li>
+      </ul>
+
+      <h2>How to Enjoy Figs?</h2>
+      <p>Soak 2-3 figs in water overnight and consume first thing in the morning along with the infused water for digestive benefits.</p>
+    `,
+    reviews: [
+      { name: "Haji Munir", city: "Multan", date: "2026-09-21", rating: 5, comment: "Anjeer bohot naram aur meethi hai, koi cheeni ya preservative nahi. Roz subah paani me bhigo k use kar raha hoon." },
+      { name: "Zainab Bibi", city: "Lahore", date: "2026-09-16", rating: 5, comment: "Very clean and hygienically packed. Great for digestion." }
+    ]
+  },
+  'prod-pistachio': {
+    id: 'prod-pistachio',
+    name: 'Pistachio (Pista) – 100% Premium Roasted & Salted (پستہ)',
+    urduName: 'پستہ',
+    brand: 'DESI TASTE LAND',
+    image: 'assets/images/prod_pistachio.jpg',
+    rating: 4.96,
+    reviewsCount: 210,
+    starsCount: { 5: 198, 4: 10, 3: 2, 2: 0, 1: 0 },
+    variants: [
+      { weight: '250g', price: 1200, originalPrice: 1500 },
+      { weight: '500g', price: 2350, originalPrice: 2850, isDefault: true },
+      { weight: '1000g', price: 4600, originalPrice: 5600 }
+    ],
+    selectedVariantIndex: 1,
+    aboutHtml: `
+      <h2>Royal Pistachios (Pista) – Crunchy, Savory & Nutrient-Packed (پستہ)</h2>
+      <p>Crispy, roasted, and lightly seasoned green pistachios from <strong>DESI TASTE LAND</strong>. Loaded with lutein, zeaxanthin, protein, and dietary fiber, delivering an irresistible crunch and luxury taste.</p>
+
+      <h2>Key Health Benefits of Pistachios</h2>
+      <ul>
+        <li><strong>Eye Health & Antioxidants:</strong> Highest levels of lutein and zeaxanthin among all nuts.</li>
+        <li><strong>Complete Amino Acids:</strong> Provides quality plant protein to fuel muscle recovery and vitality.</li>
+        <li><strong>Low Glycemic Index:</strong> Supports steady energy without blood sugar spikes.</li>
+      </ul>
+
+      <h2>How to Enjoy Pistachios?</h2>
+      <p>Enjoy as an evening tea-time snack, garnish on kheer, zarda, and sheer khurma, or crush into homemade energy bars.</p>
+    `,
+    reviews: [
+      { name: "Bilal Akhtar", city: "Peshawar", date: "2026-09-23", rating: 5, comment: "Pista ka crunch aur namak ka balance bilkul perfect hai. Daane khule hue aur fresh hain. Excellent quality!" },
+      { name: "Usman Ghani", city: "Gujranwala", date: "2026-09-17", rating: 5, comment: "Superb taste! Mehmaano k samne rakhne k liye behtareen luxury dry fruit." }
+    ]
   }
 };
 
@@ -2219,6 +2549,13 @@ PRODUCT_DETAILS_DATA['shilajit'] = PRODUCT_DETAILS_DATA['prod-shilajit'];
 PRODUCT_DETAILS_DATA['mix-pickle'] = PRODUCT_DETAILS_DATA['prod-pickle'];
 PRODUCT_DETAILS_DATA['tea-patti'] = PRODUCT_DETAILS_DATA['prod-tea'];
 PRODUCT_DETAILS_DATA['saffron'] = PRODUCT_DETAILS_DATA['prod-saffron'];
+
+// Dry Fruits aliases
+PRODUCT_DETAILS_DATA['almond'] = PRODUCT_DETAILS_DATA['prod-almond'];
+PRODUCT_DETAILS_DATA['cashew'] = PRODUCT_DETAILS_DATA['prod-cashew'];
+PRODUCT_DETAILS_DATA['walnut'] = PRODUCT_DETAILS_DATA['prod-walnut'];
+PRODUCT_DETAILS_DATA['fig'] = PRODUCT_DETAILS_DATA['prod-fig'];
+PRODUCT_DETAILS_DATA['pistachio'] = PRODUCT_DETAILS_DATA['prod-pistachio'];
 
 let pdpCurrentProduct = null;
 let pdpSelectedVariantIdx = 0;
@@ -2241,7 +2578,9 @@ function initProductDetailPage() {
 
   let prodData = PRODUCT_DETAILS_DATA[prodId];
   if (!prodData) {
-    let found = HONEY_CATEGORIES.find(c => c.id === prodId) || getLiveProducts().find(p => p.id === prodId);
+    let found = HONEY_CATEGORIES.find(c => c.id === prodId) || 
+                DRY_FRUITS_PRODUCTS.find(c => c.id === prodId) || 
+                getLiveProducts().find(p => p.id === prodId);
     if (found) {
       prodData = {
         id: found.id,
@@ -2288,6 +2627,20 @@ function initProductDetailPage() {
   if (metaTitle) metaTitle.textContent = `${prodData.name} | DESI TASTE LAND`;
   const bcTitle = document.getElementById('pdpBreadcrumbTitle');
   if (bcTitle) bcTitle.textContent = prodData.name;
+
+  const bcLink = document.querySelector('.pdp-breadcrumb a:nth-child(3)');
+  if (bcLink) {
+    if (prodData.id.startsWith('honey-')) {
+      bcLink.href = '../honeycollection/';
+      bcLink.textContent = 'Pure Honey Collection';
+    } else if (prodData.id.startsWith('prod-almond') || prodData.id.startsWith('prod-cashew') || prodData.id.startsWith('prod-walnut') || prodData.id.startsWith('prod-fig') || prodData.id.startsWith('prod-pistachio')) {
+      bcLink.href = '../dryfruits/';
+      bcLink.textContent = 'Royal Dry Fruits Collection';
+    } else {
+      bcLink.href = '../#allProductsSection';
+      bcLink.textContent = 'All Products';
+    }
+  }
 
   const storedCustomReviews = JSON.parse(localStorage.getItem(`dtl_custom_reviews_${prodData.id}`) || '[]');
   const allReviews = [...storedCustomReviews, ...prodData.reviews];

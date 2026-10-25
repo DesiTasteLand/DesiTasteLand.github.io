@@ -50,7 +50,7 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <link rel="stylesheet" href="styles.css?v=4.1">
+  <link rel="stylesheet" href="styles.css?v=5.1">
 
   <!-- JSON-LD SEO Schema for Google Search Site Name & Identity -->
   <script type="application/ld+json">
@@ -311,10 +311,15 @@
   <!-- ROYAL DRY FRUITS SECTION -->
   <section class="royal-dry-fruits-section reveal-section" id="dryFruitsSection">
     <div class="container">
-      <div class="dry-fruits-banner-card">
-        <a href="#dryFruitsSection" id="dryFruitsBannerLink" class="dry-fruits-banner-link" onclick="handleDryFruitsClick(event)" title="Explore Royal Dry Fruits Collection">
-          <img src="assets/images/royal_dry_fruits_banner.png" alt="Royal Dry Fruits – Explore The Collection" class="dry-fruits-banner-img" loading="lazy">
-        </a>
+      <div class="dry-fruits-banner-card" onclick="window.location.href='dryfruits/'" role="button" tabindex="0" title="Explore Royal Dry Fruits Collection">
+        <img src="assets/images/royal_dry_fruits_banner_clean.jpg" alt="Royal Dry Fruits Collection" class="dry-fruits-banner-bg-img" loading="lazy">
+        <div class="dry-fruits-banner-overlay">
+          <h2 class="dry-fruits-banner-title">ROYAL DRY FRUITS</h2>
+          <a href="dryfruits/" class="dry-fruits-cta-btn" id="exploreDryFruitsBtn" onclick="event.stopPropagation()">
+            <span>EXPLORE THE COLLECTION</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -587,6 +592,8 @@
           <li><a href="#hero">Home</a></li>
           <li><a href="#topSelling">Top Selling</a></li>
           <li><a href="#allProductsSection">All Products</a></li>
+          <li><a href="dryfruits/">Royal Dry Fruits</a></li>
+          <li><a href="honeycollection/">Pure Honey Collection</a></li>
           <li><a href="#specialDeal">Today's Deal</a></li>
           <li><a href="#whyUs">Why Choose Us</a></li>
           <li><a href="#aboutSection">About Us</a></li>
@@ -727,6 +734,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <script src="app.js?v=4.3"></script>
+  <script src="app.js?v=5.1"></script>
 </body>
 </html>
