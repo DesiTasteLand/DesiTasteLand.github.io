@@ -64,89 +64,392 @@ const HONEY_CATEGORIES = [
   }
 ];
 
-// 1b. ROYAL DRY FRUITS COLLECTION (5 Products - Exact Order)
-const DRY_FRUITS_PRODUCTS = [
+// 1b. ROYAL DRY FRUITS CATEGORIES (7 Main Categories)
+const DRY_FRUITS_CATEGORIES = [
   {
+    categoryKey: 'almond',
     id: 'prod-almond',
     name: 'ALMOND',
     urduName: 'بادام',
-    tag: 'Royal Selection',
+    tag: '5 Varieties Available',
     image: 'assets/images/prod_almond.jpg',
-    description: '100% naturally sourced, crisp, and nutrient-rich premium sweet almonds.',
-    variants: [
-      { weight: '250g', price: 750, originalPrice: 950 },
-      { weight: '500g', price: 1450, originalPrice: 1800, isDefault: true },
-      { weight: '1000g', price: 2800, originalPrice: 3500 }
-    ],
-    selectedWeightIndex: 1,
-    rating: 4.95,
-    reviewsCount: 184
+    description: '100% naturally sourced sweet almonds. Available in 5 premium regional varieties.',
+    varietiesCount: 5,
+    startingPrice: 3000
   },
   {
+    categoryKey: 'cashew',
     id: 'prod-cashew',
     name: 'CASHEW',
     urduName: 'کاجو',
-    tag: 'King of Nuts',
+    tag: '3 Varieties Available',
     image: 'assets/images/prod_cashew.jpg',
-    description: 'Large whole crunchy cashews with buttery texture and natural sweetness.',
-    variants: [
-      { weight: '250g', price: 1100, originalPrice: 1350 },
-      { weight: '500g', price: 2150, originalPrice: 2600, isDefault: true },
-      { weight: '1000g', price: 4200, originalPrice: 5100 }
-    ],
-    selectedWeightIndex: 1,
-    rating: 4.98,
-    reviewsCount: 142
+    description: 'Large whole crunchy cashews. Available in Simple, Roasted, and Tiger varieties.',
+    varietiesCount: 3,
+    startingPrice: 3600
   },
   {
+    categoryKey: 'walnut',
     id: 'prod-walnut',
     name: 'WALNUT',
     urduName: 'اخروٹ',
-    tag: 'Brain Food',
+    tag: '4 Varieties Available',
     image: 'assets/images/prod_walnut.jpg',
-    description: 'Fresh, light-colored Kashmiri walnut kernels packed with omega-3 and vital antioxidants.',
-    variants: [
-      { weight: '250g', price: 850, originalPrice: 1050 },
-      { weight: '500g', price: 1650, originalPrice: 2000, isDefault: true },
-      { weight: '1000g', price: 3200, originalPrice: 3900 }
-    ],
-    selectedWeightIndex: 1,
-    rating: 4.92,
-    reviewsCount: 196
+    description: 'Fresh Kashmiri and international walnut kernels packed with omega-3 nutrients.',
+    varietiesCount: 4,
+    startingPrice: 800
   },
   {
+    categoryKey: 'fig',
     id: 'prod-fig',
     name: 'FIG',
     urduName: 'انجیر',
-    tag: 'Sun Dried Organic',
+    tag: '2 Varieties Available',
     image: 'assets/images/prod_fig.jpg',
-    description: 'Juicy, naturally dried premium sweet figs packed with fiber and natural vitality.',
-    variants: [
-      { weight: '250g', price: 950, originalPrice: 1200 },
-      { weight: '500g', price: 1850, originalPrice: 2300, isDefault: true },
-      { weight: '1000g', price: 3600, originalPrice: 4400 }
-    ],
-    selectedWeightIndex: 1,
-    rating: 4.88,
-    reviewsCount: 165
+    description: 'Naturally sun-dried golden figs. Available in Desi Small and Big sizes.',
+    varietiesCount: 2,
+    startingPrice: 3200
   },
   {
+    categoryKey: 'pistachio',
     id: 'prod-pistachio',
     name: 'PISTACHIO',
     urduName: 'پستہ',
-    tag: 'Premium Roasted',
+    tag: 'Pure & Premium',
     image: 'assets/images/prod_pistachio.jpg',
-    description: 'Crisp, green premium pistachio kernels with delectable crunch and natural rich flavor.',
-    variants: [
-      { weight: '250g', price: 1200, originalPrice: 1500 },
-      { weight: '500g', price: 2350, originalPrice: 2850, isDefault: true },
-      { weight: '1000g', price: 4600, originalPrice: 5600 }
-    ],
-    selectedWeightIndex: 1,
-    rating: 4.96,
-    reviewsCount: 210
+    description: 'Crisp roasted and salted green pistachio kernels with delectable crunch.',
+    varietiesCount: 1,
+    startingPrice: 5600
+  },
+  {
+    categoryKey: 'raisins',
+    id: 'prod-raisins',
+    name: 'RAISINS',
+    urduName: 'کشمش',
+    tag: '3 Varieties Available',
+    image: 'assets/images/prod_raisins.jpg',
+    description: 'Naturally cured juicy sweet raisins. Available in Sundarkhani, Kabli, and Afghani varieties.',
+    varietiesCount: 3,
+    startingPrice: 1400
+  },
+  {
+    categoryKey: 'pumpkin-seeds',
+    id: 'prod-pumpkin-seeds',
+    name: 'PUMPKIN SEEDS',
+    urduName: 'کدو کے بیج',
+    tag: 'Organic Superfood',
+    image: 'assets/images/prod_pumpkin_seeds.jpg',
+    description: 'Nutrient-rich AAA grade raw pumpkin seed kernels for daily wellness.',
+    varietiesCount: 1,
+    startingPrice: 2000
   }
 ];
+
+// 1c. ROYAL DRY FRUITS VARIETIES BY CATEGORY
+const DRY_FRUITS_VARIETIES = {
+  'almond': [
+    {
+      id: 'prod-almond-pak',
+      categoryKey: 'almond',
+      name: 'PAKISTANI ALMONDS',
+      urduName: 'پاکستانی بادام',
+      tag: 'Local Harvest',
+      image: 'assets/images/prod_almond.jpg',
+      pricePerKg: 3000,
+      variants: [
+        { weight: '250g', price: 750 },
+        { weight: '500g', price: 1500 },
+        { weight: '1000g', price: 3000, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-almond-irani',
+      categoryKey: 'almond',
+      name: 'IRANI ALMONDS',
+      urduName: 'ایرانی بادام',
+      tag: 'Imported Irani',
+      image: 'assets/images/prod_almond.jpg',
+      pricePerKg: 3400,
+      variants: [
+        { weight: '250g', price: 850 },
+        { weight: '500g', price: 1700 },
+        { weight: '1000g', price: 3400, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-almond-american',
+      categoryKey: 'almond',
+      name: 'AMERICAN ALMONDS',
+      urduName: 'امریکی بادام',
+      tag: 'California Grade',
+      image: 'assets/images/prod_almond.jpg',
+      pricePerKg: 3450,
+      variants: [
+        { weight: '250g', price: 865 },
+        { weight: '500g', price: 1725 },
+        { weight: '1000g', price: 3450, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-almond-australian',
+      categoryKey: 'almond',
+      name: 'AUSTRALIAN ALMONDS',
+      urduName: 'آسٹریلوی بادام',
+      tag: 'Australian Premium',
+      image: 'assets/images/prod_almond.jpg',
+      pricePerKg: 3600,
+      variants: [
+        { weight: '250g', price: 900 },
+        { weight: '500g', price: 1800 },
+        { weight: '1000g', price: 3600, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-almond-abdulwahidi',
+      categoryKey: 'almond',
+      name: 'ABDUL WAHIDI ALMONDS',
+      urduName: 'عبد الواحدی بادام',
+      tag: 'Ultra Luxury Supreme',
+      image: 'assets/images/prod_almond.jpg',
+      pricePerKg: 7000,
+      variants: [
+        { weight: '250g', price: 1750 },
+        { weight: '500g', price: 3500 },
+        { weight: '1000g', price: 7000, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ],
+  'cashew': [
+    {
+      id: 'prod-cashew-simple',
+      categoryKey: 'cashew',
+      name: 'SIMPLE CASHEW',
+      urduName: 'سادہ کاجو',
+      tag: 'Natural Raw Whole',
+      image: 'assets/images/prod_cashew.jpg',
+      pricePerKg: 3600,
+      variants: [
+        { weight: '250g', price: 900 },
+        { weight: '500g', price: 1800 },
+        { weight: '1000g', price: 3600, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-cashew-roasted',
+      categoryKey: 'cashew',
+      name: 'ROASTED CASHEW',
+      urduName: 'بھنے ہوئے کاجو',
+      tag: 'Crisp Oven Roasted',
+      image: 'assets/images/prod_cashew.jpg',
+      pricePerKg: 3800,
+      variants: [
+        { weight: '250g', price: 950 },
+        { weight: '500g', price: 1900 },
+        { weight: '1000g', price: 3800, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-cashew-tiger',
+      categoryKey: 'cashew',
+      name: 'TIGER CASHEW',
+      urduName: 'ٹائیگر کاجو',
+      tag: 'Jumbo Size King',
+      image: 'assets/images/prod_cashew.jpg',
+      pricePerKg: 4400,
+      variants: [
+        { weight: '250g', price: 1100 },
+        { weight: '500g', price: 2200 },
+        { weight: '1000g', price: 4400, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ],
+  'walnut': [
+    {
+      id: 'prod-walnut-simple',
+      categoryKey: 'walnut',
+      name: 'SIMPLE WALNUTS',
+      urduName: 'سادہ اخروٹ',
+      tag: 'Fresh Harvest',
+      image: 'assets/images/prod_walnut.jpg',
+      pricePerKg: 800,
+      variants: [
+        { weight: '250g', price: 200 },
+        { weight: '500g', price: 400 },
+        { weight: '1000g', price: 800, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-walnut-sunsun',
+      categoryKey: 'walnut',
+      name: 'SUNSUN WALNUTS',
+      urduName: 'سن سن اخروٹ',
+      tag: 'Thin Shell Giri',
+      image: 'assets/images/prod_walnut.jpg',
+      pricePerKg: 1000,
+      variants: [
+        { weight: '250g', price: 250 },
+        { weight: '500g', price: 500 },
+        { weight: '1000g', price: 1000, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-walnut-turkish',
+      categoryKey: 'walnut',
+      name: 'TURKISH WALNUTS',
+      urduName: 'ترکی اخروٹ',
+      tag: 'Premium Turkish',
+      image: 'assets/images/prod_walnut.jpg',
+      pricePerKg: 1400,
+      variants: [
+        { weight: '250g', price: 350 },
+        { weight: '500g', price: 700 },
+        { weight: '1000g', price: 1400, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-walnut-macadamia',
+      categoryKey: 'walnut',
+      name: 'MACADAMIA WALNUTS',
+      urduName: 'میکاڈیمیا نٹس',
+      tag: 'Royal Macadamia',
+      image: 'assets/images/prod_walnut.jpg',
+      pricePerKg: 3000,
+      variants: [
+        { weight: '250g', price: 750 },
+        { weight: '500g', price: 1500 },
+        { weight: '1000g', price: 3000, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ],
+  'fig': [
+    {
+      id: 'prod-fig-small',
+      categoryKey: 'fig',
+      name: 'DESI FIGS (SMALL SIZE)',
+      urduName: 'دیسی انجیر',
+      tag: 'Sun-Dried Natural',
+      image: 'assets/images/prod_fig.jpg',
+      pricePerKg: 3200,
+      variants: [
+        { weight: '250g', price: 800 },
+        { weight: '500g', price: 1600 },
+        { weight: '1000g', price: 3200, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-fig-big',
+      categoryKey: 'fig',
+      name: 'DESI FIGS (BIG SIZE)',
+      urduName: 'دیسی انجیر (بڑے سائز کی)',
+      tag: 'Jumbo Size Anjeer',
+      image: 'assets/images/prod_fig.jpg',
+      pricePerKg: 3600,
+      variants: [
+        { weight: '250g', price: 900 },
+        { weight: '500g', price: 1800 },
+        { weight: '1000g', price: 3600, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ],
+  'pistachio': [
+    {
+      id: 'prod-pistachio-simple',
+      categoryKey: 'pistachio',
+      name: 'SIMPLE PISTACHIO',
+      urduName: 'سادہ پستہ',
+      tag: 'Roasted & Salted',
+      image: 'assets/images/prod_pistachio.jpg',
+      pricePerKg: 5600,
+      variants: [
+        { weight: '250g', price: 1400 },
+        { weight: '500g', price: 2800 },
+        { weight: '1000g', price: 5600, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ],
+  'raisins': [
+    {
+      id: 'prod-raisins-sundarkhani',
+      categoryKey: 'raisins',
+      name: 'SUNDARKHANI RAISINS',
+      urduName: 'سندرخانی کشمش',
+      tag: 'Long Golden Sweet',
+      image: 'assets/images/prod_raisins.jpg',
+      pricePerKg: 1400,
+      variants: [
+        { weight: '250g', price: 350 },
+        { weight: '500g', price: 700 },
+        { weight: '1000g', price: 1400, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-raisins-kabli',
+      categoryKey: 'raisins',
+      name: 'KABLI RAISINS',
+      urduName: 'کابلی کشمش',
+      tag: 'Green Kabli Grade',
+      image: 'assets/images/prod_raisins.jpg',
+      pricePerKg: 1800,
+      variants: [
+        { weight: '250g', price: 450 },
+        { weight: '500g', price: 900 },
+        { weight: '1000g', price: 1800, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    },
+    {
+      id: 'prod-raisins-afghani',
+      categoryKey: 'raisins',
+      name: 'AFGHANI RAISINS',
+      urduName: 'افغانی کشمش',
+      tag: 'Black / Afghani Special',
+      image: 'assets/images/prod_raisins.jpg',
+      pricePerKg: 1600,
+      variants: [
+        { weight: '250g', price: 400 },
+        { weight: '500g', price: 800 },
+        { weight: '1000g', price: 1600, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ],
+  'pumpkin-seeds': [
+    {
+      id: 'prod-pumpkin-seeds',
+      categoryKey: 'pumpkin-seeds',
+      name: 'PUMPKIN SEEDS',
+      urduName: 'کدو کے بیج',
+      tag: 'AAA Grade Raw',
+      image: 'assets/images/prod_pumpkin_seeds.jpg',
+      pricePerKg: 2000,
+      variants: [
+        { weight: '250g', price: 500 },
+        { weight: '500g', price: 1000 },
+        { weight: '1000g', price: 2000, isDefault: true }
+      ],
+      selectedWeightIndex: 2
+    }
+  ]
+};
+
+const ALL_DRY_FRUITS_VARIETIES = Object.values(DRY_FRUITS_VARIETIES).flat();
+const DRY_FRUITS_PRODUCTS = DRY_FRUITS_CATEGORIES;
 
 // 2. TOP SELLING PRODUCTS - Only name, image, simple BUY NOW (no price/qty display)
 const TOP_SELLING_PRODUCTS = [
@@ -873,7 +1176,10 @@ function addProductToCartDirect(productId) {
     product = HONEY_CATEGORIES.find(c => c.id === productId);
   }
   if (!product) {
-    product = DRY_FRUITS_PRODUCTS.find(c => c.id === productId);
+    product = ALL_DRY_FRUITS_VARIETIES.find(c => c.id === productId);
+  }
+  if (!product) {
+    product = DRY_FRUITS_CATEGORIES.find(c => c.id === productId);
   }
   if (!product) return;
 
@@ -963,62 +1269,156 @@ function selectDedicatedHoneyWeight(categoryId, weightIndex) {
   renderDedicatedHoneyPage();
 }
 
-// 9b-2. DEDICATED ROYAL DRY FRUITS PAGE (dryfruits/index.html) - 5 Products in exact order
+// 9b-2. DEDICATED ROYAL DRY FRUITS PAGE (dryfruits/index.html)
 function renderDedicatedDryFruitsPage() {
   const container = document.getElementById('dryFruitsPageGrid');
   if (!container) return;
 
-  container.innerHTML = DRY_FRUITS_PRODUCTS.map(product => {
-    const activeVar = product.variants[product.selectedWeightIndex || 0];
-    return `
-      <div class="honey-page-card dry-fruit-card" id="dfcard-${product.id}">
-        <span class="honey-page-badge">${product.tag}</span>
-        <div class="honey-page-img-box">
-          <button class="card-view-btn" onclick="openProductQuickView('${product.id}')" title="Quick View Product Details">
-            <i class="fa-solid fa-eye"></i>
-          </button>
-          <button class="fav-btn ${isFavorite(product.id) ? 'active' : ''}" onclick="toggleFavorite('${product.id}', event)" title="Add to Favorites">
-            <i class="${isFavorite(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-          </button>
-          <a href="../product/?id=${product.id}" style="display:block;height:100%;text-decoration:none;">
-            <img src="${resolveImagePath(product.image)}" alt="${product.name}" loading="lazy">
-          </a>
-        </div>
-        <div class="honey-page-body">
-          <h3 class="honey-page-title" style="cursor:pointer;" onclick="openProductQuickView('${product.id}')">
-            <span class="product-title-en">${product.name}</span>
-            <span class="product-title-ur">${product.urduName || ''}</span>
-          </h3>
-          <p class="honey-page-desc">${product.description}</p>
-          <div class="weight-selector-box">
-            <span class="weight-selector-label">Select Weight:</span>
-            <div class="honey-weights-row">
-              ${product.variants.map((v, idx) => `
-                <button type="button" class="honey-w-btn ${idx === (product.selectedWeightIndex || 0) ? 'active' : ''}"
-                        onclick="selectDedicatedDryFruitWeight('${product.id}', ${idx})">
-                  ${v.weight}
-                </button>
-              `).join('')}
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentCatKey = urlParams.get('cat') || urlParams.get('category');
+
+  const breadcrumbsEl = document.getElementById('dryFruitsBreadcrumbs');
+  const bcCurrentEl = document.getElementById('dryFruitsBreadcrumbCurrent');
+  const subtitleEl = document.getElementById('dryFruitsSubtitle');
+  const titleEl = document.getElementById('dryFruitsTitle');
+  const descEl = document.getElementById('dryFruitsDesc');
+  const backBtnContainer = document.getElementById('dryFruitsBackBtnContainer');
+
+  if (currentCatKey && DRY_FRUITS_VARIETIES[currentCatKey]) {
+    // --- VARIETIES SUBPAGE VIEW ---
+    const categoryInfo = DRY_FRUITS_CATEGORIES.find(c => c.categoryKey === currentCatKey) || {
+      name: currentCatKey.toUpperCase(),
+      urduName: ''
+    };
+    const varieties = DRY_FRUITS_VARIETIES[currentCatKey];
+
+    if (breadcrumbsEl) breadcrumbsEl.style.display = 'flex';
+    if (bcCurrentEl) bcCurrentEl.textContent = `${categoryInfo.name} (${categoryInfo.urduName})`;
+
+    if (subtitleEl) subtitleEl.innerHTML = `<i class="fa-solid fa-crown text-red"></i> 100% Pure, Fresh & Naturally Sourced`;
+    if (titleEl) titleEl.textContent = `${categoryInfo.name} VARIETIES`;
+    if (descEl) descEl.textContent = `Choose from ${varieties.length} premium ${categoryInfo.name.toLowerCase()} varieties. Select weight and enjoy cash on delivery nationwide.`;
+    if (backBtnContainer) backBtnContainer.style.display = 'block';
+
+    container.innerHTML = varieties.map(variety => {
+      const activeVar = variety.variants[variety.selectedWeightIndex !== undefined ? variety.selectedWeightIndex : 2];
+      return `
+        <div class="honey-page-card dry-fruit-card variety-card" id="dfvar-${variety.id}">
+          <span class="honey-page-badge">${variety.tag}</span>
+          <div class="honey-page-img-box">
+            <button class="card-view-btn" onclick="openProductQuickView('${variety.id}')" title="Quick View Product Details">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button class="fav-btn ${isFavorite(variety.id) ? 'active' : ''}" onclick="toggleFavorite('${variety.id}', event)" title="Add to Favorites">
+              <i class="${isFavorite(variety.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+            </button>
+            <a href="../product/?id=${variety.id}" style="display:block;height:100%;text-decoration:none;">
+              <img src="${resolveImagePath(variety.image)}" alt="${variety.name}" loading="lazy">
+            </a>
+          </div>
+          <div class="honey-page-body">
+            <h3 class="honey-page-title" style="cursor:pointer;" onclick="openProductQuickView('${variety.id}')">
+              <span class="product-title-en">${variety.name}</span>
+              <span class="product-title-ur">${variety.urduName || ''}</span>
+            </h3>
+            <div class="weight-selector-box">
+              <span class="weight-selector-label">Select Weight:</span>
+              <div class="honey-weights-row">
+                ${variety.variants.map((v, idx) => `
+                  <button type="button" class="honey-w-btn ${idx === (variety.selectedWeightIndex !== undefined ? variety.selectedWeightIndex : 2) ? 'active' : ''}"
+                          onclick="selectDryFruitVarietyWeight('${currentCatKey}', '${variety.id}', ${idx})">
+                    ${v.weight}
+                  </button>
+                `).join('')}
+              </div>
             </div>
+            <div class="honey-card-price-row">
+              <span class="honey-price-val" id="dfvarprice-${variety.id}">Rs. ${activeVar.price.toLocaleString()}</span>
+              <span class="honey-unit-label">per ${activeVar.weight}</span>
+            </div>
+            <button class="btn btn-red btn-block buy-now-btn" onclick="openProductSelectionModal('${variety.id}')">
+              <i class="fa-solid fa-bag-shopping"></i> BUY NOW
+            </button>
           </div>
-          <div class="honey-card-price-row">
-            <span class="honey-price-val" id="dfprice-${product.id}">Rs. ${activeVar.price.toLocaleString()}</span>
-            <span class="honey-unit-label">per ${activeVar.weight}</span>
-          </div>
-          <button class="btn btn-red btn-block buy-now-btn" onclick="openProductSelectionModal('${product.id}')">
-            <i class="fa-solid fa-bag-shopping"></i> BUY NOW
-          </button>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('');
+
+  } else {
+    // --- MAIN 7 CATEGORIES VIEW WITH SELECT BUTTON ---
+    if (breadcrumbsEl) breadcrumbsEl.style.display = 'none';
+    if (subtitleEl) subtitleEl.innerHTML = `<i class="fa-solid fa-crown text-red"></i> 100% Premium, Fresh & Naturally Sourced`;
+    if (titleEl) titleEl.textContent = `ROYAL DRY FRUITS COLLECTION`;
+    if (descEl) descEl.textContent = `Hand-picked crunchy dry fruits packed fresh in food-grade airtight pouches. Click "SELECT" on any dry fruit to explore its varieties.`;
+    if (backBtnContainer) backBtnContainer.style.display = 'none';
+
+    container.innerHTML = DRY_FRUITS_CATEGORIES.map(category => {
+      return `
+        <div class="honey-page-card dry-fruit-card category-card" id="dfcat-${category.categoryKey}">
+          <span class="honey-page-badge">${category.tag}</span>
+          <div class="honey-page-img-box" style="cursor:pointer;" onclick="navigateToDryFruitCategory('${category.categoryKey}')">
+            <button class="fav-btn ${isFavorite(category.id) ? 'active' : ''}" onclick="toggleFavorite('${category.id}', event)" title="Add to Favorites">
+              <i class="${isFavorite(category.id) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+            </button>
+            <img src="${resolveImagePath(category.image)}" alt="${category.name}" loading="lazy">
+          </div>
+          <div class="honey-page-body">
+            <h3 class="honey-page-title" style="cursor:pointer;" onclick="navigateToDryFruitCategory('${category.categoryKey}')">
+              <span class="product-title-en">${category.name}</span>
+              <span class="product-title-ur">${category.urduName || ''}</span>
+            </h3>
+            <p class="honey-page-desc">${category.description}</p>
+            <div class="honey-card-price-row">
+              <span class="honey-price-val">Rs. ${category.startingPrice.toLocaleString()} <span style="font-size:0.75rem;font-weight:600;color:var(--text-muted);">/ KG</span></span>
+            </div>
+            <button class="btn btn-red btn-block select-btn" onclick="navigateToDryFruitCategory('${category.categoryKey}')">
+              <i class="fa-solid fa-list-check"></i> SELECT
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
 
-function selectDedicatedDryFruitWeight(productId, weightIndex) {
-  const product = DRY_FRUITS_PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
-  product.selectedWeightIndex = weightIndex;
+function navigateToDryFruitCategory(catKey) {
+  const newUrl = `${window.location.pathname}?cat=${catKey}`;
+  window.history.pushState({ cat: catKey }, '', newUrl);
   renderDedicatedDryFruitsPage();
+  window.scrollTo({ top: 120, behavior: 'smooth' });
+}
+
+function backToAllDryFruits(event) {
+  if (event) event.preventDefault();
+  window.history.pushState({}, '', window.location.pathname);
+  renderDedicatedDryFruitsPage();
+  window.scrollTo({ top: 120, behavior: 'smooth' });
+}
+
+window.addEventListener('popstate', () => {
+  renderDedicatedDryFruitsPage();
+});
+
+function selectDryFruitVarietyWeight(catKey, varietyId, weightIndex) {
+  const varieties = DRY_FRUITS_VARIETIES[catKey];
+  if (!varieties) return;
+  const variety = varieties.find(v => v.id === varietyId);
+  if (!variety) return;
+  variety.selectedWeightIndex = weightIndex;
+  const activeVar = variety.variants[weightIndex];
+  const priceEl = document.getElementById(`dfvarprice-${varietyId}`);
+  if (priceEl) {
+    priceEl.textContent = `Rs. ${activeVar.price.toLocaleString()}`;
+  }
+  const card = document.getElementById(`dfvar-${varietyId}`);
+  if (card) {
+    const btns = card.querySelectorAll('.honey-w-btn');
+    btns.forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === weightIndex);
+    });
+    const unitEl = card.querySelector('.honey-unit-label');
+    if (unitEl) unitEl.textContent = `per ${activeVar.weight}`;
+  }
 }
 
 // 9c. FAVORITES / WISHLIST MANAGEMENT

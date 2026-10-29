@@ -2746,10 +2746,10 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
 
 @media (max-width: 500px) {
   .dry-fruits-page-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px !important;
-    max-width: 360px;
-    margin: 20px auto 0 auto;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    max-width: 100%;
+    margin: 20px 0 0 0;
   }
   .dry-fruits-banner-title {
     font-size: 1.35rem;
@@ -2758,5 +2758,47 @@ h1, h2, h3, .section-title, .product-title, .brand-title, .deal-heading,
   .dry-fruits-cta-btn {
     padding: 8px 18px;
     font-size: 0.8rem;
+  }
+  /* Mobile dry fruits card adjustments */
+  .dry-fruits-page-grid .honey-page-img-box {
+    height: 150px !important;
+    padding: 8px !important;
+  }
+  .dry-fruits-page-grid .honey-page-body {
+    padding: 8px !important;
+    gap: 6px !important;
+  }
+  .dry-fruits-page-grid .honey-page-title {
+    font-size: 0.78rem !important;
+  }
+  .dry-fruits-page-grid .honey-page-desc {
+    font-size: 0.72rem !important;
+    min-height: unset !important;
+  }
+  .dry-fruits-page-grid .honey-page-badge {
+    font-size: 0.6rem !important;
+    padding: 3px 7px !important;
+  }
+  .dry-fruits-page-grid .honey-price-val {
+    font-size: 0.95rem !important;
+  }
+  .dry-fruits-page-grid .buy-now-btn,
+  .dry-fruits-page-grid .select-btn {
+    font-size: 0.7rem !important;
+    padding: 7px 4px !important;
+  }
+  .dry-fruits-page-grid .buy-now-btn i,
+  .dry-fruits-page-grid .select-btn i {
+    display: none !important;
+  }
+  .dry-fruits-page-grid .honey-w-btn {
+    padding: 4px 5px !important;
+    font-size: 0.65rem !important;
+  }
+  .dry-fruits-page-grid .fav-btn,
+  .dry-fruits-page-grid .card-view-btn {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 0.72rem !important;
   }
 }

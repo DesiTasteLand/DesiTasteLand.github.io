@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -96,16 +96,28 @@
     <div class="wishlist-items-body" id="wishlistItemsContainer"></div>
   </aside>
 
+  <!-- BREADCRUMBS (Visible on Category Varieties View) -->
+  <div class="container pdp-breadcrumb" id="dryFruitsBreadcrumbs" style="display:none; padding-top: 18px; margin-bottom: 0;">
+    <a href="../"><i class="fa-solid fa-house"></i> Store</a>
+    <span class="pdp-breadcrumb-sep">/</span>
+    <a href="./" onclick="backToAllDryFruits(event)"><i class="fa-solid fa-boxes-stacked"></i> All Dry Fruits</a>
+    <span class="pdp-breadcrumb-sep">/</span>
+    <span id="dryFruitsBreadcrumbCurrent">Varieties</span>
+  </div>
+
   <!-- DRY FRUITS COLLECTION BANNER & GRID -->
   <section class="section-padding dry-fruits-collection-section">
     <div class="container">
-      <div class="section-header text-center">
-        <span class="section-subtitle"><i class="fa-solid fa-crown text-red"></i> 100% Premium, Fresh & Naturally Sourced</span>
-        <h1 class="section-title">ROYAL DRY FRUITS COLLECTION</h1>
-        <p class="section-desc">Hand-picked crunchy dry fruits packed fresh in food-grade airtight pouches. Select your preferred weight variant with nationwide Cash On Delivery.</p>
+      <div class="section-header text-center" id="dryFruitsHeaderBlock">
+        <span class="section-subtitle" id="dryFruitsSubtitle"><i class="fa-solid fa-crown text-red"></i> 100% Premium, Fresh & Naturally Sourced</span>
+        <h1 class="section-title" id="dryFruitsTitle">ROYAL DRY FRUITS COLLECTION</h1>
+        <p class="section-desc" id="dryFruitsDesc">Hand-picked crunchy dry fruits packed fresh in food-grade airtight pouches. Click "SELECT" on any dry fruit to explore its premium varieties with nationwide Cash On Delivery.</p>
+        <div id="dryFruitsBackBtnContainer" style="display:none; margin-top: 18px;">
+          <a href="./" onclick="backToAllDryFruits(event)" class="nav-back-btn"><i class="fa-solid fa-arrow-left"></i> ALL DRY FRUITS</a>
+        </div>
       </div>
 
-      <!-- DRY FRUITS 5 PRODUCTS GRID -->
+      <!-- DRY FRUITS 7 CATEGORIES / VARIETIES GRID -->
       <div class="dry-fruits-page-grid" id="dryFruitsPageGrid">
         <!-- Rendered dynamically by app.js -->
       </div>
